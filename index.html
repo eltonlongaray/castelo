@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Castelo · Realeza Holística</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Mulish:wght@300;400;500;600;700;800&display=swap">
+<style>
+  :root{
+    --sky-top:#2a1e3d; --sky-mid:#6b3f66; --sky-low:#c9788a;
+    --gold:#e0a63f; --gold-lite:#f6d488; --rose:#d98a8a; --royal:#8455a8;
+    --stone:#e9dcc6; --stone-2:#d8c6a8; --stone-line:#b89f78;
+    --ink:#3a2a2f; --ink-soft:#6d5a5a; --cream:#fbf4e7; --card:#fffaf0;
+    --muted:#a99ebd; --good:#5f9e6b; --line:rgba(58,42,47,.14);
+  }
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{ margin:0; color:var(--ink); font-family:"Mulish",ui-sans-serif,system-ui,sans-serif; line-height:1.7;
+    background:linear-gradient(180deg,var(--sky-top),var(--sky-mid) 40%,var(--sky-low)); min-height:100vh; overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+  .wrap{ width:100%; max-width:44rem; margin-inline:auto; padding:1.2rem clamp(.9rem,4vw,1.6rem) 4rem; }
+  h1,h2,h3{ font-family:"Cinzel",Georgia,serif; margin:0; font-weight:600; }
+  .hidden{ display:none !important; }
+
+  /* ---------- AUTH ---------- */
+  .auth{ background:rgba(255,250,240,.96); border-radius:18px; padding:1.6rem; max-width:26rem; margin:2.4rem auto; box-shadow:0 12px 40px rgba(0,0,0,.25); }
+  .auth .crest{ text-align:center; font-size:2.4rem; }
+  .auth h2{ text-align:center; color:var(--ink); font-size:1.4rem; margin:.3rem 0 .2rem; }
+  .auth .sub{ text-align:center; color:var(--ink-soft); font-size:.9rem; margin-bottom:1.2rem; }
+  .auth input{ width:100%; background:#fffdf8; border:1px solid var(--line); border-radius:10px; color:var(--ink);
+    font-family:inherit; font-size:1rem; padding:.85em 1em; margin-bottom:.8rem; }
+  .auth input:focus{ outline:2px solid var(--gold); }
+  .btn{ font-family:inherit; font-weight:700; font-size:1rem; border:none; border-radius:999px; padding:.85em 1.4em; cursor:pointer;
+    background:linear-gradient(180deg,var(--gold-lite),var(--gold)); color:#4a3204; transition:transform .2s; }
+  .btn:hover{ transform:translateY(-1px); }
+  .btn:disabled{ opacity:.5; cursor:not-allowed; transform:none; }
+  .btn.full{ width:100%; }
+  .btn.ghost{ background:transparent; color:var(--ink-soft); border:1px solid var(--line); }
+  .switch{ text-align:center; color:var(--ink-soft); font-size:.9rem; margin-top:1rem; }
+  .switch a{ color:var(--royal); font-weight:700; text-decoration:none; cursor:pointer; }
+  .auth .err{ color:#c0526a; font-size:.88rem; margin-top:.5rem; text-align:center; }
+  .auth .okmsg{ color:var(--good); font-size:.88rem; margin-top:.5rem; text-align:center; }
+
+  /* ---------- TOPBAR ---------- */
+  .topbar{ display:flex; align-items:center; gap:.6rem; color:var(--cream); font-size:.85rem; margin-bottom:.6rem; }
+  .topbar .who{ opacity:.9; margin-right:auto; }
+  .topbar .out{ background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.25); color:var(--cream);
+    border-radius:999px; padding:.35em .9em; font-size:.8rem; cursor:pointer; font-family:inherit; }
+  .topbar .out.alt{ background:rgba(224,166,63,.25); border-color:rgba(246,212,136,.5); color:var(--gold-lite); font-weight:700; }
+
+  /* ---------- HERO / CASTELO ---------- */
+  .hero{ text-align:center; color:var(--cream); }
+  .hero .eyebrow{ font-family:"Cinzel",serif; letter-spacing:.26em; text-transform:uppercase; font-size:.7rem; color:var(--gold-lite); }
+  .hero h1{ font-size:clamp(1.7rem,6vw,2.6rem); margin:.4rem 0 .2rem; text-shadow:0 2px 20px rgba(0,0,0,.3); }
+  .hero .sub{ font-size:.96rem; color:#f3e4d6; opacity:.92; }
+  svg.castle{ display:block; width:min(100%,20rem); height:auto; margin:.8rem auto .2rem; filter:drop-shadow(0 10px 20px rgba(0,0,0,.25)); }
+  .progress-txt{ text-align:center; color:var(--cream); font-weight:700; margin:.2rem 0 .1rem; }
+  .progress-txt b{ color:var(--gold-lite); }
+  .bricks{ display:flex; gap:.4rem; justify-content:center; margin:.5rem 0 1.2rem; flex-wrap:wrap; }
+  .brick{ width:2.4rem; height:1.3rem; border-radius:4px; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.22);
+    display:grid; place-items:center; font-size:.78rem; color:rgba(255,255,255,.5); transition:all .4s; }
+  .brick.on{ background:linear-gradient(180deg,var(--gold-lite),var(--gold)); border-color:var(--gold-lite); color:#5a3d05; transform:translateY(-2px); }
+
+  .howto{ background:rgba(255,250,240,.94); border-radius:16px; padding:1rem 1.1rem; margin-bottom:1.2rem; box-shadow:0 8px 30px rgba(0,0,0,.16); }
+  .howto p{ margin:.2rem 0; font-size:.92rem; color:var(--ink-soft); } .howto b{ color:var(--ink); }
+  .ver-resp{ display:block; width:fit-content; margin:0 auto 1.3rem; font-family:inherit; font-weight:700; font-size:.9rem; cursor:pointer;
+    background:rgba(255,250,240,.92); color:var(--royal); border:1px solid rgba(132,85,168,.3); border-radius:999px; padding:.6em 1.3em; }
+
+  .q{ background:var(--card); border:1px solid var(--line); border-radius:16px; padding:1.1rem; margin-bottom:1rem; box-shadow:0 6px 22px rgba(0,0,0,.13); }
+  .q.done{ border-color:var(--gold); box-shadow:0 6px 22px rgba(224,166,63,.26); }
+  .q-head{ display:flex; gap:.7rem; align-items:flex-start; }
+  .q-num{ flex:none; width:2rem; height:2rem; border-radius:50%; display:grid; place-items:center; font-family:"Cinzel",serif; font-weight:700;
+    background:linear-gradient(180deg,var(--stone),var(--stone-2)); color:var(--ink); border:1px solid var(--stone-line); }
+  .q.done .q-num{ background:linear-gradient(180deg,var(--gold-lite),var(--gold)); border-color:var(--gold); }
+  .q-title{ font-weight:700; font-size:1.02rem; }
+  .q-why{ font-size:.8rem; color:var(--ink-soft); font-style:italic; margin-top:.15rem; }
+  .test-link{ display:inline-flex; align-items:center; gap:.45rem; margin-top:.8rem; text-decoration:none; font-weight:700; font-size:.9rem;
+    background:linear-gradient(180deg,#8455a8,#5a3378); color:#fff; padding:.65em 1.15em; border-radius:999px; }
+  textarea{ width:100%; margin-top:.8rem; min-height:5rem; resize:vertical; border:1px solid var(--line); border-radius:10px;
+    padding:.7rem .8rem; font-family:inherit; font-size:1rem; color:var(--ink); background:#fffdf8; line-height:1.5; }
+  textarea:focus{ outline:2px solid var(--gold); } textarea[readonly]{ background:#f6efe0; color:var(--ink-soft); }
+  .q-foot{ display:flex; align-items:center; gap:.7rem; margin-top:.7rem; flex-wrap:wrap; }
+  .check{ display:none; align-items:center; gap:.35rem; color:var(--good); font-weight:700; font-size:.9rem; }
+  .q.done .check{ display:inline-flex; }
+  .warn{ display:none; width:100%; margin-top:.6rem; background:#fff4d6; border:1px solid var(--gold); border-radius:10px; padding:.6rem .8rem; font-size:.86rem; color:#7a5205; }
+  .warn.show{ display:block; }
+  .saving{ font-size:.8rem; color:var(--ink-soft); }
+
+  .finale{ display:none; text-align:center; background:rgba(255,250,240,.96); border-radius:18px; padding:1.6rem 1.2rem; margin-top:1.2rem;
+    box-shadow:0 10px 34px rgba(0,0,0,.2); border:2px solid var(--gold); }
+  .finale.show{ display:block; }
+  .finale h2{ font-size:1.4rem; } .finale p{ color:var(--ink-soft); font-size:.95rem; margin:.5rem 0 0; }
+
+  /* ---------- MODAL RESPOSTAS ---------- */
+  .resp-modal{ position:fixed; inset:0; z-index:9990; background:rgba(29,21,51,.62); display:flex; align-items:center; justify-content:center; padding:1rem; }
+  .resp-box{ background:var(--cream); border-radius:18px; max-width:34rem; width:100%; max-height:85vh; overflow:auto; box-shadow:0 20px 50px rgba(0,0,0,.4); }
+  .resp-head{ position:sticky; top:0; background:var(--cream); display:flex; align-items:center; justify-content:space-between; padding:1rem 1.2rem; border-bottom:1px solid var(--line); }
+  .resp-x{ border:none; background:none; font-size:1.3rem; cursor:pointer; color:var(--ink-soft); }
+  .resp-item{ padding:1rem 1.2rem; border-bottom:1px solid var(--line); }
+  .resp-item .rt{ font-weight:700; color:var(--royal); font-size:.9rem; margin-bottom:.3rem; }
+  .resp-item .ra{ color:var(--ink-soft); font-size:.95rem; white-space:pre-wrap; }
+  .resp-item .ra.vazio{ font-style:italic; opacity:.6; }
+
+  /* ---------- ADMIN ---------- */
+  .admin h1{ color:var(--gold-lite); font-size:clamp(1.5rem,5vw,2.2rem); }
+  .admin .sub{ color:#f3e4d6; opacity:.9; font-size:.95rem; margin-bottom:1.4rem; }
+  .acard{ background:rgba(255,250,240,.97); border-radius:16px; padding:1.2rem 1.3rem; margin-bottom:1rem; box-shadow:0 6px 22px rgba(0,0,0,.16); }
+  .acard .top{ display:flex; align-items:baseline; gap:.6rem; flex-wrap:wrap; border-bottom:1px solid var(--line); padding-bottom:.7rem; margin-bottom:.8rem; }
+  .acard .aluna{ font-family:"Cinzel",serif; font-size:1.2rem; color:var(--royal); }
+  .acard .badge{ font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; background:rgba(224,166,63,.18); color:#8a5a05; padding:.25em .7em; border-radius:999px; }
+  .acard .data{ margin-left:auto; color:var(--ink-soft); font-size:.82rem; }
+  .acard .qa{ padding:.5rem 0; border-bottom:1px solid var(--line); } .acard .qa:last-child{ border-bottom:none; }
+  .acard .qa .q2{ color:#a06a05; font-weight:700; font-size:.86rem; } .acard .qa .a2{ color:var(--ink); font-size:.96rem; white-space:pre-wrap; }
+  .empty,.msg{ text-align:center; color:#f3e4d6; padding:2rem; } .msg.err{ color:#ffd0d0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ AUTH ============ -->
+  <div id="authView">
+    <div class="auth">
+      <div class="crest">🏰</div>
+      <h2 id="authTitle">Entrar</h2>
+      <p class="sub">Realeza Holística — o seu castelo.</p>
+      <input id="nome" type="text" placeholder="Seu nome" class="hidden" autocomplete="name">
+      <input id="email" type="email" placeholder="Seu e-mail" autocomplete="username">
+      <input id="senha" type="password" placeholder="Sua senha" autocomplete="current-password">
+      <button class="btn full" id="authBtn">Entrar</button>
+      <p class="err hidden" id="authErr"></p>
+      <p class="okmsg hidden" id="authOk"></p>
+      <p class="switch"><span id="switchTxt">Ainda não tem conta?</span> <a id="switchLink">Criar conta</a></p>
+    </div>
+  </div>
+
+  <!-- ============ ALUNA (CASTELO) ============ -->
+  <div id="alunaView" class="hidden">
+    <div class="topbar"><span class="who" id="alunaWho"></span><button class="out alt hidden" id="alunaAsAdmin">👑 Ver como admin</button><button class="out" id="alunaOut">Sair</button></div>
+    <div class="hero">
+      <p class="eyebrow">Andar 1 · A Fundação</p>
+      <svg class="castle" viewBox="0 0 300 175" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="245" cy="40" r="18" fill="#f7e9c8" opacity=".85"/>
+        <g fill="#cdb98f" stroke="#a98f63" stroke-width="1.5"><rect x="55" y="76" width="34" height="80"/><rect x="211" y="76" width="34" height="80"/><rect x="110" y="58" width="80" height="98"/></g>
+        <g fill="#cdb98f"><rect x="55" y="68" width="8" height="10"/><rect x="68" y="68" width="8" height="10"/><rect x="81" y="68" width="8" height="10"/><rect x="211" y="68" width="8" height="10"/><rect x="224" y="68" width="8" height="10"/><rect x="237" y="68" width="8" height="10"/><rect x="110" y="50" width="9" height="10"/><rect x="127" y="50" width="9" height="10"/><rect x="145" y="50" width="10" height="10"/><rect x="163" y="50" width="9" height="10"/><rect x="181" y="50" width="9" height="10"/></g>
+        <polygon points="55,58 89,58 72,36" fill="#b06a72"/><polygon points="211,58 245,58 228,36" fill="#b06a72"/><polygon points="106,38 194,38 150,8" fill="#a85a74"/>
+        <line x1="150" y1="8" x2="150" y2="-8" stroke="#7a5205" stroke-width="2"/>
+        <polygon id="flag" points="150,-8 168,-3 150,2" fill="#e0a63f" opacity="0"/>
+        <path d="M138 156 v-26 a12 12 0 0 1 24 0 v26 z" fill="#7a5636"/>
+        <circle cx="72" cy="103" r="6" fill="#f2c879" opacity=".85"/><circle cx="228" cy="103" r="6" fill="#f2c879" opacity=".85"/>
+        <rect x="126" y="76" width="10" height="16" rx="5" fill="#f2c879" opacity=".85"/><rect x="164" y="76" width="10" height="16" rx="5" fill="#f2c879" opacity=".85"/>
+        <rect x="20" y="156" width="260" height="6" fill="#8a7350"/>
+      </svg>
+      <p class="progress-txt"><b id="count">0</b> de 6 pedras colocadas</p>
+      <div class="bricks" id="bricks"></div>
+    </div>
+    <div class="howto">
+      <p><b id="oiNome">Oi! 👋</b> Esse é o <b>primeiro andar</b> do seu castelo — a <b>identidade da sua marca</b>.</p>
+      <p>Responda cada pergunta com <b>calma e verdade</b> e toque em <b>“Colocar pedra”</b>. Suas respostas ficam salvas na sua conta. 💛</p>
+    </div>
+    <button class="ver-resp" id="verResp">📜 Ver minhas respostas</button>
+    <div id="questions"></div>
+    <div class="finale" id="finale">
+      <div style="font-size:2.4rem">🏰✨</div>
+      <h2>Fundação completa!</h2>
+      <p>Você colocou todas as pedras do primeiro andar. Está tudo salvo — em breve seguimos pro próximo andar. 💛</p>
+    </div>
+  </div>
+
+  <!-- ============ ADMIN (PAINEL) ============ -->
+  <div id="adminView" class="hidden admin">
+    <div class="topbar"><span class="who" id="adminWho"></span><button class="out alt" id="adminAsAluna">👤 Ver como aluna</button><button class="out" id="adminOut">Sair</button></div>
+    <h1>📜 Painel do Élton</h1>
+    <p class="sub">Respostas de todas as alunas.</p>
+    <div style="margin-bottom:1rem"><button class="btn" id="reload">🔄 Atualizar</button> <span id="stat" style="color:#f3e4d6;font-size:.9rem"></span></div>
+    <div id="adminList"></div>
+  </div>
+</div>
+
+<div class="resp-modal hidden" id="respModal">
+  <div class="resp-box">
+    <div class="resp-head"><h3>📜 Suas respostas — Andar 1</h3><button class="resp-x" id="respClose">✕</button></div>
+    <div id="respBody"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function(){
+  var SB_URL="https://gopqajnivmbxjqsiznqi.supabase.co";
+  var SB_KEY="sb_publishable_YBF0cSQt0IlTqVhCyRlduQ_ij2CHBZ5";
+  var ADMIN_EMAIL="elton.longaray483@gmail.com";
+  var ANDAR=1;
+  var client=window.supabase.createClient(SB_URL,SB_KEY);
+
+  var Q=[
+    {t:"Decisões importantes da sua vida", w:"Quais foram e o que te motivou em cada uma? Isso revela a sua essência.", ph:"Escreva aqui..."},
+    {t:"O que te emociona?", w:"Músicas, filmes, livros ou viagens que te representam.", ph:"Escreva aqui..."},
+    {t:"Sonhos, medos, valores e forças", w:"O que você ama fazer e quais seus pontos fortes? É o 'porquê' da sua marca.", ph:"Escreva aqui..."},
+    {t:"Suas 5 maiores habilidades e paixões", w:"O que você pode ensinar além da sua profissão.", ph:"1... 2... 3... 4... 5..."},
+    {t:"Quem mais você poderia ajudar?", w:"Além do seu serviço — e de que forma?", ph:"Escreva aqui..."},
+    {t:"E por fim: qual é o seu arquétipo de marca?", w:"Faça o teste (botão) — o resultado aparece aqui automático. Depois coloque a pedra.", ph:"Ex: Principal Cuidadora, secundário Maga...", arq:true}
+  ];
+  function key(i){ return (i+1)+') '+Q[i].t; }
+
+  var $=function(id){return document.getElementById(id);};
+  function show(id){ ['authView','alunaView','adminView'].forEach(function(v){ $(v).classList.toggle('hidden', v!==id); }); }
+  function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  // ---------- AUTH ----------
+  var mode='login';
+  function setMode(m){ mode=m;
+    $('authTitle').textContent = m==='login'?'Entrar':'Criar conta';
+    $('authBtn').textContent = m==='login'?'Entrar':'Criar conta';
+    $('switchTxt').textContent = m==='login'?'Ainda não tem conta?':'Já tem conta?';
+    $('switchLink').textContent = m==='login'?'Criar conta':'Entrar';
+    $('nome').classList.toggle('hidden', m==='login');
+    $('authErr').classList.add('hidden'); $('authOk').classList.add('hidden');
+  }
+  $('switchLink').addEventListener('click',function(){ setMode(mode==='login'?'signup':'login'); });
+  $('authBtn').addEventListener('click', auth);
+  $('senha').addEventListener('keydown',function(e){ if(e.key==='Enter') auth(); });
+
+  async function auth(){
+    var b=$('authBtn'), err=$('authErr'), ok=$('authOk');
+    err.classList.add('hidden'); ok.classList.add('hidden'); b.disabled=true;
+    var email=$('email').value.trim(), senha=$('senha').value, nome=$('nome').value.trim();
+    try{
+      if(mode==='signup'){
+        var r=await client.auth.signUp({ email:email, password:senha, options:{ data:{ nome: nome||email.split('@')[0] } } });
+        if(r.error) throw r.error;
+        if(r.data && r.data.session){ route(); }
+        else { ok.textContent='✅ Conta criada! Se pedir confirmação, clique no link do e-mail e depois entre.'; ok.classList.remove('hidden'); setMode('login'); }
+      } else {
+        var r2=await client.auth.signInWithPassword({ email:email, password:senha });
+        if(r2.error) throw r2.error;
+        route();
+      }
+    }catch(e){ err.textContent = traduz(e.message||'Erro'); err.classList.remove('hidden'); }
+    b.disabled=false;
+  }
+  function traduz(m){ m=(m||'').toLowerCase();
+    if(m.indexOf('invalid login')>=0||m.indexOf('credentials')>=0) return 'E-mail ou senha incorretos.';
+    if(m.indexOf('already registered')>=0) return 'Esse e-mail já tem conta — é só entrar.';
+    if(m.indexOf('email not confirmed')>=0) return 'Confirme seu e-mail pelo link que enviamos.';
+    if(m.indexOf('password')>=0) return 'Senha muito curta (mín. 6 caracteres).';
+    return m; }
+
+  $('alunaOut').addEventListener('click', sair); $('adminOut').addEventListener('click', sair);
+  async function sair(){ await client.auth.signOut(); location.reload(); }
+
+  // ---------- ROTEAMENTO ----------
+  var isAdmin=false, viewAs='admin';
+  async function route(){
+    var s=(await client.auth.getSession()).data.session;
+    if(!s){ show('authView'); return; }
+    var u=s.user; isAdmin=((u.email||'').toLowerCase()===ADMIN_EMAIL);
+    if(isAdmin && viewAs==='admin'){ initAdmin(u); }
+    else { initAluna(u); }
+  }
+  $('adminAsAluna').addEventListener('click', function(){ viewAs='aluna'; route(); });
+  $('alunaAsAdmin').addEventListener('click', function(){ viewAs='admin'; route(); });
+
+  // ---------- ALUNA ----------
+  var state={}, rowExiste=false, prevDone=null;
+  async function initAluna(u){
+    show('alunaView');
+    $('alunaAsAdmin').classList.toggle('hidden', !isAdmin);
+    var nome=(u.user_metadata&&u.user_metadata.nome)||(u.email||'').split('@')[0];
+    $('alunaWho').textContent='👤 '+nome; $('oiNome').textContent='Oi, '+nome+'! 👋';
+    renderQuestions();
+    // carrega respostas dela
+    var r=await client.from('respostas_castelo').select('respostas').eq('user_id',u.id).eq('andar',ANDAR).maybeSingle();
+    state={}; if(r.data && r.data.respostas){ rowExiste=true; Object.keys(r.data.respostas).forEach(function(k){ state[k]=r.data.respostas[k]; }); }
+    aplicarEstado(); refresh();
+    autofillArq();
+  }
+  function renderQuestions(){
+    var wrap=$('questions'); wrap.innerHTML='';
+    var br=$('bricks'); br.innerHTML='';
+    Q.forEach(function(q,i){
+      var d=document.createElement('div'); d.className='q'; d.setAttribute('data-idx',i);
+      var arq = q.arq ? '<a class="test-link" href="teste/" target="_blank" rel="noopener">🔮 Fazer o teste de arquétipos</a>' : '';
+      d.innerHTML='<div class="q-head"><div class="q-num">'+(i+1)+'</div><div><div class="q-title">'+esc(q.t)+'</div><div class="q-why">'+q.w+'</div></div></div>'+
+        arq+'<textarea placeholder="'+esc(q.ph)+'"></textarea>'+
+        '<div class="q-foot"><button class="btn colocar">Colocar pedra 🧱</button><span class="check">✓ Pedra colocada</span><span class="saving hidden">salvando…</span></div>'+
+        '<div class="warn">⚠️ Você mudou uma resposta já enviada. Se precisar, avise o Élton. 💬</div>';
+      wrap.appendChild(d);
+      var b=document.createElement('div'); b.className='brick'; b.textContent=(i+1); br.appendChild(b);
+      var ta=d.querySelector('textarea'), btn=d.querySelector('.colocar'), warn=d.querySelector('.warn');
+      btn.addEventListener('click', function(){
+        if(!d.classList.contains('done')){
+          if(ta.value.trim()===''){ ta.focus(); return; }
+          state[key(i)]=ta.value.trim(); setDone(d,ta,btn,true); warn.classList.remove('show'); salvar(d); refresh();
+        } else { setDone(d,ta,btn,false); warn.classList.add('show'); ta.focus(); }
+      });
+      ta.addEventListener('input', function(){ if(d.classList.contains('done')===false && state[key(i)] && ta.value.trim()!==state[key(i)]) warn.classList.add('show'); });
+    });
+  }
+  function setDone(card,ta,btn,done){
+    if(done){ card.classList.add('done'); ta.setAttribute('readonly','readonly'); btn.textContent='Editar resposta'; btn.classList.add('ghost'); }
+    else { card.classList.remove('done'); ta.removeAttribute('readonly'); btn.textContent='Salvar 🧱'; btn.classList.remove('ghost'); }
+  }
+  function aplicarEstado(){
+    document.querySelectorAll('#questions .q').forEach(function(card){
+      var i=+card.getAttribute('data-idx'), ta=card.querySelector('textarea'), btn=card.querySelector('.colocar');
+      if(state[key(i)]){ ta.value=state[key(i)]; setDone(card,ta,btn,true); }
+    });
+  }
+  async function salvar(card){
+    var sv=card.querySelector('.saving'); sv.classList.remove('hidden');
+    var s=(await client.auth.getSession()).data.session; if(!s){ sv.classList.add('hidden'); return; }
+    var u=s.user, nome=(u.user_metadata&&u.user_metadata.nome)||(u.email||'').split('@')[0];
+    var texto=montarTexto();
+    var payload={ user_id:u.id, aluna:nome, andar:ANDAR, respostas:state, texto:texto };
+    var res=await client.from('respostas_castelo').upsert(payload,{ onConflict:'user_id,andar' });
+    sv.classList.add('hidden'); if(!res.error) rowExiste=true;
+  }
+  function montarTexto(){ var m='🏰 Andar 1 — '+($('alunaWho').textContent||'')+' (Identidade de Marca)\n\n';
+    Q.forEach(function(q,i){ m+= (i+1)+') '+q.t+':\n'+(state[key(i)]||'—')+'\n\n'; }); return m; }
+  function refresh(){
+    var done=0; document.querySelectorAll('#questions .q').forEach(function(c){ if(c.classList.contains('done')) done++; });
+    $('count').textContent=done;
+    var bricks=$('bricks').children;
+    document.querySelectorAll('#questions .q').forEach(function(c){ var i=+c.getAttribute('data-idx'); if(bricks[i]) bricks[i].classList.toggle('on', c.classList.contains('done')); });
+    var flag=$('flag');
+    if(done===6){ if(flag){flag.style.transition='opacity .6s';flag.setAttribute('opacity','1');}
+      if(prevDone!==null && prevDone<6){ var rm=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches; celebrate(); if(rm){$('finale').classList.add('show');} else{ setTimeout(function(){$('finale').classList.add('show');$('finale').scrollIntoView({behavior:'smooth'});},5000);} }
+      else { $('finale').classList.add('show'); }
+    } else { $('finale').classList.remove('show'); if(flag) flag.setAttribute('opacity','0'); }
+    prevDone=done;
+  }
+  function autofillArq(){
+    var card=document.querySelector('#questions .q[data-idx="5"]'); if(!card) return;
+    var ta=card.querySelector('textarea'), res=''; try{res=localStorage.getItem('castelo-larissa-arq-result')||'';}catch(e){}
+    if(res && !card.classList.contains('done') && ta.value.trim()===''){ ta.value=res; }
+  }
+  window.addEventListener('focus', autofillArq);
+  window.addEventListener('storage', function(e){ if(e.key==='castelo-larissa-arq-result') autofillArq(); });
+
+  // ver respostas
+  $('verResp').addEventListener('click', function(){
+    var body=$('respBody'); body.innerHTML='';
+    Q.forEach(function(q,i){ var a=state[key(i)]||''; var div=document.createElement('div'); div.className='resp-item';
+      div.innerHTML='<div class="rt">'+(i+1)+') '+esc(q.t)+'</div><div class="ra'+(a?'':' vazio')+'">'+(a?esc(a):'Ainda não respondida')+'</div>'; body.appendChild(div); });
+    $('respModal').classList.remove('hidden');
+  });
+  $('respClose').addEventListener('click', function(){ $('respModal').classList.add('hidden'); });
+  $('respModal').addEventListener('click', function(e){ if(e.target===$('respModal')) $('respModal').classList.add('hidden'); });
+
+  // ---------- ADMIN ----------
+  async function initAdmin(u){
+    show('adminView'); $('adminWho').textContent='👑 '+(u.email||'');
+    carregarAdmin();
+  }
+  $('reload').addEventListener('click', carregarAdmin);
+  async function carregarAdmin(){
+    var list=$('adminList'); list.innerHTML='<div class="empty">Carregando…</div>';
+    var res=await client.from('respostas_castelo').select('*').order('criado_em',{ascending:false});
+    if(res.error){ list.innerHTML='<div class="msg err">Erro: '+esc(res.error.message)+'</div>'; return; }
+    var rows=res.data||[]; $('stat').textContent=rows.length+' resposta(s)';
+    if(!rows.length){ list.innerHTML='<div class="empty">Nenhuma resposta ainda. 🏰</div>'; return; }
+    list.innerHTML='';
+    rows.forEach(function(row){
+      var c=document.createElement('div'); c.className='acard';
+      var data=row.criado_em?new Date(row.criado_em).toLocaleString('pt-BR'):'';
+      var qas='';
+      if(row.respostas&&typeof row.respostas==='object'){ Object.keys(row.respostas).forEach(function(q){ qas+='<div class="qa"><div class="q2">'+esc(q)+'</div><div class="a2">'+esc(row.respostas[q])+'</div></div>'; }); }
+      else if(row.texto){ qas='<div class="qa"><div class="a2">'+esc(row.texto)+'</div></div>'; }
+      c.innerHTML='<div class="top"><span class="aluna">'+esc(row.aluna||'—')+'</span><span class="badge">Andar '+esc(row.andar)+'</span><span class="data">'+esc(data)+'</span></div>'+qas;
+      list.appendChild(c);
+    });
+  }
+
+  // ---------- CELEBRAÇÃO (igual Falcon) ----------
+  function celebrate(){ if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches) return; launchCelebration(); }
+  function launchCelebration(){
+    document.getElementById('celebration-kf')&&document.getElementById('celebration-kf').remove();
+    var s=document.createElement('style'); s.id='celebration-kf';
+    s.textContent='@keyframes confettiFall{0%{transform:translateY(0) rotateZ(var(--r));opacity:1}85%{opacity:1}100%{transform:translateY(110vh) rotateZ(calc(var(--r) + 540deg));opacity:0}}@keyframes balloonRise{0%{transform:translateY(0)}100%{transform:translateY(-150vh)}}';
+    document.head.appendChild(s);
+    var overlay=document.createElement('div'); overlay.style.cssText='position:fixed;inset:0;pointer-events:none;z-index:9998;overflow:hidden'; document.body.appendChild(overlay);
+    var cc=['#7c3aed','#10b981','#f59e0b','#ef4444','#3b82f6','#ec4899','#06b6d4','#a855f7','#f97316','#14b8a6'];
+    var star='M10,0 L12.35,6.76 L19.51,6.91 L13.80,11.24 L15.88,18.09 L10,14 L4.12,18.09 L6.20,11.24 L0.49,6.91 L7.65,6.76 Z';
+    for(var i=0;i<100;i++){ var color=cc[i%cc.length],left=Math.random()*100,rot=Math.floor(Math.random()*360),delay=Math.random()*1.8,dur=2.2+Math.random()*2,anim='confettiFall '+dur+'s cubic-bezier(.25,.46,.45,.94) '+delay+'s both',base='position:absolute;top:-24px;left:'+left+'%;--r:'+rot+'deg;animation:'+anim+';',k=i%5;
+      if(k===1){ var sz=8+Math.random()*8,svg=document.createElementNS('http://www.w3.org/2000/svg','svg'); svg.setAttribute('viewBox','0 0 20 20'); svg.setAttribute('width',sz); svg.setAttribute('height',sz); svg.style.cssText=base; var p=document.createElementNS('http://www.w3.org/2000/svg','path'); p.setAttribute('d',star); p.setAttribute('fill',color); svg.appendChild(p); overlay.appendChild(svg); }
+      else if(k===4){ var el=document.createElement('div'),w=2+Math.random()*2,h=14+Math.random()*10; el.style.cssText=base+'width:'+w+'px;height:'+h+'px;background:'+color+';border-radius:1px;'; overlay.appendChild(el); }
+      else { var sz2=5+Math.random()*7,el2=document.createElement('div'); el2.style.cssText=base+'width:'+sz2+'px;height:'+sz2+'px;background:'+color+';border-radius:50%;'; overlay.appendChild(el2); } }
+    var bc=['#7c3aed','#10b981','#f59e0b','#3b82f6','#ef4444','#ec4899','#06b6d4','#f97316'];
+    [5,17,29,41,53,65,77,89].forEach(function(bl,i){ var left=bl+(Math.random()*8-4),sz=68+Math.floor(Math.random()*52),svgH=Math.round(sz*1.85),startB=-(svgH+20+Math.floor(Math.random()*120)),delay=Math.random()*1.6,dur=2.8+Math.random()*2,z=Math.round(sz/20),c=bc[i];
+      var w=document.createElement('div'); w.style.cssText='position:absolute;bottom:'+startB+'px;left:'+left+'%;z-index:'+z+';animation:balloonRise '+dur+'s ease-out '+delay+'s both;';
+      w.innerHTML='<svg width="'+sz+'" height="'+svgH+'" viewBox="0 0 60 111" xmlns="http://www.w3.org/2000/svg"><ellipse cx="30" cy="28" rx="26" ry="28" fill="'+c+'"/><ellipse cx="19" cy="15" rx="9" ry="7" fill="white" opacity="0.25"/><ellipse cx="38" cy="12" rx="4" ry="3" fill="white" opacity="0.15"/><polygon points="30,56 27,62 33,62" fill="'+c+'"/><path d="M30 62 Q40 75 22 88 Q10 98 28 108" stroke="#555" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>'; overlay.appendChild(w); });
+    setTimeout(function(){ overlay.remove(); },5500);
+  }
+
+  // start
+  setMode('login');
+  client.auth.onAuthStateChange(function(){ });
+  route();
+})();
+</script>
+</body>
+</html>

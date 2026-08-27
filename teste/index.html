@@ -1,0 +1,164 @@
+<title>Teste de Arquétipos</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Mulish:wght@400;500;600;700;800&display=swap">
+
+<style>
+  /* ===== Teste de Arquétipos — mundo místico (Maga) ===== */
+  :root{
+    --sky-top:#1d1533; --sky-mid:#3d2352; --sky-low:#7a4a6e;
+    --gold:#e0a63f; --gold-lite:#f6d488; --rose:#e09aa0;
+    --ink:#3a2a3a; --ink-soft:#6d5a6a; --cream:#fbf2e7;
+    --card:#fffaf2; --line:rgba(58,42,58,.14); --good:#5f9e6b;
+  }
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{ margin:0; color:var(--ink); font-family:"Mulish",ui-sans-serif,system-ui,sans-serif; line-height:1.6;
+    background:linear-gradient(180deg,var(--sky-top),var(--sky-mid) 45%,var(--sky-low)); min-height:100vh; overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+  .wrap{ width:100%; max-width:42rem; margin-inline:auto; padding:1.4rem clamp(.9rem,4vw,1.5rem) 4rem; }
+  h1,h2,h3{ font-family:"Cinzel",Georgia,serif; margin:0; font-weight:600; }
+
+  .hero{ text-align:center; color:var(--cream); }
+  .hero .orb{ font-size:3rem; filter:drop-shadow(0 6px 24px rgba(246,212,136,.5)); animation:float 4s ease-in-out infinite; }
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+  @media (prefers-reduced-motion:reduce){ .hero .orb{animation:none} }
+  .hero h1{ font-size:clamp(1.7rem,6vw,2.5rem); margin:.3rem 0; text-shadow:0 2px 20px rgba(0,0,0,.3); }
+  .hero .sub{ color:#f0e0d4; opacity:.92; font-size:.98rem; max-width:30rem; margin:.3rem auto 0; }
+
+  .howto{ background:rgba(255,250,242,.94); border-radius:16px; padding:1rem 1.1rem; margin:1.3rem 0; box-shadow:0 8px 30px rgba(0,0,0,.2); }
+  .howto p{ margin:.25rem 0; font-size:.9rem; color:var(--ink-soft); }
+  .howto b{ color:var(--ink); }
+
+  .progress{ position:sticky; top:0; z-index:5; background:rgba(29,21,51,.85); backdrop-filter:blur(6px); color:var(--cream);
+    text-align:center; padding:.55rem; border-radius:0 0 12px 12px; font-weight:700; font-size:.9rem; margin-bottom:1rem; }
+  .progress b{ color:var(--gold-lite); }
+
+  .arc{ background:var(--card); border:1px solid var(--line); border-radius:16px; padding:1rem 1.1rem; margin-bottom:.9rem; box-shadow:0 5px 18px rgba(0,0,0,.14); transition:border-color .3s; }
+  .arc.rated{ border-color:var(--gold); }
+  .arc .top{ display:flex; align-items:baseline; gap:.5rem; }
+  .arc .em{ font-size:1.3rem; }
+  .arc h3{ font-size:1.1rem; }
+  .arc .lema{ font-family:"Cinzel",serif; font-style:italic; color:var(--rose); font-size:.82rem; margin-left:auto; }
+  .arc .desc{ font-size:.9rem; color:var(--ink-soft); margin:.5rem 0 .8rem; }
+  .rate{ display:grid; grid-template-columns:repeat(4,1fr); gap:.4rem; }
+  .rate button{ font-family:inherit; font-weight:700; font-size:.82rem; border:1px solid var(--line); border-radius:10px; padding:.55rem .2rem;
+    background:#fffdf8; color:var(--ink-soft); cursor:pointer; transition:all .15s; line-height:1.2; }
+  .rate button small{ display:block; font-weight:600; font-size:.66rem; opacity:.7; }
+  .rate button:hover{ border-color:var(--gold); }
+  .rate button.sel{ background:linear-gradient(180deg,var(--gold-lite),var(--gold)); color:#4a3204; border-color:var(--gold); box-shadow:0 4px 12px rgba(224,166,63,.4); }
+
+  .reveal-btn{ display:block; width:100%; max-width:22rem; margin:1.6rem auto 0; font-family:inherit; font-weight:800; font-size:1.05rem;
+    border:none; border-radius:999px; padding:.95em 1.4em; cursor:pointer; color:#4a3204;
+    background:linear-gradient(180deg,var(--gold-lite),var(--gold)); box-shadow:0 10px 26px rgba(224,166,63,.45); transition:transform .2s; }
+  .reveal-btn:hover{ transform:translateY(-2px); }
+  .reveal-btn:disabled{ opacity:.5; cursor:not-allowed; box-shadow:none; }
+
+  .result{ display:none; margin-top:1.6rem; background:rgba(255,250,242,.97); border:2px solid var(--gold); border-radius:20px; padding:1.6rem 1.2rem; text-align:center; box-shadow:0 12px 36px rgba(0,0,0,.24); }
+  .result.show{ display:block; animation:pop .5s ease; }
+  @keyframes pop{from{transform:scale(.96);opacity:0}to{transform:scale(1);opacity:1}}
+  .result .eyebrow{ font-family:"Cinzel",serif; letter-spacing:.2em; text-transform:uppercase; font-size:.7rem; color:var(--gold); }
+  .rcard{ margin:1rem 0; padding:1rem; border-radius:14px; background:linear-gradient(180deg,#fff,#fdf3e2); border:1px solid var(--line); }
+  .rcard .tag{ font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; font-weight:700; color:var(--rose); }
+  .rcard h2{ font-size:1.5rem; margin:.2rem 0; }
+  .rcard p{ font-size:.9rem; color:var(--ink-soft); margin:.3rem 0 0; }
+  .result .note{ font-size:.86rem; color:var(--ink-soft); margin-top:1rem; }
+  .back{ display:inline-block; margin-top:1rem; font-weight:700; color:var(--gold); text-decoration:none; border-bottom:1px solid var(--gold); }
+  .foot{ text-align:center; color:#f0e0d4; opacity:.8; font-size:.8rem; margin-top:1.5rem; }
+</style>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="orb" aria-hidden="true">🔮</div>
+    <h1>Descubra o seu Arquétipo</h1>
+    <p class="sub">Toda marca forte tem uma personalidade. Vamos descobrir a sua — a verdadeira.</p>
+  </div>
+
+  <div class="howto">
+    <p><b>Antes de tudo, respire.</b> Pense em <b>quem você é de verdade</b> — não em quem você gostaria de ser. É isso que cria uma marca autêntica.</p>
+    <p>Para cada arquétipo, dê uma nota de <b>0 a 3</b> pelo quanto você se identifica. No fim, revelo o seu <b>principal</b> e o <b>secundário</b>. 🔮</p>
+  </div>
+
+  <div class="progress">✨ <b id="count">0</b> de 12 avaliados</div>
+
+  <div id="list"></div>
+
+  <button class="reveal-btn" id="revealBtn" disabled>🔮 Revelar meu arquétipo</button>
+
+  <div class="result" id="result">
+    <p class="eyebrow">O seu universo de marca</p>
+    <div class="rcard"><span class="tag">1º · Principal</span><h2 id="r0name">—</h2><p id="r0desc"></p></div>
+    <div class="rcard"><span class="tag">2º · Secundário</span><h2 id="r1name">—</h2><p id="r1desc"></p></div>
+    <div class="rcard"><span class="tag">3º · Terciário</span><h2 id="r2name">—</h2><p id="r2desc"></p></div>
+    <p class="note">✨ Já preenchi isso na <b>pergunta 6</b> do seu castelo — é só voltar lá e <b>colocar a pedra</b>! 🏰</p>
+    <a class="back" id="backLink" href="../">🧱 Voltar pro castelo</a>
+  </div>
+
+  <p class="foot">Baseado nos 12 arquétipos de marca. Feito com carinho pra você. 🌙</p>
+</div>
+
+<script>
+(function(){
+  var ARQ = [
+    {em:"🛡️", name:"Heroína", lema:"Onde há vontade, há caminho", desc:"Coragem, disciplina, foco e resultado. Quer provar seu valor e deixar um legado."},
+    {em:"🔥", name:"Rebelde", lema:"Regras foram feitas pra quebrar", desc:"Ousada, disruptiva, livre. Quer revolucionar e quebrar padrões que não funcionam."},
+    {em:"🌙", name:"Maga", lema:"Tudo pode acontecer", desc:"Cura, transformação e intuição. Quer transformar sonhos em realidade e curar mente, corpo e coração."},
+    {em:"🕊️", name:"Inocente", lema:"Livres para ser quem somos", desc:"Fé, otimismo, pureza e simplicidade. Quer viver o bem e a felicidade."},
+    {em:"🧭", name:"Exploradora", lema:"Não levante cercas à minha volta", desc:"Autonomia, autenticidade e aventura. Quer liberdade pra descobrir o mundo e a si mesma."},
+    {em:"📚", name:"Sábia", lema:"A verdade libertará você", desc:"Sabedoria, inteligência e conhecimento. Quer entender o mundo e ensinar (a professora)."},
+    {em:"🤝", name:"Cidadã", lema:"Todas as pessoas são iguais", desc:"Empatia, realismo e humildade. Quer pertencer e se conectar com as pessoas."},
+    {em:"💗", name:"Amante", lema:"Conexão que toca a alma", desc:"Paixão, gratidão e comprometimento. Quer intimidade e experiências que ama."},
+    {em:"🎭", name:"Performática", lema:"Viver o agora com alegria", desc:"Alegria, leveza e irreverência. Quer se divertir e alegrar o mundo."},
+    {em:"🎨", name:"Criadora", lema:"Se você imagina, você cria", desc:"Criatividade e imaginação. Quer dar forma à sua visão e criar algo de valor."},
+    {em:"🤲", name:"Cuidadora", lema:"Cuidar é a minha natureza", desc:"Compaixão e generosidade. Quer proteger, acolher e ajudar os outros."},
+    {em:"👑", name:"Governante", lema:"Ordem cria prosperidade", desc:"Liderança e responsabilidade. Quer construir algo bem-sucedido e duradouro."}
+  ];
+  var LABELS = ["Nada","Pouco","Bastante","Total"];
+  var scores = {};
+  var KEY="teste-arquetipos-larissa";
+  try{ scores = JSON.parse(localStorage.getItem(KEY))||{}; }catch(e){ scores={}; }
+
+  var list = document.getElementById('list');
+  ARQ.forEach(function(a, i){
+    var card = document.createElement('div'); card.className='arc'; card.setAttribute('data-i',i);
+    var rate = '<div class="rate">';
+    for(var n=0;n<4;n++){ rate += '<button data-n="'+n+'">'+n+'<small>'+LABELS[n]+'</small></button>'; }
+    rate += '</div>';
+    card.innerHTML = '<div class="top"><span class="em">'+a.em+'</span><h3>'+a.name+'</h3><span class="lema">"'+a.lema+'"</span></div>'+
+                     '<div class="desc">'+a.desc+'</div>'+ rate;
+    list.appendChild(card);
+    var btns = card.querySelectorAll('.rate button');
+    if(scores[i]!=null){ card.classList.add('rated'); btns[scores[i]].classList.add('sel'); }
+    btns.forEach(function(b){
+      b.addEventListener('click', function(){
+        btns.forEach(function(x){x.classList.remove('sel');});
+        b.classList.add('sel'); scores[i]=+b.getAttribute('data-n'); card.classList.add('rated');
+        try{ localStorage.setItem(KEY, JSON.stringify(scores)); }catch(e){}
+        refresh();
+      });
+    });
+  });
+
+  function refresh(){
+    var done = Object.keys(scores).length;
+    document.getElementById('count').textContent = done;
+    document.getElementById('revealBtn').disabled = (done < 12);
+  }
+
+  document.getElementById('revealBtn').addEventListener('click', function(){
+    var ranked = ARQ.map(function(a,i){ return {a:a, s:scores[i]||0}; }).sort(function(x,y){ return y.s - x.s; });
+    var top = ranked.slice(0,3);
+    for(var j=0;j<3;j++){
+      document.getElementById('r'+j+'name').textContent = top[j].a.em+" "+top[j].a.name+"  ("+top[j].s+"/3)";
+      document.getElementById('r'+j+'desc').textContent = top[j].a.desc;
+    }
+    // Salva o resultado pro castelo preencher a pergunta 6 automaticamente
+    var resultStr = "Principal: "+top[0].a.name+" ("+top[0].s+"/3) · Secundário: "+top[1].a.name+" ("+top[1].s+"/3) · Terciário: "+top[2].a.name+" ("+top[2].s+"/3)";
+    try{ localStorage.setItem('castelo-larissa-arq-result', resultStr); }catch(e){}
+    var r = document.getElementById('result'); r.classList.add('show');
+    r.scrollIntoView({behavior:'smooth'});
+  });
+
+  refresh();
+})();
+</script>
