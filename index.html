@@ -365,7 +365,7 @@
       var c=document.createElement('div'); c.className='acard';
       var data=row.criado_em?new Date(row.criado_em).toLocaleString('pt-BR'):'';
       var qas='';
-      if(row.respostas&&typeof row.respostas==='object'){ Object.keys(row.respostas).forEach(function(q){ qas+='<div class="qa"><div class="q2">'+esc(q)+'</div><div class="a2">'+esc(row.respostas[q])+'</div></div>'; }); }
+      if(row.respostas&&typeof row.respostas==='object'){ Object.keys(row.respostas).sort(function(a,b){ return (parseInt(a,10)||0)-(parseInt(b,10)||0); }).forEach(function(q){ qas+='<div class="qa"><div class="q2">'+esc(q)+'</div><div class="a2">'+esc(row.respostas[q])+'</div></div>'; }); }
       else if(row.texto){ qas='<div class="qa"><div class="a2">'+esc(row.texto)+'</div></div>'; }
       c.innerHTML='<div class="top"><span class="aluna">'+esc(row.aluna||'—')+'</span><span class="badge">Andar '+esc(row.andar)+'</span><span class="data">'+esc(data)+'</span></div>'+qas;
       list.appendChild(c);
