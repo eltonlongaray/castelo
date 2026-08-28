@@ -178,11 +178,11 @@
 
   var ANDARES=[
     { titulo:"A Fundação", sub:"Identidade de Marca", intro:"Esse é o <b>primeiro andar</b> — a <b>identidade da sua marca</b>.", perguntas:[
-      {t:"Decisões importantes da sua vida", w:"Quais foram e o que te motivou em cada uma? Isso revela a sua essência."},
-      {t:"O que te emociona?", w:"Músicas, filmes, livros ou viagens que te representam."},
-      {t:"Sonhos, medos, valores e forças", w:"O que você ama fazer e quais seus pontos fortes? É o 'porquê' da sua marca."},
-      {t:"Suas 5 maiores habilidades e paixões", w:"O que você pode ensinar além da sua profissão.", ph:"1... 2... 3... 4... 5..."},
-      {t:"Quem mais você poderia ajudar?", w:"Além do seu serviço — e de que forma?"},
+      {t:"Decisões importantes da sua vida", w:"Quais foram e o que te motivou em cada uma? Ex: 'morei sozinha pra ter liberdade', 'mudei de carreira pra viver meu propósito', 'fiz uma viagem que me transformou'. Isso revela a sua essência."},
+      {t:"O que te emociona?", w:"O que te arrepia, te faz chorar ou vibrar. Ex: um filme de superação, uma música, viajar, ajudar alguém, estar na natureza."},
+      {t:"Sonhos, medos, valores e forças", w:"Ex: sonho de ter liberdade e viver do meu propósito; medo de estagnar; valorizo honestidade e conexão; minha força é acolher e transformar."},
+      {t:"Suas 5 maiores habilidades e paixões", w:"O que você faz bem E ama. Ex: escutar, acolher, ensinar, organizar, criar, comunicar.", ph:"1... 2... 3... 4... 5..."},
+      {t:"Quem mais você poderia ajudar?", w:"Além do seu serviço — e de que forma? Ex: 'mulheres sobrecarregadas, a desacelerar'; 'quem quer recomeçar, com mais autoconfiança'."},
       {t:"E por fim: qual é o seu arquétipo de marca?", w:"Faça o teste (botão) — o resultado, com as características de cada arquétipo, aparece aqui automático. Depois coloque a pedra.", ph:"Ex: Principal Cuidadora...", arq:true}
     ]},
     { titulo:"O Mecanismo", sub:"Público, Problema e Vendas", intro:"Esse é o <b>segundo andar</b> — pra <b>quem</b> você fala e qual <b>dor</b> você resolve.", perguntas:[
@@ -200,6 +200,17 @@
     ]}
   ];
   function key(a,i){ return (i+1)+') '+ANDARES[a].perguntas[i].t; }
+  // remapeia respostas antigas (títulos diferentes) pras chaves atuais, casando pelo número da pergunta
+  function remap(a, oldResp){
+    if(a<0||a>=ANDARES.length||!oldResp) return oldResp||{};
+    var out={};
+    ANDARES[a].perguntas.forEach(function(q,i){
+      var nk=key(a,i), num=(i+1)+')';
+      if(oldResp[nk]!=null){ out[nk]=oldResp[nk]; return; }
+      for(var kk in oldResp){ if(kk.indexOf(num)===0){ out[nk]=oldResp[kk]; return; } }
+    });
+    return out;
+  }
 
   var $=function(id){return document.getElementById(id);};
   function show(id){ ['authView','alunaView','adminView'].forEach(function(v){ $(v).classList.toggle('hidden', v!==id); }); }
@@ -257,7 +268,7 @@
     show('alunaView'); $('alunaAsAdmin').classList.toggle('hidden', !isAdmin);
     $('alunaWho').textContent='👤 '+nome(); $('oiNome').textContent='Oi, '+nome()+'! 👋';
     var r=await client.from('respostas_castelo').select('andar,respostas').eq('user_id',USER.id);
-    rows={}; if(r.data) r.data.forEach(function(x){ rows[x.andar]=x.respostas||{}; });
+    rows={}; if(r.data) r.data.forEach(function(x){ rows[x.andar]=remap(x.andar-1, x.respostas||{}); });
     // abre o primeiro andar incompleto
     var abrir=0; for(var a=0;a<ANDARES.length;a++){ if(!andarCompleto(a)){ abrir=a; break; } if(a===ANDARES.length-1) abrir=a; }
     renderNav(); abrirAndar(abrir);
