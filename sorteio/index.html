@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Carrossel do Sorteio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Mulish:wght@400;500;600;700;800;900&display=swap">
+<style>
+  :root{
+    --plum:#241634; --plum-2:#38234f; --mauve:#6b3f66; --rose:#c9788a; --rose-deep:#a8546a;
+    --gold:#e0a63f; --gold-lite:#f6d488; --gold-deep:#b97e1e;
+    --cream:#fbf4e7; --sand:#f3e7d0; --card:#fffaf0; --ink:#3a2a2f; --ink-soft:#7a6763;
+    --line:rgba(224,166,63,.4);
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{ font-family:"Mulish",ui-sans-serif,system-ui,sans-serif; color:var(--cream); line-height:1.5;
+    background:radial-gradient(1200px 600px at 50% -10%, #33204a, #1a1026 60%, #140b1e); min-height:100vh;
+    -webkit-font-smoothing:antialiased; padding:1.2rem clamp(.6rem,3vw,1.4rem) 4rem; }
+  h1,h2,h3{ font-family:"Cinzel",Georgia,serif; text-wrap:balance; }
+
+  /* guia (não faz parte dos cards) */
+  .guide{ max-width:30rem; margin:0 auto 1.6rem; text-align:center; }
+  .guide .k{ font-family:"Cinzel",serif; letter-spacing:.28em; text-transform:uppercase; font-size:.66rem; color:var(--gold-lite); }
+  .guide h1{ font-size:clamp(1.3rem,5vw,1.8rem); color:var(--cream); margin:.35rem 0 .5rem; }
+  .guide p{ font-size:.86rem; color:#d9c9d6; }
+  .guide .warn{ margin-top:.9rem; background:rgba(224,166,63,.14); border:1px solid var(--line); border-radius:12px;
+    padding:.7rem .9rem; font-size:.84rem; color:var(--gold-lite); font-weight:700; }
+
+  .deck{ display:flex; flex-direction:column; align-items:center; gap:1.8rem; }
+  .item{ width:min(430px,94vw); }
+  .tag{ font-family:"Cinzel",serif; letter-spacing:.2em; text-transform:uppercase; font-size:.66rem; color:var(--gold-lite);
+    text-align:center; margin-bottom:.5rem; opacity:.85; }
+
+  /* CARD base — 4:5 pronto pra screenshot */
+  .card{ position:relative; width:100%; aspect-ratio:4/5; border-radius:22px; overflow:hidden;
+    box-shadow:0 18px 50px rgba(0,0,0,.4); display:flex; flex-direction:column;
+    padding:clamp(1.5rem,6%,2.2rem); }
+  .card .brand{ position:absolute; left:0; right:0; bottom:1.1rem; text-align:center;
+    font-family:"Cinzel",serif; font-size:.72rem; letter-spacing:.14em; color:rgba(255,255,255,.72); }
+  .pager{ display:flex; gap:.3rem; justify-content:center; }
+  .pager i{ width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,.32); }
+  .pager i.on{ background:var(--gold-lite); width:18px; border-radius:3px; }
+
+  .dark{ background:linear-gradient(165deg,var(--plum-2),var(--plum) 55%,#160d22); color:var(--cream); }
+  .rose{ background:linear-gradient(165deg,#7c4a6f,var(--rose) 90%); color:#fff; }
+  .warm{ background:linear-gradient(170deg,var(--card),var(--sand)); color:var(--ink); }
+  .gold{ background:linear-gradient(165deg,#efc25f,var(--gold) 60%,var(--gold-deep)); color:#3a2704; }
+
+  .sparkle{ position:absolute; color:var(--gold-lite); opacity:.5; filter:drop-shadow(0 0 6px rgba(246,212,136,.5)); }
+
+  /* CARD 1 — capa */
+  .c1{ justify-content:center; text-align:center; }
+  .c1 .eyebrow{ font-family:"Cinzel",serif; letter-spacing:.3em; text-transform:uppercase; font-size:.8rem; color:var(--gold-lite); }
+  .c1 .gift{ font-size:2.6rem; margin:.2rem 0 .4rem; }
+  .c1 h2{ font-size:clamp(2rem,10vw,2.9rem); line-height:1.02; color:#fff;
+    text-shadow:0 2px 24px rgba(0,0,0,.35); }
+  .c1 h2 .free{ color:var(--gold-lite); display:block; }
+  .c1 .line{ width:44px; height:2px; background:var(--gold); margin:1rem auto; border-radius:2px; }
+  .c1 .sub{ font-size:1rem; color:#e9d9e6; font-weight:600; }
+  .c1 .swipe{ margin-top:1.4rem; font-family:"Cinzel",serif; letter-spacing:.16em; text-transform:uppercase;
+    font-size:.74rem; color:var(--gold-lite); display:inline-flex; gap:.5rem; align-items:center; align-self:center;
+    animation:nudge 1.6s ease-in-out infinite; }
+  @keyframes nudge{ 0%,100%{ transform:translateX(0); } 50%{ transform:translateX(6px); } }
+  @media (prefers-reduced-motion:reduce){ .swipe{ animation:none; } }
+
+  /* CARD 2 — promessa + destaque */
+  .c2{ justify-content:center; }
+  .c2 .k{ font-family:"Cinzel",serif; letter-spacing:.2em; text-transform:uppercase; font-size:.72rem; color:var(--rose); }
+  .c2 h2{ font-size:clamp(1.5rem,6.6vw,2rem); line-height:1.12; color:var(--ink); margin:.5rem 0 1.1rem; }
+  .c2 h2 em{ font-style:normal; color:var(--rose-deep); }
+  .promessa{ background:linear-gradient(165deg,#2c1b40,#1b1029); border:1.5px solid var(--gold);
+    border-radius:16px; padding:1.15rem 1.1rem; text-align:center; box-shadow:0 10px 30px rgba(224,166,63,.22); }
+  .promessa .cap{ font-family:"Cinzel",serif; letter-spacing:.14em; text-transform:uppercase; font-size:.66rem; color:var(--gold-lite); }
+  .promessa .big{ font-family:"Cinzel",serif; font-weight:800; color:var(--gold-lite); line-height:1.05;
+    font-size:clamp(2.4rem,13vw,3.4rem); margin:.15rem 0; text-shadow:0 2px 18px rgba(224,166,63,.35); }
+  .promessa .big small{ font-size:.42em; vertical-align:.35em; }
+  .promessa .cond{ color:#f0e0dd; font-weight:700; font-size:.98rem; }
+  .promessa .cond b{ color:#fff; }
+
+  /* CARD 3 — prova social */
+  .c3{ justify-content:flex-start; }
+  .c3 h2{ font-size:clamp(1.5rem,6.4vw,1.95rem); line-height:1.1; margin-bottom:.35rem; color:#fff; }
+  .c3 h2 span{ color:var(--gold-lite); }
+  .c3 .lead{ color:#f0dfe7; font-size:.92rem; margin-bottom:1rem; }
+  .prints{ display:grid; grid-template-columns:1fr 1fr; gap:.7rem; flex:1; }
+  .print{ background:rgba(255,255,255,.1); border:1.5px dashed rgba(255,255,255,.5); border-radius:12px;
+    display:flex; align-items:center; justify-content:center; text-align:center; padding:.6rem;
+    font-size:.74rem; color:#fbeef3; font-weight:600; }
+  .print:first-child{ grid-column:1/-1; }
+  .c3 .hint{ margin-top:.8rem; font-size:.76rem; color:#f3d9e4; text-align:center; font-style:italic; }
+
+  /* CARD 4 — prêmio */
+  .c4{ justify-content:center; text-align:center; }
+  .c4 .k{ font-family:"Cinzel",serif; letter-spacing:.2em; text-transform:uppercase; font-size:.72rem; color:#6a4a05; }
+  .c4 h2{ font-size:clamp(1.7rem,7.5vw,2.2rem); color:#3a2704; margin:.3rem 0 .9rem; line-height:1.05; }
+  .prize{ background:rgba(255,255,255,.55); border:1.5px solid rgba(120,80,10,.35); border-radius:16px;
+    padding:1.1rem; text-align:left; display:flex; flex-direction:column; gap:.7rem; }
+  .prize .row{ display:flex; gap:.7rem; align-items:flex-start; font-weight:700; color:#3a2704; font-size:1rem; }
+  .prize .row .em{ font-size:1.3rem; line-height:1; }
+  .scarcity{ margin-top:1rem; font-family:"Cinzel",serif; font-weight:700; font-size:.92rem; color:#5a3d05;
+    background:rgba(58,39,4,.1); border-radius:999px; padding:.55rem 1rem; display:inline-block; align-self:center; }
+
+  /* CARD 5 — participar */
+  .c5{ justify-content:flex-start; }
+  .c5 h2{ font-size:clamp(1.6rem,6.6vw,2rem); color:#fff; margin-bottom:.9rem; text-align:center; }
+  .c5 h2 span{ color:var(--gold-lite); }
+  .steps{ display:flex; flex-direction:column; gap:.6rem; }
+  .step{ display:flex; gap:.7rem; align-items:center; background:rgba(255,255,255,.09);
+    border:1px solid rgba(255,255,255,.16); border-radius:12px; padding:.6rem .8rem; }
+  .step .n{ flex:none; width:1.7rem; height:1.7rem; border-radius:50%; display:grid; place-items:center;
+    font-family:"Cinzel",serif; font-weight:700; font-size:.9rem; background:linear-gradient(180deg,var(--gold-lite),var(--gold)); color:#4a3204; }
+  .step .t{ font-weight:700; font-size:.9rem; color:#fdeef4; }
+  .step .t b{ color:var(--gold-lite); }
+  .datebox{ margin-top:1rem; text-align:center; border:1.5px dashed var(--gold-lite); border-radius:14px;
+    padding:.8rem; background:rgba(224,166,63,.12); }
+  .datebox .cap{ font-family:"Cinzel",serif; letter-spacing:.16em; text-transform:uppercase; font-size:.66rem; color:var(--gold-lite); }
+  .datebox .d{ font-family:"Cinzel",serif; font-weight:800; font-size:1.5rem; color:#fff; letter-spacing:.04em; }
+</style>
+</head>
+<body>
+
+  <div class="guide">
+    <p class="k">Carrossel do sorteio</p>
+    <h1>Pronto pra postar 💛</h1>
+    <p>Tire um print (ou salve) de cada card e poste como carrossel no feed, na ordem. Os textos e a arte já estão prontos.</p>
+    <div class="warn">⚠️ Larissa: no <b>Card 5</b>, troque o “DIA __/__” pela <b>data real do sorteio</b> antes de postar.</div>
+  </div>
+
+  <div class="deck">
+
+    <!-- CARD 1 -->
+    <div class="item">
+      <p class="tag">Card 1 · Capa</p>
+      <div class="card dark c1">
+        <div class="sparkle" style="top:12%;left:16%;font-size:1.1rem">✦</div>
+        <div class="sparkle" style="top:20%;right:18%;font-size:.8rem">✧</div>
+        <div class="sparkle" style="bottom:26%;left:22%;font-size:.7rem">✧</div>
+        <p class="eyebrow">Sorteio</p>
+        <div class="gift">🎁</div>
+        <h2>Massagem <span class="free">GRÁTIS</span> + Aula Prática</h2>
+        <div class="line"></div>
+        <p class="sub">Um presente pra quem ama (ou sonha em viver de) massagem.</p>
+        <span class="swipe">arrasta pro lado →</span>
+        <div class="brand"><div class="pager"><i class="on"></i><i></i><i></i><i></i><i></i></div></div>
+      </div>
+    </div>
+
+    <!-- CARD 2 -->
+    <div class="item">
+      <p class="tag">Card 2 · A promessa</p>
+      <div class="card warm c2">
+        <p class="k">E se eu te dissesse que…</p>
+        <h2>existe um <em>método único</em> de massagem que pode mudar a sua vida.</h2>
+        <div class="promessa">
+          <p class="cap">Com ele dá pra</p>
+          <p class="big">R$20mil<small>+</small></p>
+          <p class="cond">por mês trabalhando <b>só 5 horas por dia</b></p>
+        </div>
+        <div class="brand" style="color:rgba(58,42,47,.5)"><div class="pager"><i></i><i class="on"></i><i></i><i></i><i></i></div></div>
+      </div>
+    </div>
+
+    <!-- CARD 3 -->
+    <div class="item">
+      <p class="tag">Card 3 · Prova social</p>
+      <div class="card rose c3">
+        <h2>Não é sonho.<br><span>É método.</span></h2>
+        <p class="lead">Veja o que quem já viveu isso tem a dizer 👇</p>
+        <div class="prints">
+          <div class="print">📸 Coloque aqui o print de um depoimento marcante</div>
+          <div class="print">📸 print de<br>depoimento</div>
+          <div class="print">📸 print de<br>depoimento</div>
+        </div>
+        <p class="hint">Use os prints reais das suas clientes (WhatsApp / direct).</p>
+        <div class="brand"><div class="pager"><i></i><i></i><i class="on"></i><i></i><i></i></div></div>
+      </div>
+    </div>
+
+    <!-- CARD 4 -->
+    <div class="item">
+      <p class="tag">Card 4 · O prêmio</p>
+      <div class="card gold c4">
+        <p class="k">Você pode ser a próxima</p>
+        <h2>O que você ganha</h2>
+        <div class="prize">
+          <div class="row"><span class="em">💆‍♀️</span><span>Uma <b>massagem completa gratuita</b>, comigo</span></div>
+          <div class="row"><span class="em">🎓</span><span>+ uma <b>aula técnica dos princípios básicos</b> do meu método</span></div>
+        </div>
+        <div class="scarcity">🔥 As vagas do método completo abrem em breve</div>
+        <div class="brand" style="color:rgba(58,39,4,.5)"><div class="pager"><i></i><i></i><i></i><i class="on"></i><i></i></div></div>
+      </div>
+    </div>
+
+    <!-- CARD 5 -->
+    <div class="item">
+      <p class="tag">Card 5 · Como participar</p>
+      <div class="card dark c5">
+        <h2>Pra <span>concorrer</span>:</h2>
+        <div class="steps">
+          <div class="step"><div class="n">1</div><div class="t">Reposte este post nos seus <b>stories</b></div></div>
+          <div class="step"><div class="n">2</div><div class="t">Marque <b>@massoterapeutalarissar</b></div></div>
+          <div class="step"><div class="n">3</div><div class="t">Comente <b>“Eu quero”</b> no meu direct</div></div>
+          <div class="step"><div class="n">4</div><div class="t">Preencha o <b>formulário</b> (link na bio)</div></div>
+        </div>
+        <div class="datebox">
+          <p class="cap">Sorteio ao vivo</p>
+          <p class="d">DIA __/__</p>
+        </div>
+        <div class="brand"><div class="pager"><i></i><i></i><i></i><i></i><i class="on"></i></div></div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
