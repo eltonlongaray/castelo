@@ -63,14 +63,22 @@
   </div>
 
   <div class="card" id="qsorteio" style="border:1px solid var(--gold);background:#fffaf0;">
-    <h2>🎁 Vai usar como SORTEIO? Comece o form assim</h2>
-    <p class="lead">Ofereça uma massagem completa + uma aula do seu método pra quem preencher. Estes campos servem pra sortear e pra virar sua lista de contatos.</p>
+    <h2>🎁 Vai usar como SORTEIO? Faça assim (nos stories)</h2>
+    <p class="lead">Em vez de "sim ou não" num form, o desafio faz cada pessoa <b>repostar o seu story</b> (alcance viral) e <b>te mandar as respostas no direct</b> (pesquisa + conversa que vira venda). Você ganha os 3: alcance, dados e leads.</p>
+
+    <p style="font-weight:700;color:var(--ink);margin:.2rem 0 .4rem">1️⃣ Aqueça com uma sequência de caixinhas</p>
+    <p style="font-size:.9rem;color:var(--ink-soft);margin:0 0 .9rem">Uma por dia (use as versões curtas lá embaixo 📱). A última já avisa: <i>"amanhã vem um sorteio que você não vai querer perder 👀"</i>.</p>
+
+    <p style="font-weight:700;color:var(--ink);margin:.2rem 0 .4rem">2️⃣ Poste o STORY DA OFERTA (o que vale o print)</p>
+    <p id="ofertaSorteio" style="background:#fff4d6;border:1px solid var(--gold);border-radius:12px;padding:.8rem 1rem;font-weight:700;color:#7a5205;font-size:.98rem;margin:0 0 .9rem">💆‍♀️ "Aprenda um método único de massagem para ganhar acima de R$30 mil por mês trabalhando só 5 horas por dia."</p>
+
+    <p style="font-weight:700;color:var(--ink);margin:.2rem 0 .4rem">3️⃣ O DESAFIO pra concorrer (o requisito)</p>
     <ol>
-      <li>Qual o seu nome?</li>
-      <li>Qual o seu @ do Instagram? (pra avisar se você ganhar)</li>
-      <li>Qual o seu WhatsApp? (opcional)</li>
-      <li>Aceito participar do sorteio e receber novidades da Larissa 💛 (Sim / Não)</li>
+      <li>📸 Printar a tela deste story</li>
+      <li>🔁 Repostar no seu próprio story marcando <b>@massoterapeutalarissar</b></li>
+      <li>📩 Responder este story no direct com as suas informações (as respostas das perguntas abaixo)</li>
     </ol>
+    <p style="font-size:.86rem;color:var(--ink-soft);margin:.6rem 0 0">💡 Assim, quem participa te dá alcance E já te manda a pesquisa respondida na DM — abrindo a conversa.</p>
   </div>
 
   <div class="card" id="qclientes">
@@ -119,7 +127,7 @@
 <script>
   document.getElementById('baixar').addEventListener('click', function(){ window.print(); });
   document.getElementById('copiar').addEventListener('click', function(){
-    var t="PESQUISA COM O MEU PÚBLICO\n\nSE FOR SORTEIO — COMECE ASSIM:\n";
+    var t="PESQUISA COM O MEU PÚBLICO\n\nSORTEIO — STORY DA OFERTA:\n"+document.getElementById('ofertaSorteio').textContent.trim()+"\n\nSORTEIO — O DESAFIO PRA CONCORRER:\n";
     document.querySelectorAll('#qsorteio ol li').forEach(function(li,i){ t+=(i+1)+". "+li.textContent+"\n"; });
     t+="\nPARA OS MEUS CLIENTES ATUAIS (por que me escolhem):\n";
     document.querySelectorAll('#qclientes ol li').forEach(function(li,i){ t+=(i+1)+". "+li.textContent+"\n"; });
