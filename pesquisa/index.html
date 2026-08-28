@@ -62,6 +62,17 @@
     <p>3. Depois de coletar, <b>volte no castelo e atualize suas respostas do Andar 2</b> com as palavras que o seu público usou.</p>
   </div>
 
+  <div class="card" id="qsorteio" style="border:1px solid var(--gold);background:#fffaf0;">
+    <h2>🎁 Vai usar como SORTEIO? Comece o form assim</h2>
+    <p class="lead">Ofereça uma massagem completa + uma aula do seu método pra quem preencher. Estes campos servem pra sortear e pra virar sua lista de contatos.</p>
+    <ol>
+      <li>Qual o seu nome?</li>
+      <li>Qual o seu @ do Instagram? (pra avisar se você ganhar)</li>
+      <li>Qual o seu WhatsApp? (opcional)</li>
+      <li>Aceito participar do sorteio e receber novidades da Larissa 💛 (Sim / Não)</li>
+    </ol>
+  </div>
+
   <div class="card" id="qclientes">
     <h2>🌟 Pergunte aos seus CLIENTES atuais (de massagem)</h2>
     <p class="lead">Isso revela o seu VALOR ÚNICO — o que só você faz. Ouro pros seus diferenciais e pro seu mecanismo.</p>
@@ -111,7 +122,9 @@
 <script>
   document.getElementById('baixar').addEventListener('click', function(){ window.print(); });
   document.getElementById('copiar').addEventListener('click', function(){
-    var t="PESQUISA COM O MEU PÚBLICO\n\nPARA OS MEUS CLIENTES ATUAIS (por que me escolhem):\n";
+    var t="PESQUISA COM O MEU PÚBLICO\n\nSE FOR SORTEIO — COMECE ASSIM:\n";
+    document.querySelectorAll('#qsorteio ol li').forEach(function(li,i){ t+=(i+1)+". "+li.textContent+"\n"; });
+    t+="\nPARA OS MEUS CLIENTES ATUAIS (por que me escolhem):\n";
     document.querySelectorAll('#qclientes ol li').forEach(function(li,i){ t+=(i+1)+". "+li.textContent+"\n"; });
     t+="\nPARA QUEM QUER APRENDER (Google Forms):\n";
     document.querySelectorAll('#qform ol li').forEach(function(li,i){ t+=(i+1)+". "+li.textContent+"\n"; });
