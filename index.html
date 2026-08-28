@@ -142,7 +142,6 @@
       <p><b id="oiNome">Oi! 👋</b> <span id="andarIntro"></span></p>
       <p>Responda com <b>calma e verdade</b> e toque em <b>“Colocar pedra”</b>. Tudo fica salvo na sua conta. 💛</p>
     </div>
-    <button class="ver-resp" id="verResp">📜 Ver minhas respostas deste andar</button>
     <div id="questions"></div>
     <div class="finale" id="finale">
       <div style="font-size:2.4rem">🏰✨</div>
@@ -158,13 +157,6 @@
     <p class="sub">Respostas de todos os alunos e alunas.</p>
     <div style="margin-bottom:1rem"><button class="btn" id="reload">🔄 Atualizar</button> <span id="stat" style="color:#f3e4d6;font-size:.9rem"></span></div>
     <div id="adminList"></div>
-  </div>
-</div>
-
-<div class="resp-modal hidden" id="respModal">
-  <div class="resp-box">
-    <div class="resp-head"><h3 id="respTitle">📜 Suas respostas</h3><button class="resp-x" id="respClose">✕</button></div>
-    <div id="respBody"></div>
   </div>
 </div>
 
@@ -361,16 +353,6 @@
   }
   window.addEventListener('focus', autofillArq);
   window.addEventListener('storage',function(e){ if(e.key==='castelo-larissa-arq-result') autofillArq(); });
-
-  $('verResp').addEventListener('click',function(){
-    $('respTitle').textContent='📜 Respostas — Andar '+(cur+1);
-    var body=$('respBody'); body.innerHTML=''; var st=rows[cur+1]||{};
-    ANDARES[cur].perguntas.forEach(function(q,i){ var a=st[key(cur,i)]||''; var div=document.createElement('div'); div.className='resp-item';
-      div.innerHTML='<div class="rt">'+(i+1)+') '+esc(q.t)+'</div><div class="ra'+(a?'':' vazio')+'">'+(a?esc(a):'Ainda não respondida')+'</div>'; body.appendChild(div); });
-    $('respModal').classList.remove('hidden');
-  });
-  $('respClose').addEventListener('click',function(){ $('respModal').classList.add('hidden'); });
-  $('respModal').addEventListener('click',function(e){ if(e.target===$('respModal')) $('respModal').classList.add('hidden'); });
 
   // ---------- ADMIN ----------
   function initAdmin(){ show('adminView'); $('adminWho').textContent='👑 '+(USER.email||''); carregarAdmin(); }
