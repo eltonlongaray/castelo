@@ -62,8 +62,18 @@
     <p>3. Depois de coletar, <b>volte no castelo e atualize suas respostas do Andar 2</b> com as palavras que o seu público usou.</p>
   </div>
 
+  <div class="card" id="qclientes">
+    <h2>🌟 Pergunte aos seus CLIENTES atuais (de massagem)</h2>
+    <p class="lead">Isso revela o seu VALOR ÚNICO — o que só você faz. Ouro pros seus diferenciais e pro seu mecanismo.</p>
+    <ol>
+      <li>Por que você escolhe a minha massagem, mesmo podendo pagar mais barato com outro profissional?</li>
+      <li>O que você sente com o meu trabalho que não sentiu com outros profissionais?</li>
+      <li>Se fosse recomendar o meu trabalho pra uma amiga, o que você diria?</li>
+    </ol>
+  </div>
+
   <div class="card" id="qform">
-    <h2>📋 Perguntas para o Google Forms</h2>
+    <h2>📋 Perguntas para quem quer APRENDER (Google Forms)</h2>
     <p class="lead">Investigam o público, as dores, os desejos, os medos e as crenças.</p>
     <ol>
       <li>Qual a sua idade e o que você faz hoje?</li>
@@ -97,7 +107,9 @@
 <script>
   document.getElementById('baixar').addEventListener('click', function(){ window.print(); });
   document.getElementById('copiar').addEventListener('click', function(){
-    var t="PESQUISA COM O MEU PÚBLICO\n\nPERGUNTAS (Google Forms):\n";
+    var t="PESQUISA COM O MEU PÚBLICO\n\nPARA OS MEUS CLIENTES ATUAIS (por que me escolhem):\n";
+    document.querySelectorAll('#qclientes ol li').forEach(function(li,i){ t+=(i+1)+". "+li.textContent+"\n"; });
+    t+="\nPARA QUEM QUER APRENDER (Google Forms):\n";
     document.querySelectorAll('#qform ol li').forEach(function(li,i){ t+=(i+1)+". "+li.textContent+"\n"; });
     t+="\nCAIXINHA DO INSTAGRAM (versões curtas):\n";
     document.querySelectorAll('#qinsta ul li').forEach(function(li){ t+="- "+li.textContent+"\n"; });
