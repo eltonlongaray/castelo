@@ -118,6 +118,15 @@
     padding:.8rem; background:rgba(224,166,63,.12); }
   .datebox .cap{ font-family:"Cinzel",serif; letter-spacing:.16em; text-transform:uppercase; font-size:.66rem; color:var(--gold-lite); }
   .datebox .d{ font-family:"Cinzel",serif; font-weight:800; font-size:1.5rem; color:#fff; letter-spacing:.04em; }
+
+  /* CARD pergunta (a virada) */
+  .cq{ justify-content:center; text-align:center; align-items:center; }
+  .cq .qk{ font-family:"Cinzel",serif; letter-spacing:.2em; text-transform:uppercase; font-size:.72rem; color:var(--gold-lite); }
+  .cq .qmark{ font-family:"Cinzel",serif; font-weight:800; font-size:clamp(3rem,17vw,4.6rem); line-height:.9;
+    color:var(--gold-lite); text-shadow:0 4px 24px rgba(224,166,63,.4); margin:.3rem 0 .5rem; }
+  .cq .qh{ font-size:clamp(1.55rem,7vw,2.05rem); line-height:1.14; color:#fff; }
+  .cq .qh span{ color:var(--rose); }
+  .cq .qsub{ margin-top:1.1rem; font-size:.92rem; color:#e9d9e6; font-weight:600; }
 </style>
 </head>
 <body>
@@ -126,7 +135,7 @@
     <p class="k">Carrossel do sorteio</p>
     <h1>Pronto pra postar 💛</h1>
     <p>Tire um print (ou salve) de cada card e poste como carrossel no feed, na ordem. Os textos e a arte já estão prontos.</p>
-    <div class="warn">⚠️ Larissa: no <b>Card 5</b>, troque o “DIA __/__” pela <b>data real do sorteio</b> antes de postar.</div>
+    <div class="warn">⚠️ Larissa: no <b>Card 6</b>, troque o “DIA __/__” pela <b>data real do sorteio</b> antes de postar.</div>
   </div>
 
   <div class="deck">
@@ -144,7 +153,7 @@
         <div class="line"></div>
         <p class="sub">Um presente pra quem ama (ou sonha em viver de) massagem.</p>
         <span class="swipe">arrasta pro lado →</span>
-        <div class="brand"><div class="pager"><i class="on"></i><i></i><i></i><i></i><i></i></div></div>
+        <div class="brand"><div class="pager"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div></div>
       </div>
     </div>
 
@@ -159,7 +168,7 @@
           <p class="big">R$20mil<small>+</small></p>
           <p class="cond">por mês trabalhando <b>só 5 horas por dia</b></p>
         </div>
-        <div class="brand" style="color:rgba(58,42,47,.5)"><div class="pager"><i></i><i class="on"></i><i></i><i></i><i></i></div></div>
+        <div class="brand" style="color:rgba(58,42,47,.5)"><div class="pager"><i></i><i class="on"></i><i></i><i></i><i></i><i></i></div></div>
       </div>
     </div>
 
@@ -175,13 +184,27 @@
           <div class="print">📸 print de<br>depoimento</div>
         </div>
         <p class="hint">Use os prints reais das suas clientes (WhatsApp / direct).</p>
-        <div class="brand"><div class="pager"><i></i><i></i><i class="on"></i><i></i><i></i></div></div>
+        <div class="brand"><div class="pager"><i></i><i></i><i class="on"></i><i></i><i></i><i></i></div></div>
       </div>
     </div>
 
-    <!-- CARD 4 -->
+    <!-- CARD 4 (pergunta / virada) -->
     <div class="item">
-      <p class="tag">Card 4 · O prêmio</p>
+      <p class="tag">Card 4 · A virada</p>
+      <div class="card dark cq">
+        <div class="sparkle" style="top:14%;right:16%;font-size:1rem">✦</div>
+        <div class="sparkle" style="bottom:20%;left:16%;font-size:.75rem">✧</div>
+        <p class="qk">Deixa eu te perguntar…</p>
+        <div class="qmark">?</div>
+        <h2 class="qh">O que te <span>trava</span> de começar nessa área da massoterapia?</h2>
+        <p class="qsub">Comenta aqui 👇 ou me conta no direct — eu leio tudo 💛</p>
+        <div class="brand"><div class="pager"><i></i><i></i><i></i><i class="on"></i><i></i><i></i></div></div>
+      </div>
+    </div>
+
+    <!-- CARD 5 -->
+    <div class="item">
+      <p class="tag">Card 5 · O prêmio</p>
       <div class="card gold c4">
         <p class="k">Você pode ser a próxima</p>
         <h2>O que você ganha</h2>
@@ -190,13 +213,13 @@
           <div class="row"><span class="em">🎓</span><span>+ uma <b>aula técnica dos princípios básicos</b> do meu método</span></div>
         </div>
         <div class="scarcity">🔥 As vagas do método completo abrem em breve</div>
-        <div class="brand" style="color:rgba(58,39,4,.5)"><div class="pager"><i></i><i></i><i></i><i class="on"></i><i></i></div></div>
+        <div class="brand" style="color:rgba(58,39,4,.5)"><div class="pager"><i></i><i></i><i></i><i></i><i class="on"></i><i></i></div></div>
       </div>
     </div>
 
-    <!-- CARD 5 -->
+    <!-- CARD 6 -->
     <div class="item">
-      <p class="tag">Card 5 · Como participar</p>
+      <p class="tag">Card 6 · Como participar</p>
       <div class="card dark c5">
         <h2>Pra <span>concorrer</span>:</h2>
         <div class="steps">
@@ -209,7 +232,7 @@
           <p class="cap">Sorteio ao vivo</p>
           <p class="d">DIA __/__</p>
         </div>
-        <div class="brand"><div class="pager"><i></i><i></i><i></i><i></i><i class="on"></i></div></div>
+        <div class="brand"><div class="pager"><i></i><i></i><i></i><i></i><i></i><i class="on"></i></div></div>
       </div>
     </div>
 
