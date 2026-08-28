@@ -61,6 +61,8 @@
 
   .howto{ background:rgba(255,250,240,.94); border-radius:16px; padding:1rem 1.1rem; margin-bottom:1.2rem; box-shadow:0 8px 30px rgba(0,0,0,.16); }
   .howto p{ margin:.2rem 0; font-size:.92rem; color:var(--ink-soft); } .howto b{ color:var(--ink); }
+  .howto.pesq{ border:1px solid var(--gold); background:#fff8ea; }
+  .howto.pesq .btn{ font-family:inherit; font-weight:700; font-size:.9rem; border:none; border-radius:999px; padding:.6em 1.2em; cursor:pointer; text-decoration:none; background:linear-gradient(180deg,var(--gold-lite),var(--gold)); color:#4a3204; }
   .ver-resp{ display:block; width:fit-content; margin:0 auto 1.3rem; font-family:inherit; font-weight:700; font-size:.9rem; cursor:pointer; background:rgba(255,250,240,.92); color:var(--royal); border:1px solid rgba(132,85,168,.3); border-radius:999px; padding:.6em 1.3em; }
 
   .q-sec{ font-family:"Cinzel",serif; color:var(--gold-lite); font-size:1.02rem; letter-spacing:.04em; margin:1.6rem 0 .6rem; text-align:center; text-shadow:0 1px 10px rgba(0,0,0,.35); }
@@ -142,12 +144,17 @@
       <p><b id="oiNome">Oi! 👋</b> <span id="andarIntro"></span></p>
       <p>Responda com <b>calma e verdade</b> e toque em <b>“Colocar pedra”</b>. Tudo fica salvo na sua conta. 💛</p>
     </div>
+    <div class="howto pesq hidden" id="pesquisaCallout">
+      <p>🔎 <b>Algumas respostas você não vai saber de cabeça</b> — e tá tudo bem! Responda o que der agora, mas o certo é <b>perguntar pro seu público</b>. Faça a pesquisa e depois volte pra atualizar com as palavras reais deles.</p>
+      <a class="btn" href="pesquisa/" style="margin-top:.5rem;display:inline-block">🔎 Ver a pesquisa</a>
+    </div>
     <div id="questions"></div>
     <div class="finale" id="finale">
       <div style="font-size:2.4rem">🏰✨</div>
       <h2 id="finaleTitle">Andar completo!</h2>
       <p id="finaleTxt">Tudo salvo. 💛</p>
-      <button class="btn hidden" id="proxAndar">➡️ Ir pro próximo andar</button>
+      <a class="btn hidden" id="finalePesquisa" href="pesquisa/" style="text-decoration:none;display:inline-block;margin:.2rem">🔎 Fazer a pesquisa</a>
+      <button class="btn hidden" id="proxAndar" style="margin:.2rem">➡️ Ir pro próximo andar</button>
     </div>
   </div>
 
@@ -177,18 +184,18 @@
       {t:"Quem mais você poderia ajudar?", w:"Além do seu serviço — e de que forma? Ex: 'mulheres sobrecarregadas, a desacelerar'; 'quem quer recomeçar, com mais autoconfiança'."},
       {t:"E por fim: qual é o seu arquétipo de marca?", w:"Faça o teste (botão) — o resultado, com as características de cada arquétipo, aparece aqui automático. Depois coloque a pedra.", ph:"Ex: Principal Cuidadora...", arq:true}
     ]},
-    { titulo:"O Mecanismo", sub:"Público, Problema e Vendas", intro:"Esse é o <b>segundo andar</b> — pra <b>quem</b> você fala e qual <b>dor</b> você resolve.", perguntas:[
-      {sec:"👥 Seu público", t:"Quem é o seu cliente ideal?", w:"Idade, gênero, momento de vida, rotina — descreva a pessoa. Ex: 'mulheres de 30 a 45 anos, com rotina corrida, que vivem tensas e sem tempo pra si'."},
-      {t:"As 3 maiores dores dele(a)", w:"No corpo e na vida. Ex: dores no corpo, insônia, ansiedade, sensação de estar sempre no limite."},
-      {t:"Os medos e dificuldades dele(a)", w:"O que trava, o que ele(a) evita. Ex: medo de não dar conta, dificuldade de priorizar o próprio cuidado, culpa de parar."},
-      {sec:"🎯 O problema", t:"O problema EXTERNO", w:"É a situação física e concreta — a barreira real entre o cliente e o que ele deseja. Ex: 'a dor no pescoço que sempre volta', 'não consigo desligar e relaxar'."},
-      {t:"O problema INTERNO", w:"É a EMOÇÃO ruim que o problema externo causa — como o cliente SE SENTE por causa dele. Ex: 'me sinto travada, sem energia, frustrada, culpada'."},
-      {t:"O problema FILOSÓFICO", w:"É o senso de que 'isso não deveria ser assim' (junta o externo + o interno + o desejo). Complete: 'eu não deveria ter que ___ para ___'. Ex: 'não deveria ter que viver com dor pra dar conta de tudo'."},
-      {t:"Em 1 frase: qual problema você resolve?", w:"O seu posicionamento central."},
-      {sec:"⚙️ O seu mecanismo", t:"Por que esse problema acontece?", w:"A causa raiz que os outros não enxergam. Ex: 'a tensão no corpo nasce da sobrecarga emocional, não só do músculo'."},
-      {t:"Como o seu trabalho resolve?", w:"O 'como' — o seu método. Ex: 'trato corpo, emoção e energia juntos, indo na causa e não só no alívio'."},
-      {t:"O que SÓ você faz de diferente?", w:"O seu mecanismo único. Ex: 'uno técnicas num ritual de desaceleração, do jeito que ninguém mais faz'."},
-      {t:"Seus diferenciais", w:"Em relação a outros(as) do seu ramo. Ex: 'ambiente acolhedor, escuta ativa, foco na causa e não só no alívio momentâneo'."}
+    { titulo:"O Mecanismo", sub:"Público, Problema e Vendas", pesquisa:true, intro:"Esse é o <b>segundo andar</b> — pra <b>quem</b> você fala e qual <b>dor</b> você resolve.", perguntas:[
+      {sec:"👥 Seu público", t:"Quem é o seu cliente ideal?", w:"Descreva quem quer APRENDER com você. Ex: 'mulheres que querem aprender massagem pra ter uma renda ou mudar de profissão' ou 'terapeutas iniciantes que querem se aperfeiçoar'."},
+      {t:"As 3 maiores dores dele(a)", w:"O que mais incomoda essa pessoa. Ex: 'não sei por onde começar', 'aprendi a teoria mas travo na prática', 'não consigo conquistar clientes'."},
+      {t:"Os medos e dificuldades dele(a)", w:"O que trava. Ex: 'medo de investir e não dar certo', 'não me sentir capaz', 'medo de não conseguir viver disso'."},
+      {sec:"🎯 O problema", t:"O problema EXTERNO", w:"A situação concreta — a barreira real entre a pessoa e o que ela quer. Ex: 'não sei como começar a atender', 'faço curso atrás de curso e não saio do lugar'."},
+      {t:"O problema INTERNO", w:"A EMOÇÃO que isso causa — como a pessoa SE SENTE. Ex: 'me sinto insegura, perdida, com medo de não ser boa o suficiente'."},
+      {t:"O problema FILOSÓFICO", w:"O senso de que 'isso não deveria ser assim'. Complete: 'eu não deveria ter que ___ para ___'. Ex: 'não deveria ter que ficar num emprego que não amo pra ter segurança'."},
+      {t:"Em 1 frase: qual problema você resolve?", w:"O seu posicionamento central. Ex: 'ajudo pessoas a viverem da massagem com segurança e método'."},
+      {sec:"⚙️ O seu mecanismo", t:"Por que esse problema acontece?", w:"A causa raiz que os outros não enxergam. Ex: 'faltou base prática e confiança, não só técnica solta'."},
+      {t:"Como o seu trabalho resolve?", w:"O 'como' — o seu método. Ex: 'ensino mão na massa, do zero ao primeiro cliente, com segurança'."},
+      {t:"O que SÓ você faz de diferente?", w:"O seu mecanismo único. Ex: 'meu método une técnica + presença + como conquistar clientes'."},
+      {t:"Seus diferenciais", w:"Em relação a outros(as) do seu ramo. Ex: 'acompanhamento próximo, prática real, foco em quem está começando'."}
     ]}
   ];
   function key(a,i){ return (i+1)+') '+ANDARES[a].perguntas[i].t; }
@@ -281,6 +288,7 @@
     $('andarEyebrow').textContent='Andar '+(a+1);
     $('andarTitulo').textContent=A.titulo; $('andarSub').textContent=A.sub;
     $('andarIntro').innerHTML=A.intro; $('totalTxt').textContent='de '+A.perguntas.length+' pedras colocadas';
+    $('pesquisaCallout').classList.toggle('hidden', !A.pesquisa);
     renderQuestions(a); aplicarEstado(a); renderNav(); refresh(); autofillArq();
     window.scrollTo({top:0,behavior:'smooth'});
   }
@@ -337,8 +345,10 @@
       renderNav();
       var temProx = cur < ANDARES.length-1;
       $('finaleTitle').textContent='Andar '+(cur+1)+' completo! 🎉';
-      $('finaleTxt').textContent= temProx ? 'Fundação sólida! Bora pro próximo andar do seu castelo.' : 'Você concluiu todos os andares disponíveis. 👑';
+      if(ANDARES[cur].pesquisa){ $('finaleTxt').textContent='Ótimo! Agora faça a pesquisa com o seu público e volte pra deixar essas respostas ainda mais precisas.'; }
+      else { $('finaleTxt').textContent= temProx ? 'Fundação sólida! Bora pro próximo andar do seu castelo.' : 'Você concluiu todos os andares disponíveis. 👑'; }
       $('proxAndar').classList.toggle('hidden', !temProx);
+      $('finalePesquisa').classList.toggle('hidden', !ANDARES[cur].pesquisa);
       if(prevDone!==null && prevDone<total){ var rm=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches; celebrate(); if(rm){$('finale').classList.add('show');} else{ setTimeout(function(){$('finale').classList.add('show');$('finale').scrollIntoView({behavior:'smooth'});},5000);} }
       else { $('finale').classList.add('show'); }
     } else { $('finale').classList.remove('show'); if(flag) flag.setAttribute('opacity','0'); }

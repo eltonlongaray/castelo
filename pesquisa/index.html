@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Pesquisa com o seu público</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Mulish:wght@400;500;600;700;800&display=swap">
+<style>
+  :root{ --sky-top:#2a1e3d; --sky-mid:#6b3f66; --sky-low:#c9788a; --gold:#e0a63f; --gold-lite:#f6d488; --royal:#8455a8;
+    --ink:#3a2a2f; --ink-soft:#6d5a5a; --cream:#fbf4e7; --card:#fffaf0; --line:rgba(58,42,47,.14); --good:#5f9e6b; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; color:var(--ink); font-family:"Mulish",ui-sans-serif,system-ui,sans-serif; line-height:1.65;
+    background:linear-gradient(180deg,var(--sky-top),var(--sky-mid) 42%,var(--sky-low)); min-height:100vh; -webkit-font-smoothing:antialiased; }
+  .wrap{ max-width:42rem; margin-inline:auto; padding:1.4rem clamp(.9rem,4vw,1.6rem) 4rem; }
+  h1,h2{ font-family:"Cinzel",Georgia,serif; margin:0; }
+  .top{ text-align:center; color:var(--cream); margin-bottom:1.2rem; }
+  .top .eyebrow{ font-family:"Cinzel",serif; letter-spacing:.24em; text-transform:uppercase; font-size:.7rem; color:var(--gold-lite); }
+  .top h1{ font-size:clamp(1.6rem,5.5vw,2.3rem); margin:.3rem 0; text-shadow:0 2px 20px rgba(0,0,0,.3); }
+  .top p{ color:#f3e4d6; font-size:.95rem; opacity:.92; max-width:32rem; margin:.3rem auto 0; }
+  .actions{ display:flex; gap:.7rem; justify-content:center; flex-wrap:wrap; margin:1.2rem 0; }
+  .btn{ font-family:inherit; font-weight:700; font-size:.95rem; border:none; border-radius:999px; padding:.75em 1.3em; cursor:pointer;
+    background:linear-gradient(180deg,var(--gold-lite),var(--gold)); color:#4a3204; }
+  .btn.ghost{ background:rgba(255,250,240,.9); color:var(--royal); border:1px solid rgba(132,85,168,.3); }
+  .btn.back{ background:transparent; color:var(--cream); border:1px solid rgba(255,255,255,.3); }
+  .copied{ display:none; text-align:center; color:var(--gold-lite); font-weight:700; font-size:.9rem; margin-bottom:.6rem; }
+  .copied.show{ display:block; }
+  .card{ background:var(--card); border:1px solid var(--line); border-radius:16px; padding:1.3rem 1.4rem; margin-bottom:1.1rem; box-shadow:0 8px 30px rgba(0,0,0,.18); }
+  .card h2{ font-size:1.2rem; color:var(--royal); margin-bottom:.2rem; }
+  .card .lead{ color:var(--ink-soft); font-size:.9rem; margin-bottom:.9rem; }
+  ol{ margin:0; padding-left:1.4rem; } ol li{ margin:.55rem 0; }
+  ul.caixa{ list-style:none; margin:0; padding:0; } ul.caixa li{ margin:.5rem 0; padding:.6rem .8rem; background:#fff6e6; border:1px solid var(--line); border-radius:10px; font-weight:600; }
+  .como{ background:rgba(255,250,240,.94); border-radius:14px; padding:1rem 1.1rem; margin-bottom:1.1rem; }
+  .como p{ margin:.3rem 0; font-size:.92rem; color:var(--ink-soft); } .como b{ color:var(--ink); }
+  .dica{ background:#fff4d6; border:1px solid var(--gold); border-radius:12px; padding:.9rem 1rem; font-size:.9rem; color:#7a5205; }
+  @media print{
+    body{ background:#fff; } .top{ color:#000; } .top h1{ text-shadow:none; color:#000; } .top .eyebrow{ color:#8a5a05; } .top p{ color:#333; }
+    .actions,.copied,.btn{ display:none !important; } .card,.como{ box-shadow:none; border:1px solid #ccc; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <p class="eyebrow">Antes de fechar o Andar 2</p>
+    <h1>🔎 Pesquisa com o seu público</h1>
+    <p>Não precisa adivinhar as dores da sua aluna — <b>pergunte pra ela</b>. Copie estas perguntas, monte um Google Forms e use a caixinha do Instagram. Quanto mais respostas, mais forte fica a sua marca.</p>
+  </div>
+
+  <div class="actions">
+    <button class="btn" id="copiar">📋 Copiar todas as perguntas</button>
+    <button class="btn ghost" id="baixar">⬇️ Baixar / imprimir PDF</button>
+    <a class="btn back" href="../">🏰 Voltar pro castelo</a>
+  </div>
+  <p class="copied" id="copied">✓ Copiado! Cole no seu Google Forms.</p>
+
+  <div class="como">
+    <p><b>Como usar:</b></p>
+    <p>1. Crie um <b>Google Forms</b> (forms.google.com) com as perguntas de baixo e mande pra suas alunas atuais e futuras (stories, direct, grupo).</p>
+    <p>2. Use a <b>caixinha de perguntas do Instagram</b> com as versões curtas — uma por dia.</p>
+    <p>3. Depois de coletar, <b>volte no castelo e atualize suas respostas do Andar 2</b> com as palavras que o seu público usou.</p>
+  </div>
+
+  <div class="card" id="qform">
+    <h2>📋 Perguntas para o Google Forms</h2>
+    <p class="lead">Investigam o público, as dores, os desejos, os medos e as crenças.</p>
+    <ol>
+      <li>Qual a sua idade e o que você faz hoje?</li>
+      <li>O que te faz querer aprender massagem/terapia? Qual o seu sonho com isso?</li>
+      <li>Qual o seu maior objetivo? (ex: ter uma renda própria, mudar de profissão, ajudar pessoas)</li>
+      <li>Qual é a sua maior dificuldade ou desafio hoje pra chegar lá?</li>
+      <li>O que você já tentou e não funcionou como esperava?</li>
+      <li>Como você se sente em relação a isso hoje? (ex: insegura, perdida, animada, frustrada)</li>
+      <li>Do que você tem medo quando pensa em seguir/viver disso?</li>
+      <li>O que você acredita que precisa pra conseguir o seu objetivo?</li>
+      <li>Por que você acha que ainda não conseguiu?</li>
+      <li>Em UMA palavra: o que é mais importante pra você nessa jornada?</li>
+      <li>Se existisse algo que te ajudasse de verdade nisso, como ele seria?</li>
+    </ol>
+  </div>
+
+  <div class="card" id="qinsta">
+    <h2>📱 Versões curtas — caixinha do Instagram</h2>
+    <p class="lead">Uma por vez, no story. Rápidas de responder.</p>
+    <ul class="caixa">
+      <li>Qual a sua maior dúvida sobre aprender massagem?</li>
+      <li>O que mais te trava pra viver da terapia?</li>
+      <li>Em uma palavra: o seu maior sonho com isso?</li>
+      <li>Do que você tem mais medo ao começar?</li>
+    </ul>
+  </div>
+
+  <div class="dica">💡 <b>Dica de ouro:</b> anote as <b>palavras exatas</b> que as pessoas usarem. É com elas que a sua marca vai falar — e é isso que faz o conteúdo converter.</div>
+</div>
+
+<script>
+  document.getElementById('baixar').addEventListener('click', function(){ window.print(); });
+  document.getElementById('copiar').addEventListener('click', function(){
+    var t="PESQUISA COM O MEU PÚBLICO\n\nPERGUNTAS (Google Forms):\n";
+    document.querySelectorAll('#qform ol li').forEach(function(li,i){ t+=(i+1)+". "+li.textContent+"\n"; });
+    t+="\nCAIXINHA DO INSTAGRAM (versões curtas):\n";
+    document.querySelectorAll('#qinsta ul li').forEach(function(li){ t+="- "+li.textContent+"\n"; });
+    function ok(){ var c=document.getElementById('copied'); c.classList.add('show'); setTimeout(function(){c.classList.remove('show');},3000); }
+    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(ok,function(){fallback(t);ok();}); }
+    else { fallback(t); ok(); }
+  });
+  function fallback(t){ var ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');}catch(e){} ta.remove(); }
+</script>
+</body>
+</html>
