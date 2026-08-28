@@ -62,6 +62,7 @@
   .rcard .tag{ font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; font-weight:700; color:var(--rose); }
   .rcard h2{ font-size:1.5rem; margin:.2rem 0; }
   .rcard p{ font-size:.9rem; color:var(--ink-soft); margin:.3rem 0 0; }
+  .rcard .rcar{ font-size:.82rem; color:#a06a05; margin-top:.6rem; padding-top:.55rem; border-top:1px solid var(--line); font-weight:600; }
   .result .note{ font-size:.86rem; color:var(--ink-soft); margin-top:1rem; }
   .back{ display:inline-block; margin-top:1rem; font-weight:700; color:var(--gold); text-decoration:none; border-bottom:1px solid var(--gold); }
   .foot{ text-align:center; color:#f0e0d4; opacity:.8; font-size:.8rem; margin-top:1.5rem; }
@@ -87,9 +88,9 @@
 
   <div class="result" id="result">
     <p class="eyebrow">O seu universo de marca</p>
-    <div class="rcard"><span class="tag">1º · Principal</span><h2 id="r0name">—</h2><p id="r0desc"></p></div>
-    <div class="rcard"><span class="tag">2º · Secundário</span><h2 id="r1name">—</h2><p id="r1desc"></p></div>
-    <div class="rcard"><span class="tag">3º · Terciário</span><h2 id="r2name">—</h2><p id="r2desc"></p></div>
+    <div class="rcard"><span class="tag">1º · Principal</span><h2 id="r0name">—</h2><p id="r0desc"></p><p class="rcar" id="r0car"></p></div>
+    <div class="rcard"><span class="tag">2º · Secundário</span><h2 id="r1name">—</h2><p id="r1desc"></p><p class="rcar" id="r1car"></p></div>
+    <div class="rcard"><span class="tag">3º · Terciário</span><h2 id="r2name">—</h2><p id="r2desc"></p><p class="rcar" id="r2car"></p></div>
     <p class="note">✨ Já preenchi isso na <b>pergunta 6</b> do seu castelo — é só voltar lá e <b>colocar a pedra</b>! 🏰</p>
     <a class="back" id="backLink" href="../">🧱 Voltar pro castelo</a>
   </div>
@@ -100,18 +101,18 @@
 <script>
 (function(){
   var ARQ = [
-    {em:"🛡️", name:"Heroína", lema:"Onde há vontade, há caminho", desc:"Coragem, disciplina, foco e resultado. Quer provar seu valor e deixar um legado."},
-    {em:"🔥", name:"Rebelde", lema:"Regras foram feitas pra quebrar", desc:"Ousada, disruptiva, livre. Quer revolucionar e quebrar padrões que não funcionam."},
-    {em:"🌙", name:"Maga", lema:"Tudo pode acontecer", desc:"Cura, transformação e intuição. Quer transformar sonhos em realidade e curar mente, corpo e coração."},
-    {em:"🕊️", name:"Inocente", lema:"Livres para ser quem somos", desc:"Fé, otimismo, pureza e simplicidade. Quer viver o bem e a felicidade."},
-    {em:"🧭", name:"Exploradora", lema:"Não levante cercas à minha volta", desc:"Autonomia, autenticidade e aventura. Quer liberdade pra descobrir o mundo e a si mesma."},
-    {em:"📚", name:"Sábia", lema:"A verdade libertará você", desc:"Sabedoria, inteligência e conhecimento. Quer entender o mundo e ensinar (a professora)."},
-    {em:"🤝", name:"Cidadã", lema:"Todas as pessoas são iguais", desc:"Empatia, realismo e humildade. Quer pertencer e se conectar com as pessoas."},
-    {em:"💗", name:"Amante", lema:"Conexão que toca a alma", desc:"Paixão, gratidão e comprometimento. Quer intimidade e experiências que ama."},
-    {em:"🎭", name:"Performática", lema:"Viver o agora com alegria", desc:"Alegria, leveza e irreverência. Quer se divertir e alegrar o mundo."},
-    {em:"🎨", name:"Criadora", lema:"Se você imagina, você cria", desc:"Criatividade e imaginação. Quer dar forma à sua visão e criar algo de valor."},
-    {em:"🤲", name:"Cuidadora", lema:"Cuidar é a minha natureza", desc:"Compaixão e generosidade. Quer proteger, acolher e ajudar os outros."},
-    {em:"👑", name:"Governante", lema:"Ordem cria prosperidade", desc:"Liderança e responsabilidade. Quer construir algo bem-sucedido e duradouro."}
+    {em:"🛡️", name:"Heroína", lema:"Onde há vontade, há caminho", desc:"Coragem, disciplina, foco e resultado. Quer provar seu valor e deixar um legado.", car:"Marca: forças na coragem, foco e performance. Cores fortes e contrastantes. Ex: Nike, FedEx."},
+    {em:"🔥", name:"Rebelde", lema:"Regras foram feitas pra quebrar", desc:"Ousada, disruptiva, livre. Quer revolucionar e quebrar padrões que não funcionam.", car:"Marca: ousadia e ruptura. Preto e vermelho, impacto. Ex: Apple, Harley-Davidson."},
+    {em:"🌙", name:"Maga", lema:"Tudo pode acontecer", desc:"Cura, transformação e intuição. Quer transformar sonhos em realidade e curar mente, corpo e coração.", car:"Marca: cura, transformação e magia. Roxo, lilás e tons místicos. Ex: Disney, Mastercard."},
+    {em:"🕊️", name:"Inocente", lema:"Livres para ser quem somos", desc:"Fé, otimismo, pureza e simplicidade. Quer viver o bem e a felicidade.", car:"Marca: pureza, otimismo e simplicidade. Cores suaves e claras. Ex: Coca-Cola, Dove."},
+    {em:"🧭", name:"Exploradora", lema:"Não levante cercas à minha volta", desc:"Autonomia, autenticidade e aventura. Quer liberdade pra descobrir o mundo e a si mesma.", car:"Marca: liberdade, autenticidade e aventura. Tons de natureza. Ex: Jeep, Starbucks."},
+    {em:"📚", name:"Sábia", lema:"A verdade libertará você", desc:"Sabedoria, inteligência e conhecimento. Quer entender o mundo e ensinar (a professora).", car:"Marca: sabedoria e credibilidade. Cinza, azul e bege, sóbrio. Ex: Google, CNN."},
+    {em:"🤝", name:"Cidadã", lema:"Todas as pessoas são iguais", desc:"Empatia, realismo e humildade. Quer pertencer e se conectar com as pessoas.", car:"Marca: empatia, simplicidade e pertencimento. Cores populares e neutras. Ex: Havaianas, Hering."},
+    {em:"💗", name:"Amante", lema:"Conexão que toca a alma", desc:"Paixão, gratidão e comprometimento. Quer intimidade e experiências que ama.", car:"Marca: paixão, sensibilidade e intimidade. Vermelho e rosa. Ex: marcas de beleza e sedução."},
+    {em:"🎭", name:"Performática", lema:"Viver o agora com alegria", desc:"Alegria, leveza e irreverência. Quer se divertir e alegrar o mundo.", car:"Marca: alegria, leveza e diversão. Cores vibrantes e jovens. Ex: M&M's, Fanta."},
+    {em:"🎨", name:"Criadora", lema:"Se você imagina, você cria", desc:"Criatividade e imaginação. Quer dar forma à sua visão e criar algo de valor.", car:"Marca: criatividade e originalidade. Paleta livre e expressiva. Ex: Lego, Adobe."},
+    {em:"🤲", name:"Cuidadora", lema:"Cuidar é a minha natureza", desc:"Compaixão e generosidade. Quer proteger, acolher e ajudar os outros.", car:"Marca: acolhimento, compaixão e generosidade. Cores suaves e aconchegantes. Ex: Dove, Johnson's."},
+    {em:"👑", name:"Governante", lema:"Ordem cria prosperidade", desc:"Liderança e responsabilidade. Quer construir algo bem-sucedido e duradouro.", car:"Marca: liderança, ordem e excelência. Cores nobres — dourado, preto, vinho. Ex: Rolex, Mercedes."}
   ];
   var LABELS = ["Nada","Pouco","Bastante","Total"];
   var scores = {};
@@ -151,6 +152,7 @@
     for(var j=0;j<3;j++){
       document.getElementById('r'+j+'name').textContent = top[j].a.em+" "+top[j].a.name+"  ("+top[j].s+"/3)";
       document.getElementById('r'+j+'desc').textContent = top[j].a.desc;
+      document.getElementById('r'+j+'car').textContent = top[j].a.car;
     }
     // Salva o resultado pro castelo preencher a pergunta 6 automaticamente
     var resultStr = "Principal: "+top[0].a.name+" ("+top[0].s+"/3) · Secundário: "+top[1].a.name+" ("+top[1].s+"/3) · Terciário: "+top[2].a.name+" ("+top[2].s+"/3)";
