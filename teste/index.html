@@ -147,7 +147,9 @@
   }
 
   document.getElementById('revealBtn').addEventListener('click', function(){
-    var ranked = ARQ.map(function(a,i){ return {a:a, s:scores[i]||0}; }).sort(function(x,y){ return y.s - x.s; });
+    // desempate: em caso de nota igual, ordena pela prioridade de marca (mais acolhedores/transformadores antes dos mais "duros")
+    var TIE=["Cuidadora","Maga","Amante","Inocente","Sábia","Criadora","Exploradora","Performática","Governante","Cidadã","Heroína","Rebelde"];
+    var ranked = ARQ.map(function(a,i){ return {a:a, s:scores[i]||0}; }).sort(function(x,y){ return (y.s - x.s) || (TIE.indexOf(x.a.name)-TIE.indexOf(y.a.name)); });
     var top = ranked.slice(0,3);
     for(var j=0;j<3;j++){
       document.getElementById('r'+j+'name').textContent = top[j].a.em+" "+top[j].a.name+"  ("+top[j].s+"/3)";
