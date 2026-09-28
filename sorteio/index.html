@@ -34,17 +34,14 @@
     background:linear-gradient(155deg,#f7f2e9 0%,#ebe2d1 100%);
     padding:calc(120 * var(--u)) calc(100 * var(--u)); color:#2b2430; }
   .card.dark{ background:linear-gradient(160deg,#3b2551 0%,#241634 62%,#1b1027 100%); color:#f6f1e7; }
-  .mono{ position:absolute; font-family:"Cormorant Garamond",serif; font-weight:700; font-size:calc(1250 * var(--u));
-    line-height:.75; color:rgba(43,36,48,.05); top:calc(-40 * var(--u)); right:calc(-140 * var(--u)); pointer-events:none; }
-  .dark .mono{ color:rgba(246,212,136,.05); }
-  .body{ position:relative; }
-  .handle{ position:absolute; left:calc(100 * var(--u)); bottom:calc(72 * var(--u)); font-size:calc(28 * var(--u));
+  .body{ position:relative; z-index:2; }
+  .handle{ position:absolute; z-index:3; left:calc(100 * var(--u)); bottom:calc(72 * var(--u)); font-size:calc(28 * var(--u));
     font-weight:600; color:#6a5f63; letter-spacing:.02em; }
-  .dark .handle{ color:rgba(246,241,231,.6); }
-  .pager{ position:absolute; right:calc(100 * var(--u)); bottom:calc(84 * var(--u)); display:flex; gap:calc(12 * var(--u)); align-items:center; }
+  .dark .handle{ color:rgba(246,241,231,.65); }
+  .pager{ position:absolute; z-index:3; right:calc(100 * var(--u)); bottom:calc(84 * var(--u)); display:flex; gap:calc(12 * var(--u)); align-items:center; }
   .pager i{ width:calc(12 * var(--u)); height:calc(12 * var(--u)); border-radius:50%; background:rgba(43,36,48,.18); }
   .pager i.on{ width:calc(38 * var(--u)); border-radius:calc(6 * var(--u)); background:#a9803f; }
-  .dark .pager i{ background:rgba(246,241,231,.22); } .dark .pager i.on{ background:#e0b35c; }
+  .dark .pager i{ background:rgba(246,241,231,.25); } .dark .pager i.on{ background:#e0b35c; }
 
   .eyebrow{ font-weight:700; letter-spacing:.28em; text-transform:uppercase; font-size:calc(26 * var(--u)); color:#a9803f; }
   .dark .eyebrow{ color:#e0b35c; }
@@ -59,38 +56,63 @@
   .dark .txt{ color:#e9dfe9; }
   .txt b{ color:#2b2430; font-weight:700; } .dark .txt b{ color:#f6d488; }
 
-  /* === BLOCO 3: PEÇAS ESPECÍFICAS === */
-  .foto{ position:absolute; right:0; bottom:0; width:calc(540 * var(--u)); height:calc(830 * var(--u));
-    border-top-left-radius:calc(270 * var(--u)); background:linear-gradient(180deg,rgba(169,128,63,.16),rgba(43,36,48,.18));
-    display:flex; align-items:center; justify-content:center; text-align:center; }
-  .foto span{ font-size:calc(26 * var(--u)); color:#6a5f63; font-weight:600; line-height:1.4; }
-  .swipe{ position:absolute; left:calc(100 * var(--u)); bottom:calc(140 * var(--u)); font-weight:700; letter-spacing:.16em;
+  /* === BLOCO 3: MARCA (LR) E FOTOS === */
+  .lr{ position:absolute; z-index:0; pointer-events:none; height:auto; opacity:.07; }
+  .dark .lr{ opacity:.12; }
+  .pager.on-photo i{ background:rgba(255,255,255,.45); } .pager.on-photo i.on{ background:#e0b35c; }
+
+  .arch{ position:absolute; z-index:1; right:0; bottom:0; width:calc(540 * var(--u)); height:calc(830 * var(--u));
+    border-top-left-radius:calc(270 * var(--u)); overflow:hidden; }
+  .arch img{ width:100%; height:100%; object-fit:cover; object-position:50% 10%; display:block; }
+
+  /* foto em fundo escuro: some com o preto (lighten) e esfuma pra esquerda/baixo */
+  .melt{ position:absolute; z-index:1; mix-blend-mode:lighten; }
+  .melt img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .melt.strip{ right:0; top:0; bottom:0; width:calc(560 * var(--u));
+    -webkit-mask-image:linear-gradient(to right, transparent 0, #000 42%); mask-image:linear-gradient(to right, transparent 0, #000 42%); }
+  .melt.strip img{ object-position:50% 8%; }
+  .melt.corner{ right:0; top:0; width:calc(500 * var(--u)); height:calc(780 * var(--u));
+    -webkit-mask-image:linear-gradient(to right, transparent 0, #000 38%), linear-gradient(to bottom, #000 58%, transparent 100%);
+    -webkit-mask-composite:source-in;
+    mask-image:linear-gradient(to right, transparent 0, #000 38%), linear-gradient(to bottom, #000 58%, transparent 100%);
+    mask-composite:intersect; }
+  .melt.corner img{ object-position:50% 0; transform:scale(1.4); transform-origin:50% 4%; }
+
+  /* === BLOCO 4: PEÇAS ESPECÍFICAS === */
+  .swipe{ position:absolute; z-index:3; left:calc(100 * var(--u)); bottom:calc(140 * var(--u)); font-weight:700; letter-spacing:.16em;
     text-transform:uppercase; font-size:calc(26 * var(--u)); color:#a9803f; }
-  .bubble{ background:#fff; border-radius:calc(6 * var(--u)) calc(30 * var(--u)) calc(30 * var(--u)) calc(30 * var(--u));
-    padding:calc(28 * var(--u)) calc(38 * var(--u)); box-shadow:0 calc(10 * var(--u)) calc(30 * var(--u)) rgba(43,36,48,.10);
-    max-width:calc(820 * var(--u)); margin-top:calc(28 * var(--u)); font-size:calc(38 * var(--u)); line-height:1.4; font-style:italic; color:#2b2430; }
+
+  /* prints de WhatsApp */
+  .print{ width:calc(840 * var(--u)); background:#efe7dc; border-radius:calc(22 * var(--u)); padding:calc(20 * var(--u));
+    box-shadow:0 calc(12 * var(--u)) calc(30 * var(--u)) rgba(43,36,48,.14); margin-top:calc(26 * var(--u)); }
+  .print.r1{ transform:rotate(-1.4deg); } .print.r2{ transform:rotate(1.2deg); margin-left:calc(40 * var(--u)); }
+  .msg{ background:#fff; border-radius:0 calc(18 * var(--u)) calc(18 * var(--u)) calc(18 * var(--u));
+    padding:calc(18 * var(--u)) calc(24 * var(--u)) calc(20 * var(--u)); }
+  .msg .who{ font-weight:700; font-size:calc(25 * var(--u)); color:#1f7a6d; margin-bottom:calc(4 * var(--u)); }
+  .msg p{ font-size:calc(31 * var(--u)); line-height:1.42; color:#2b2430; }
+
   .pills{ margin-top:calc(52 * var(--u)); display:flex; flex-wrap:wrap; align-items:center; gap:calc(18 * var(--u)) calc(14 * var(--u)); }
   .pill{ border:calc(2 * var(--u)) solid #a9803f; border-radius:999px; padding:calc(10 * var(--u)) calc(30 * var(--u));
     font-size:calc(36 * var(--u)); font-weight:700; color:#2b2430; }
   .arrow{ font-size:calc(40 * var(--u)); color:#a9803f; }
-  .step{ display:flex; gap:calc(28 * var(--u)); align-items:center; margin-top:calc(22 * var(--u)); }
-  .step .n{ flex:none; width:calc(66 * var(--u)); height:calc(66 * var(--u)); border-radius:50%; background:#e0b35c; color:#241634;
-    display:flex; align-items:center; justify-content:center; font-family:"Karla",sans-serif; font-weight:700; font-size:calc(34 * var(--u)); }
-  .date{ margin-top:calc(44 * var(--u)); border:calc(3 * var(--u)) dashed #e0b35c; border-radius:calc(24 * var(--u));
-    padding:calc(22 * var(--u)) calc(38 * var(--u)); display:inline-block; }
+
+  .step{ display:flex; gap:calc(26 * var(--u)); align-items:center; margin-top:calc(18 * var(--u)); }
+  .step .n{ flex:none; width:calc(60 * var(--u)); height:calc(60 * var(--u)); border-radius:50%; background:#e0b35c; color:#241634;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:calc(32 * var(--u)); }
+  .date{ margin-top:calc(36 * var(--u)); border:calc(3 * var(--u)) dashed #e0b35c; border-radius:999px;
+    padding:calc(16 * var(--u)) calc(38 * var(--u)); display:inline-flex; align-items:center; gap:calc(24 * var(--u)); }
 </style>
 </head>
 <body>
 
   <div class="guide">
-    <p class="k">Carrossel do sorteio · v3</p>
+    <p class="k">Carrossel do sorteio · v4</p>
     <h1>Pronto pra postar</h1>
     <p>Tire um print de cada card (ou salve) e poste como carrossel no feed, na ordem.</p>
     <div class="warn">⚠️ <b>Larissa, antes de postar:</b>
       <ul>
-        <li><b>Card 1:</b> coloque a sua foto (com fundo removido) no espaço marcado.</li>
-        <li><b>Card 5:</b> se quiser, troque os balões pelos prints reais das clientes.</li>
-        <li><b>Card 7:</b> troque o “DIA __/__” pela data do sorteio.</li>
+        <li><b>Cards 5 e 6:</b> são depoimentos reais das clientes. Confirme com elas se pode usar o primeiro nome.</li>
+        <li><b>Card 8:</b> troque o “DIA __/__” pela data do sorteio.</li>
       </ul>
     </div>
   </div>
@@ -101,16 +123,16 @@
     <div class="item">
       <p class="tag">Card 1 · Capa</p>
       <div class="card">
-        <div class="mono">R</div>
-        <div class="foto"><span>foto da Larissa<br>(fundo removido)</span></div>
+        <img class="lr" src="img/lr-ink.png" alt="" style="width:calc(1180 * var(--u));top:calc(60 * var(--u));left:calc(-40 * var(--u))">
+        <div class="arch"><img src="img/capa.jpg" alt="Larissa Rodrigues"></div>
         <div class="body" style="margin-top:calc(40 * var(--u))">
           <h2 class="serif" style="font-size:calc(138 * var(--u))">Massoterapeuta,</h2>
           <div class="rule"></div>
-          <p class="txt" style="font-size:calc(52 * var(--u));line-height:1.38;max-width:calc(470 * var(--u))">descubra por que aliviar a dor do seu cliente <span class="box">pode ser uma péssima ideia.</span></p>
+          <p class="txt" style="font-size:calc(50 * var(--u));line-height:1.38;max-width:calc(420 * var(--u))">descubra por que aliviar a dor do seu cliente <span class="box">pode ser uma péssima ideia.</span></p>
         </div>
         <p class="swipe">arraste →</p>
         <div class="handle">@massoterapeutalarissar</div>
-        <div class="pager"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="pager on-photo"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       </div>
     </div>
 
@@ -118,7 +140,6 @@
     <div class="item">
       <p class="tag">Card 2 · A defesa</p>
       <div class="card">
-        <div class="mono">R</div>
         <div class="body" style="margin-top:calc(60 * var(--u))">
           <p class="serif" style="font-size:calc(112 * var(--u))">Ele chega travado.</p>
           <p class="serif" style="font-size:calc(112 * var(--u));margin-top:calc(18 * var(--u))">Você alivia.</p>
@@ -128,7 +149,7 @@
           <p class="txt">E você vira <span class="box">refém da dor dele</span> — sem ver resultado e sem saber quanto vai ganhar no mês.</p>
         </div>
         <div class="handle">@massoterapeutalarissar</div>
-        <div class="pager"><i></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="pager"><i></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       </div>
     </div>
 
@@ -136,7 +157,6 @@
     <div class="item">
       <p class="tag">Card 3 · A tese</p>
       <div class="card">
-        <div class="mono">R</div>
         <div class="body" style="margin-top:calc(110 * var(--u))">
           <p class="serif" style="font-size:calc(118 * var(--u))">Ele recebeu<br>o remédio,</p>
           <p class="serif" style="font-size:calc(118 * var(--u));margin-top:calc(22 * var(--u))">mas não<br><span class="box">o caminho.</span></p>
@@ -144,7 +164,7 @@
           <p class="txt">Quando o cliente entende a <b>causa</b> da dor, o cuidado continua <b>fora da maca</b> — e ele passa a escolher a <b>constância</b>, não a emergência.</p>
         </div>
         <div class="handle">@massoterapeutalarissar</div>
-        <div class="pager"><i></i><i></i><i class="on"></i><i></i><i></i><i></i><i></i></div>
+        <div class="pager"><i></i><i></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
       </div>
     </div>
 
@@ -152,41 +172,57 @@
     <div class="item">
       <p class="tag">Card 4 · O método</p>
       <div class="card dark">
-        <div class="mono">R</div>
-        <div class="body" style="margin-top:calc(90 * var(--u))">
+        <div class="melt strip"><img src="img/metodo.jpg" alt="Larissa Rodrigues"></div>
+        <div class="body" style="margin-top:calc(40 * var(--u));max-width:calc(540 * var(--u))">
           <p class="eyebrow">6 anos · centenas de clientes</p>
           <div class="rule"></div>
-          <p class="txt" style="font-size:calc(46 * var(--u))">Depois de 6 anos ouvindo o corpo de centenas de clientes,</p>
-          <p class="serif" style="font-size:calc(124 * var(--u));margin-top:calc(26 * var(--u))">eu criei um método <span class="gold" style="font-style:italic">só meu.</span></p>
-          <p class="txt" style="margin-top:calc(70 * var(--u))">Eu não entrego só a massagem: <b>escuto o corpo</b>, mostro de onde a dor vem e o caminho pra ela não voltar.</p>
+          <p class="txt" style="font-size:calc(42 * var(--u))">Depois de 6 anos ouvindo o corpo de centenas de clientes,</p>
+          <p class="serif" style="font-size:calc(104 * var(--u));margin-top:calc(26 * var(--u))">eu criei um método <span class="gold" style="font-style:italic">só meu.</span></p>
+          <p class="txt" style="font-size:calc(40 * var(--u));margin-top:calc(50 * var(--u))">Eu não entrego só a massagem: <b>escuto o corpo</b>, mostro de onde a dor vem e o caminho pra ela não voltar.</p>
         </div>
         <div class="handle">@massoterapeutalarissar</div>
-        <div class="pager"><i></i><i></i><i></i><i class="on"></i><i></i><i></i><i></i></div>
+        <div class="pager"><i></i><i></i><i></i><i class="on"></i><i></i><i></i><i></i><i></i></div>
       </div>
     </div>
 
-    <!-- CARD 5 · PROVA SOCIAL -->
+    <!-- CARD 5 · PROVA SOCIAL 1/2 (CONSCIÊNCIA) -->
     <div class="item">
-      <p class="tag">Card 5 · Prova social</p>
+      <p class="tag">Card 5 · Prova social (1/2)</p>
       <div class="card">
-        <div class="mono">R</div>
-        <div class="body" style="margin-top:calc(50 * var(--u))">
-          <p class="serif" style="font-size:calc(112 * var(--u))">Não sou só eu<br>que digo.</p>
-          <div class="rule" style="margin:calc(40 * var(--u)) 0 calc(20 * var(--u))"></div>
-          <div class="bubble">“Tu me fez olhar com mais cuidado pra mim.”</div>
-          <div class="bubble" style="margin-left:calc(120 * var(--u))">“Tu realmente lê as pessoas.”</div>
-          <div class="bubble">“Depois que fizer uma vez, não vai querer ir em outra pessoa.”</div>
+        <div class="body" style="margin-top:calc(0 * var(--u))">
+          <p class="eyebrow">Palavras das minhas clientes</p>
+          <div class="rule" style="margin:calc(26 * var(--u)) 0 calc(30 * var(--u))"></div>
+          <p class="serif" style="font-size:calc(84 * var(--u))">Não sou só eu que digo.</p>
+          <div class="print r1"><div class="msg"><p class="who">Laura</p><p>Com outras pessoas, muitas vezes era só um tratamento pro corpo. Contigo, parece que eu tô cuidando da cabeça e da alma também.</p></div></div>
+          <div class="print r2"><div class="msg"><p class="who">Betina</p><p>Tu faz a gente se sentir cuidada de verdade, não parece algo automático ou só mais um atendimento.</p></div></div>
+          <div class="print r1"><div class="msg"><p class="who">Luana</p><p>Tu me fez olhar com mais cuidado pra mim… e a gente vai aprendendo a ser mais gentil com a gente mesmo.</p></div></div>
         </div>
         <div class="handle">@massoterapeutalarissar</div>
-        <div class="pager"><i></i><i></i><i></i><i></i><i class="on"></i><i></i><i></i></div>
+        <div class="pager"><i></i><i></i><i></i><i></i><i class="on"></i><i></i><i></i><i></i></div>
       </div>
     </div>
 
-    <!-- CARD 6 · O EFEITO CASCATA -->
+    <!-- CARD 6 · PROVA SOCIAL 2/2 (CONSTÂNCIA) -->
     <div class="item">
-      <p class="tag">Card 6 · O Efeito Cascata</p>
+      <p class="tag">Card 6 · Prova social (2/2)</p>
       <div class="card">
-        <div class="mono">R</div>
+        <div class="body" style="margin-top:calc(60 * var(--u))">
+          <p class="eyebrow">Constância</p>
+          <div class="rule" style="margin:calc(26 * var(--u)) 0 calc(30 * var(--u))"></div>
+          <p class="serif" style="font-size:calc(120 * var(--u))">E elas <span class="gold" style="font-style:italic">voltam.</span></p>
+          <div class="print r2" style="margin-top:calc(44 * var(--u))"><div class="msg"><p class="who">Luana</p><p>No meu primeiro atendimento contigo, sabia que eu voltaria!</p></div></div>
+          <div class="print r1"><div class="msg"><p class="who">Martina</p><p>Conexão, profissionalismo… eu realmente criei fidelidade com teu trabalho!</p></div></div>
+          <div class="print r2"><div class="msg"><p class="who">Nathalia</p><p>Depois que fizer uma vez, não vai querer mais ir em outra pessoa. Hihihi</p></div></div>
+        </div>
+        <div class="handle">@massoterapeutalarissar</div>
+        <div class="pager"><i></i><i></i><i></i><i></i><i></i><i class="on"></i><i></i><i></i></div>
+      </div>
+    </div>
+
+    <!-- CARD 7 · O EFEITO CASCATA -->
+    <div class="item">
+      <p class="tag">Card 7 · O Efeito Cascata</p>
+      <div class="card">
         <div class="body" style="margin-top:calc(40 * var(--u))">
           <p class="eyebrow">O efeito cascata</p>
           <div class="rule"></div>
@@ -201,31 +237,34 @@
           <p class="txt" style="font-size:calc(42 * var(--u))">em 5h por dia — sem correr atrás de cliente.<br><b>Eles vêm até você.</b></p>
         </div>
         <div class="handle">@massoterapeutalarissar</div>
-        <div class="pager"><i></i><i></i><i></i><i></i><i></i><i class="on"></i><i></i></div>
+        <div class="pager"><i></i><i></i><i></i><i></i><i></i><i></i><i class="on"></i><i></i></div>
       </div>
     </div>
 
-    <!-- CARD 7 · PRÊMIO + COMO PARTICIPAR -->
+    <!-- CARD 8 · PRÊMIO + COMO PARTICIPAR -->
     <div class="item">
-      <p class="tag">Card 7 · Prêmio + como participar</p>
+      <p class="tag">Card 8 · Prêmio + como participar</p>
       <div class="card dark">
-        <div class="mono">R</div>
-        <div class="body" style="margin-top:calc(30 * var(--u))">
-          <p class="eyebrow">Sorteio</p>
-          <div class="rule"></div>
-          <p class="serif" style="font-size:calc(96 * var(--u))">Vou sortear uma <span class="gold" style="font-style:italic">aula exclusiva</span></p>
-          <p class="txt" style="font-size:calc(38 * var(--u));margin-top:calc(26 * var(--u))">com os princípios básicos do meu método — as vagas do método completo abrem em breve.</p>
-          <p class="eyebrow" style="margin-top:calc(52 * var(--u));font-size:calc(24 * var(--u))">Pra participar</p>
-          <div class="step"><span class="n">1</span><span class="txt" style="font-size:calc(40 * var(--u))">Reposte nos seus stories</span></div>
-          <div class="step"><span class="n">2</span><span class="txt" style="font-size:calc(40 * var(--u))">Marque <b>@massoterapeutalarissar</b></span></div>
-          <div class="step"><span class="n">3</span><span class="txt" style="font-size:calc(40 * var(--u))">Comente <b>“Eu quero”</b> no direct</span></div>
+        <img class="lr" src="img/lr-gold.png" alt="" style="width:calc(1000 * var(--u));bottom:calc(-60 * var(--u));left:calc(-160 * var(--u))">
+        <div class="melt corner"><img src="img/convite.jpg" alt="Larissa Rodrigues"></div>
+        <div class="body">
+          <div style="max-width:calc(540 * var(--u))">
+            <p class="eyebrow">Sorteio</p>
+            <div class="rule" style="margin:calc(26 * var(--u)) 0 calc(40 * var(--u))"></div>
+            <p class="serif" style="font-size:calc(92 * var(--u))">Vou sortear uma <span class="gold" style="font-style:italic">aula exclusiva</span></p>
+            <p class="txt" style="font-size:calc(36 * var(--u));margin-top:calc(24 * var(--u))">com os princípios básicos do meu método — as vagas do método completo abrem em breve.</p>
+          </div>
+          <p class="eyebrow" style="margin-top:calc(44 * var(--u));font-size:calc(24 * var(--u))">Pra participar</p>
+          <div class="step"><span class="n">1</span><span class="txt" style="font-size:calc(38 * var(--u))">Reposte nos seus stories</span></div>
+          <div class="step"><span class="n">2</span><span class="txt" style="font-size:calc(38 * var(--u))">Marque <b>@massoterapeutalarissar</b></span></div>
+          <div class="step"><span class="n">3</span><span class="txt" style="font-size:calc(38 * var(--u))">Comente <b>“Eu quero”</b> no direct</span></div>
           <div class="date">
             <p class="eyebrow" style="font-size:calc(22 * var(--u))">Sorteio ao vivo</p>
-            <p class="serif" style="font-size:calc(70 * var(--u))">DIA __/__</p>
+            <p class="serif" style="font-size:calc(56 * var(--u))">DIA __/__</p>
           </div>
         </div>
         <div class="handle">@massoterapeutalarissar</div>
-        <div class="pager"><i></i><i></i><i></i><i></i><i></i><i></i><i class="on"></i></div>
+        <div class="pager"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="on"></i></div>
       </div>
     </div>
 
