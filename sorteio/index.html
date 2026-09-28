@@ -71,47 +71,35 @@
   .melt.strip{ right:0; top:0; bottom:0; width:calc(560 * var(--u));
     -webkit-mask-image:linear-gradient(to right, transparent 0, #000 42%); mask-image:linear-gradient(to right, transparent 0, #000 42%); }
   .melt.strip img{ object-position:50% 8%; }
-  .melt.corner{ right:0; top:0; width:calc(500 * var(--u)); height:calc(780 * var(--u));
-    -webkit-mask-image:linear-gradient(to right, transparent 0, #000 38%), linear-gradient(to bottom, #000 58%, transparent 100%);
-    -webkit-mask-composite:source-in;
-    mask-image:linear-gradient(to right, transparent 0, #000 38%), linear-gradient(to bottom, #000 58%, transparent 100%);
-    mask-composite:intersect; }
-  .melt.corner img{ object-position:50% 0; transform:scale(1.4); transform-origin:50% 4%; }
 
   /* === BLOCO 4: PEÇAS ESPECÍFICAS === */
   .swipe{ position:absolute; z-index:3; left:calc(100 * var(--u)); bottom:calc(140 * var(--u)); font-weight:700; letter-spacing:.16em;
     text-transform:uppercase; font-size:calc(26 * var(--u)); color:#a9803f; }
 
-  /* prints de WhatsApp */
-  .print{ width:calc(840 * var(--u)); background:#efe7dc; border-radius:calc(22 * var(--u)); padding:calc(20 * var(--u));
-    box-shadow:0 calc(12 * var(--u)) calc(30 * var(--u)) rgba(43,36,48,.14); margin-top:calc(26 * var(--u)); }
-  .print.r1{ transform:rotate(-1.4deg); } .print.r2{ transform:rotate(1.2deg); margin-left:calc(40 * var(--u)); }
-  .msg{ background:#fff; border-radius:0 calc(18 * var(--u)) calc(18 * var(--u)) calc(18 * var(--u));
-    padding:calc(18 * var(--u)) calc(24 * var(--u)) calc(20 * var(--u)); }
-  .msg .who{ font-weight:700; font-size:calc(25 * var(--u)); color:#1f7a6d; margin-bottom:calc(4 * var(--u)); }
-  .msg p{ font-size:calc(31 * var(--u)); line-height:1.42; color:#2b2430; }
+  /* prints reais (recortes) */
+  .shot{ display:block; height:auto; border-radius:calc(18 * var(--u)); box-shadow:0 calc(14 * var(--u)) calc(34 * var(--u)) rgba(43,36,48,.20); }
 
-  .pills{ margin-top:calc(52 * var(--u)); display:flex; flex-wrap:wrap; align-items:center; gap:calc(18 * var(--u)) calc(14 * var(--u)); }
-  .pill{ border:calc(2 * var(--u)) solid #a9803f; border-radius:999px; padding:calc(10 * var(--u)) calc(30 * var(--u));
-    font-size:calc(36 * var(--u)); font-weight:700; color:#2b2430; }
-  .arrow{ font-size:calc(40 * var(--u)); color:#a9803f; }
+  /* efeito cascata em degraus */
+  .cascata{ margin-top:calc(44 * var(--u)); }
+  .cascata p{ font-family:"Cormorant Garamond",serif; font-style:italic; font-weight:600; font-size:calc(58 * var(--u)); line-height:1.25; color:#2b2430; }
+  .cascata .arrow{ font-style:normal; color:#a9803f; margin-right:calc(12 * var(--u)); }
 
-  .step{ display:flex; gap:calc(26 * var(--u)); align-items:center; margin-top:calc(18 * var(--u)); }
-  .step .n{ flex:none; width:calc(60 * var(--u)); height:calc(60 * var(--u)); border-radius:50%; background:#e0b35c; color:#241634;
-    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:calc(32 * var(--u)); }
-  .date{ margin-top:calc(36 * var(--u)); border:calc(3 * var(--u)) dashed #e0b35c; border-radius:999px;
-    padding:calc(16 * var(--u)) calc(38 * var(--u)); display:inline-flex; align-items:center; gap:calc(24 * var(--u)); }
+  /* passo a passo limpo */
+  .steps p{ display:flex; align-items:baseline; gap:calc(26 * var(--u)); font-size:calc(40 * var(--u)); color:#e9dfe9;
+    padding:calc(18 * var(--u)) 0; border-bottom:1px solid rgba(246,241,231,.14); }
+  .steps p b{ color:#f6d488; }
+  .steps .num{ font-family:"Karla",sans-serif; font-weight:700; font-size:calc(34 * var(--u)); letter-spacing:.06em; color:#e0b35c; min-width:calc(62 * var(--u)); }
 </style>
 </head>
 <body>
 
   <div class="guide">
-    <p class="k">Carrossel do sorteio · v4</p>
+    <p class="k">Carrossel do sorteio · v5</p>
     <h1>Pronto pra postar</h1>
     <p>Tire um print de cada card (ou salve) e poste como carrossel no feed, na ordem.</p>
     <div class="warn">⚠️ <b>Larissa, antes de postar:</b>
       <ul>
-        <li><b>Cards 5 e 6:</b> são depoimentos reais das clientes. Confirme com elas se pode usar o primeiro nome.</li>
+        <li><b>Cards 5 e 6:</b> são os prints reais das clientes. Confirme com elas se pode publicar.</li>
         <li><b>Card 8:</b> troque o “DIA __/__” pela data do sorteio.</li>
       </ul>
     </div>
@@ -123,9 +111,9 @@
     <div class="item">
       <p class="tag">Card 1 · Capa</p>
       <div class="card">
-        <img class="lr" src="img/lr-ink.png" alt="" style="width:calc(1180 * var(--u));top:calc(60 * var(--u));left:calc(-40 * var(--u))">
+        <img class="lr" src="img/lr-ink.png" alt="" style="width:calc(760 * var(--u));top:calc(24 * var(--u));right:calc(60 * var(--u))">
         <div class="arch"><img src="img/capa.jpg" alt="Larissa Rodrigues"></div>
-        <div class="body" style="margin-top:calc(40 * var(--u))">
+        <div class="body" style="margin-top:calc(240 * var(--u))">
           <h2 class="serif" style="font-size:calc(138 * var(--u))">Massoterapeuta,</h2>
           <div class="rule"></div>
           <p class="txt" style="font-size:calc(50 * var(--u));line-height:1.38;max-width:calc(420 * var(--u))">descubra por que aliviar a dor do seu cliente <span class="box">pode ser uma péssima ideia.</span></p>
@@ -189,16 +177,15 @@
     <div class="item">
       <p class="tag">Card 5 · Prova social (1/2)</p>
       <div class="card">
-        <div class="body" style="margin-top:calc(0 * var(--u))">
+        <div class="body">
           <p class="eyebrow">Palavras das minhas clientes</p>
           <div class="rule" style="margin:calc(26 * var(--u)) 0 calc(30 * var(--u))"></div>
           <p class="serif" style="font-size:calc(84 * var(--u))">Não sou só eu que digo.</p>
-          <div class="print r1"><div class="msg"><p class="who">Laura</p><p>Com outras pessoas, muitas vezes era só um tratamento pro corpo. Contigo, parece que eu tô cuidando da cabeça e da alma também.</p></div></div>
-          <div class="print r2"><div class="msg"><p class="who">Betina</p><p>Tu faz a gente se sentir cuidada de verdade, não parece algo automático ou só mais um atendimento.</p></div></div>
-          <div class="print r1"><div class="msg"><p class="who">Luana</p><p>Tu me fez olhar com mais cuidado pra mim… e a gente vai aprendendo a ser mais gentil com a gente mesmo.</p></div></div>
+          <img class="shot" src="img/print-laura.jpg" alt="Print do depoimento da Laura" style="width:calc(720 * var(--u));margin-top:calc(40 * var(--u));transform:rotate(-1.2deg)">
+          <img class="shot" src="img/print-luana.jpg" alt="Print do depoimento da Luana" style="width:calc(720 * var(--u));margin:calc(30 * var(--u)) 0 0 calc(160 * var(--u));transform:rotate(1deg)">
         </div>
         <div class="handle">@massoterapeutalarissar</div>
-        <div class="pager"><i></i><i></i><i></i><i></i><i class="on"></i><i></i><i></i><i></i></div>
+        <div class="pager"><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class="on"></i><i class=""></i><i class=""></i><i class=""></i></div>
       </div>
     </div>
 
@@ -206,16 +193,16 @@
     <div class="item">
       <p class="tag">Card 6 · Prova social (2/2)</p>
       <div class="card">
-        <div class="body" style="margin-top:calc(60 * var(--u))">
+        <div class="body">
           <p class="eyebrow">Constância</p>
           <div class="rule" style="margin:calc(26 * var(--u)) 0 calc(30 * var(--u))"></div>
           <p class="serif" style="font-size:calc(120 * var(--u))">E elas <span class="gold" style="font-style:italic">voltam.</span></p>
-          <div class="print r2" style="margin-top:calc(44 * var(--u))"><div class="msg"><p class="who">Luana</p><p>No meu primeiro atendimento contigo, sabia que eu voltaria!</p></div></div>
-          <div class="print r1"><div class="msg"><p class="who">Martina</p><p>Conexão, profissionalismo… eu realmente criei fidelidade com teu trabalho!</p></div></div>
-          <div class="print r2"><div class="msg"><p class="who">Nathalia</p><p>Depois que fizer uma vez, não vai querer mais ir em outra pessoa. Hihihi</p></div></div>
+          <img class="shot" src="img/print-martina.jpg" alt="Print do depoimento da Martina" style="width:calc(640 * var(--u));margin-top:calc(36 * var(--u));transform:rotate(-1deg)">
+          <img class="shot" src="img/print-nathalia.jpg" alt="Print do depoimento da Nathalia" style="width:calc(640 * var(--u));margin:calc(26 * var(--u)) 0 0 calc(240 * var(--u));transform:rotate(1.2deg)">
+          <img class="shot" src="img/print-betina.jpg" alt="Print do depoimento da Betina" style="width:calc(640 * var(--u));margin:calc(26 * var(--u)) 0 0 calc(60 * var(--u));transform:rotate(-.8deg)">
         </div>
         <div class="handle">@massoterapeutalarissar</div>
-        <div class="pager"><i></i><i></i><i></i><i></i><i></i><i class="on"></i><i></i><i></i></div>
+        <div class="pager"><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class="on"></i><i class=""></i><i class=""></i></div>
       </div>
     </div>
 
@@ -226,18 +213,18 @@
         <div class="body" style="margin-top:calc(40 * var(--u))">
           <p class="eyebrow">O efeito cascata</p>
           <div class="rule"></div>
-          <p class="serif" style="font-size:calc(100 * var(--u))">Cliente consciente vira <span class="box">cliente de pacote.</span></p>
-          <div class="pills">
-            <span class="pill">constância</span><span class="arrow">→</span>
-            <span class="pill">fideliza</span><span class="arrow">→</span>
-            <span class="pill">indica</span><span class="arrow">→</span>
-            <span class="pill">uma traz a outra</span>
+          <p class="serif" style="font-size:calc(92 * var(--u))">Cliente consciente<br>vira <span class="gold" style="font-style:italic">cliente de pacote.</span></p>
+          <div class="cascata">
+            <p>constância</p>
+            <p style="padding-left:calc(90 * var(--u))"><span class="arrow">↳</span>fideliza</p>
+            <p style="padding-left:calc(180 * var(--u))"><span class="arrow">↳</span>indica</p>
+            <p style="padding-left:calc(270 * var(--u))"><span class="arrow">↳</span>uma traz a outra</p>
           </div>
-          <p class="serif gold" style="font-size:calc(150 * var(--u));margin-top:calc(40 * var(--u))">R$20mil+</p>
-          <p class="txt" style="font-size:calc(42 * var(--u))">em 5h por dia — sem correr atrás de cliente.<br><b>Eles vêm até você.</b></p>
+          <p class="serif gold" style="font-size:calc(150 * var(--u));margin-top:calc(30 * var(--u))">R$20k+</p>
+          <p class="txt" style="font-size:calc(40 * var(--u))">em 5h por dia — sem correr atrás de cliente.<br><b>Eles vêm até você.</b></p>
         </div>
         <div class="handle">@massoterapeutalarissar</div>
-        <div class="pager"><i></i><i></i><i></i><i></i><i></i><i></i><i class="on"></i><i></i></div>
+        <div class="pager"><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class="on"></i><i class=""></i></div>
       </div>
     </div>
 
@@ -245,26 +232,23 @@
     <div class="item">
       <p class="tag">Card 8 · Prêmio + como participar</p>
       <div class="card dark">
-        <img class="lr" src="img/lr-gold.png" alt="" style="width:calc(1000 * var(--u));bottom:calc(-60 * var(--u));left:calc(-160 * var(--u))">
-        <div class="melt corner"><img src="img/convite.jpg" alt="Larissa Rodrigues"></div>
+        <img class="lr" src="img/lr-gold.png" alt="" style="width:calc(900 * var(--u));left:calc(90 * var(--u));top:calc(260 * var(--u));opacity:.07">
         <div class="body">
-          <div style="max-width:calc(540 * var(--u))">
-            <p class="eyebrow">Sorteio</p>
-            <div class="rule" style="margin:calc(26 * var(--u)) 0 calc(40 * var(--u))"></div>
-            <p class="serif" style="font-size:calc(92 * var(--u))">Vou sortear uma <span class="gold" style="font-style:italic">aula exclusiva</span></p>
-            <p class="txt" style="font-size:calc(36 * var(--u));margin-top:calc(24 * var(--u))">com os princípios básicos do meu método — as vagas do método completo abrem em breve.</p>
+          <p class="eyebrow">Sorteio</p>
+          <div class="rule"></div>
+          <p class="serif" style="font-size:calc(112 * var(--u))">Vou sortear uma<br><span class="gold" style="font-style:italic">aula exclusiva</span></p>
+          <p class="txt" style="font-size:calc(40 * var(--u));margin-top:calc(26 * var(--u))">com os princípios básicos do meu método.</p>
+          <p class="eyebrow" style="margin-top:calc(70 * var(--u));font-size:calc(24 * var(--u))">Pra participar</p>
+          <div class="steps">
+            <p><span class="num">01</span>Reposte nos seus stories</p>
+            <p><span class="num">02</span><span>Marque <b>@massoterapeutalarissar</b></span></p>
+            <p><span class="num">03</span><span>Comente <b>“Eu quero”</b> no direct</span></p>
           </div>
-          <p class="eyebrow" style="margin-top:calc(44 * var(--u));font-size:calc(24 * var(--u))">Pra participar</p>
-          <div class="step"><span class="n">1</span><span class="txt" style="font-size:calc(38 * var(--u))">Reposte nos seus stories</span></div>
-          <div class="step"><span class="n">2</span><span class="txt" style="font-size:calc(38 * var(--u))">Marque <b>@massoterapeutalarissar</b></span></div>
-          <div class="step"><span class="n">3</span><span class="txt" style="font-size:calc(38 * var(--u))">Comente <b>“Eu quero”</b> no direct</span></div>
-          <div class="date">
-            <p class="eyebrow" style="font-size:calc(22 * var(--u))">Sorteio ao vivo</p>
-            <p class="serif" style="font-size:calc(56 * var(--u))">DIA __/__</p>
-          </div>
+          <p class="eyebrow" style="margin-top:calc(52 * var(--u));font-size:calc(22 * var(--u))">Sorteio ao vivo</p>
+          <p class="serif" style="font-size:calc(66 * var(--u));margin-top:calc(8 * var(--u))">DIA __/__</p>
         </div>
         <div class="handle">@massoterapeutalarissar</div>
-        <div class="pager"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="on"></i></div>
+        <div class="pager"><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class="on"></i></div>
       </div>
     </div>
 
