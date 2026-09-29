@@ -11,55 +11,55 @@
   /* === BLOCO 1: BASE DA PÁGINA === */
   *{ box-sizing:border-box; margin:0; padding:0; }
   html{ -webkit-text-size-adjust:100%; }
-  body{ font-family:"Karla",system-ui,sans-serif; color:#2b2430; line-height:1.5; background:#e6ded1;
+  body{ font-family:"Karla",system-ui,sans-serif; color:#050404; line-height:1.5; background:#E3DFD9;
     min-height:100vh; padding:1.4rem clamp(.6rem,3vw,1.4rem) 4rem; -webkit-font-smoothing:antialiased; }
 
   .guide{ max-width:30rem; margin:0 auto 1.8rem; text-align:center; }
-  .guide .k{ font-weight:700; letter-spacing:.28em; text-transform:uppercase; font-size:.68rem; color:#a9803f; }
+  .guide .k{ font-weight:700; letter-spacing:.28em; text-transform:uppercase; font-size:.68rem; color:#C4646B; }
   .guide h1{ font-family:"Cormorant Garamond",serif; font-weight:700; font-size:clamp(1.6rem,6vw,2.1rem); margin:.3rem 0 .4rem; }
-  .guide p{ font-size:.88rem; color:#5a4f55; }
-  .guide .warn{ margin-top:.9rem; text-align:left; background:#f7f2e9; border:1px solid rgba(169,128,63,.45);
-    border-radius:12px; padding:.75rem .95rem; font-size:.84rem; color:#4a3f45; }
-  .guide .warn b{ color:#2b2430; }
+  .guide p{ font-size:.88rem; color:#55504e; }
+  .guide .warn{ margin-top:.9rem; text-align:left; background:#F4F1ED; border:1px solid rgba(228,143,148,.45);
+    border-radius:12px; padding:.75rem .95rem; font-size:.84rem; color:#3a3736; }
+  .guide .warn b{ color:#050404; }
   .guide .warn li{ margin:.2rem 0 .2rem 1rem; }
 
   .deck{ display:flex; flex-direction:column; align-items:center; gap:1.8rem; }
   .item{ width:min(430px,94vw); container-type:inline-size; }
-  .tag{ font-weight:700; letter-spacing:.18em; text-transform:uppercase; font-size:.66rem; color:#a9803f;
+  .tag{ font-weight:700; letter-spacing:.18em; text-transform:uppercase; font-size:.66rem; color:#C4646B;
     text-align:center; margin-bottom:.5rem; }
 
   /* === BLOCO 2: O CARD (desenhado em 1080x1350 e escalado com cqw) === */
   .card{ --u:calc(100cqw / 1080); position:relative; width:100%; aspect-ratio:4/5; overflow:hidden;
-    border-radius:calc(28 * var(--u)); box-shadow:0 14px 40px rgba(43,36,48,.22);
-    background:linear-gradient(155deg,#f7f2e9 0%,#ebe2d1 100%);
-    padding:calc(120 * var(--u)) calc(100 * var(--u)); color:#2b2430; }
-  .card.dark{ background:linear-gradient(160deg,#3b2551 0%,#241634 62%,#1b1027 100%); color:#f6f1e7; }
+    border-radius:calc(28 * var(--u)); box-shadow:0 14px 40px rgba(5,4,4,.22);
+    background:linear-gradient(155deg,#F4F1ED 0%,#EAE6E0 100%);
+    padding:calc(120 * var(--u)) calc(100 * var(--u)); color:#050404; }
+  .card.dark{ background:linear-gradient(160deg,#1a1818 0%,#0b0a0a 62%,#050404 100%); color:#F1EEE9; }
   .body{ position:relative; z-index:2; }
   .handle{ position:absolute; z-index:3; left:calc(100 * var(--u)); bottom:calc(72 * var(--u)); font-size:calc(28 * var(--u));
-    font-weight:600; color:#6a5f63; letter-spacing:.02em; }
-  .dark .handle{ color:rgba(246,241,231,.65); }
+    font-weight:600; color:#5f5a58; letter-spacing:.02em; }
+  .dark .handle{ color:rgba(241,238,233,.65); }
   .pager{ position:absolute; z-index:3; right:calc(100 * var(--u)); bottom:calc(84 * var(--u)); display:flex; gap:calc(12 * var(--u)); align-items:center; }
-  .pager i{ width:calc(12 * var(--u)); height:calc(12 * var(--u)); border-radius:50%; background:rgba(43,36,48,.18); }
-  .pager i.on{ width:calc(38 * var(--u)); border-radius:calc(6 * var(--u)); background:#a9803f; }
-  .dark .pager i{ background:rgba(246,241,231,.25); } .dark .pager i.on{ background:#e0b35c; }
+  .pager i{ width:calc(12 * var(--u)); height:calc(12 * var(--u)); border-radius:50%; background:rgba(5,4,4,.18); }
+  .pager i.on{ width:calc(38 * var(--u)); border-radius:calc(6 * var(--u)); background:#C4646B; }
+  .dark .pager i{ background:rgba(241,238,233,.25); } .dark .pager i.on{ background:#E48F94; }
 
-  .eyebrow{ font-weight:700; letter-spacing:.28em; text-transform:uppercase; font-size:calc(26 * var(--u)); color:#a9803f; }
-  .dark .eyebrow{ color:#e0b35c; }
-  .rule{ width:calc(72 * var(--u)); height:calc(3 * var(--u)); background:#a9803f; margin:calc(30 * var(--u)) 0 calc(48 * var(--u)); }
-  .dark .rule{ background:#e0b35c; }
+  .eyebrow{ font-weight:700; letter-spacing:.28em; text-transform:uppercase; font-size:calc(26 * var(--u)); color:#C4646B; }
+  .dark .eyebrow{ color:#E48F94; }
+  .rule{ width:calc(72 * var(--u)); height:calc(3 * var(--u)); background:#C4646B; margin:calc(30 * var(--u)) 0 calc(48 * var(--u)); }
+  .dark .rule{ background:#E48F94; }
   .serif{ font-family:"Cormorant Garamond",serif; font-weight:700; line-height:1.04; }
   .dark .serif{ color:#fff; }
-  .gold{ color:#a9803f; } .dark .gold{ color:#e0b35c; }
-  .box{ background:#2b2430; color:#f7f2e9; padding:0 calc(16 * var(--u)) calc(4 * var(--u));
+  .gold{ color:#C4646B; } .dark .gold{ color:#E48F94; }
+  .box{ background:#050404; color:#F4F1ED; padding:0 calc(16 * var(--u)) calc(4 * var(--u));
     -webkit-box-decoration-break:clone; box-decoration-break:clone; }
-  .txt{ font-size:calc(44 * var(--u)); line-height:1.45; color:#3d3439; }
-  .dark .txt{ color:#e9dfe9; }
-  .txt b{ color:#2b2430; font-weight:700; } .dark .txt b{ color:#f6d488; }
+  .txt{ font-size:calc(44 * var(--u)); line-height:1.45; color:#2c2929; }
+  .dark .txt{ color:#E9E6E2; }
+  .txt b{ color:#050404; font-weight:700; } .dark .txt b{ color:#FCDDDA; }
 
   /* === BLOCO 3: MARCA (LR) E FOTOS === */
   .lr{ position:absolute; z-index:0; pointer-events:none; height:auto; opacity:.07; }
   .dark .lr{ opacity:.12; }
-  .pager.on-photo i{ background:rgba(255,255,255,.45); } .pager.on-photo i.on{ background:#e0b35c; }
+  .pager.on-photo i{ background:rgba(255,255,255,.45); } .pager.on-photo i.on{ background:#E48F94; }
 
   .arch{ position:absolute; z-index:1; right:0; bottom:0; width:calc(540 * var(--u)); height:calc(830 * var(--u));
     border-top-left-radius:calc(270 * var(--u)); overflow:hidden; }
@@ -74,21 +74,31 @@
 
   /* === BLOCO 4: PEÇAS ESPECÍFICAS === */
   .swipe{ position:absolute; z-index:3; left:calc(100 * var(--u)); bottom:calc(140 * var(--u)); font-weight:700; letter-spacing:.16em;
-    text-transform:uppercase; font-size:calc(26 * var(--u)); color:#a9803f; }
+    text-transform:uppercase; font-size:calc(26 * var(--u)); color:#C4646B; }
 
   /* prints reais (recortes) */
-  .shot{ display:block; height:auto; border-radius:calc(18 * var(--u)); box-shadow:0 calc(14 * var(--u)) calc(34 * var(--u)) rgba(43,36,48,.20); }
+  .shot{ display:block; height:auto; border-radius:calc(18 * var(--u)); box-shadow:0 calc(14 * var(--u)) calc(34 * var(--u)) rgba(5,4,4,.20); }
 
   /* efeito cascata em degraus */
   .cascata{ margin-top:calc(44 * var(--u)); }
-  .cascata p{ font-family:"Cormorant Garamond",serif; font-style:italic; font-weight:600; font-size:calc(58 * var(--u)); line-height:1.25; color:#2b2430; }
-  .cascata .arrow{ font-style:normal; color:#a9803f; margin-right:calc(12 * var(--u)); }
+  .cascata p{ font-family:"Cormorant Garamond",serif; font-style:italic; font-weight:600; font-size:calc(58 * var(--u)); line-height:1.25; color:#050404; }
+  .cascata .arrow{ font-style:normal; color:#C4646B; margin-right:calc(12 * var(--u)); }
 
   /* passo a passo limpo */
-  .steps p{ display:flex; align-items:baseline; gap:calc(26 * var(--u)); font-size:calc(40 * var(--u)); color:#e9dfe9;
-    padding:calc(18 * var(--u)) 0; border-bottom:1px solid rgba(246,241,231,.14); }
-  .steps p b{ color:#f6d488; }
-  .steps .num{ font-family:"Karla",sans-serif; font-weight:700; font-size:calc(34 * var(--u)); letter-spacing:.06em; color:#e0b35c; min-width:calc(62 * var(--u)); }
+  .steps p{ display:flex; align-items:baseline; gap:calc(26 * var(--u)); font-size:calc(40 * var(--u)); color:#E9E6E2;
+    padding:calc(18 * var(--u)) 0; border-bottom:1px solid rgba(241,238,233,.14); }
+  .steps p b{ color:#FCDDDA; }
+  .steps .num{ font-family:"Karla",sans-serif; font-weight:700; font-size:calc(34 * var(--u)); letter-spacing:.06em; color:#E48F94; min-width:calc(62 * var(--u)); }
+
+  /* === BLOCO 5: EXPORTAÇÃO (PDF 1080x1350 por página, p/ importar no Canva) === */
+  @page{ size:1080px 1350px; margin:0; }
+  @media print{
+    html,body{ padding:0 !important; background:none !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    .guide,.tag{ display:none !important; }
+    .deck{ gap:0 !important; display:block !important; }
+    .item{ width:1080px !important; break-after:page; page-break-after:always; }
+    .card{ border-radius:0 !important; box-shadow:none !important; }
+  }
 </style>
 </head>
 <body>
@@ -232,7 +242,7 @@
     <div class="item">
       <p class="tag">Card 8 · Prêmio + como participar</p>
       <div class="card dark">
-        <img class="lr" src="img/lr-gold.png" alt="" style="width:calc(900 * var(--u));left:calc(90 * var(--u));top:calc(260 * var(--u));opacity:.07">
+        <img class="lr" src="img/lr-rosa.png" alt="" style="width:calc(900 * var(--u));left:calc(90 * var(--u));top:calc(260 * var(--u));opacity:.07">
         <div class="body">
           <p class="eyebrow">Sorteio</p>
           <div class="rule"></div>
