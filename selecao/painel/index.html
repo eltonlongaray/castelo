@@ -61,7 +61,8 @@ let linhas = [], filtro = "todas";
 
 const ROTULOS = {
   tempo_atende:"Tempo atendendo", atend_semana:"Atendimentos/semana", renda:"Renda/mês",
-  clientes_voltam:"Como os clientes voltam", pacotes:"Pacotes", o_que_falta:"O que mais falta"
+  clientes_voltam:"Como os clientes voltam", pacotes:"Pacotes", o_que_falta:"O que mais falta",
+  origem_clientes:"De onde vêm os clientes"
 };
 
 // === BLOCO 3: LOGIN ===
@@ -104,7 +105,7 @@ function contagem(campo){
 function render(){
   const sel = linhas.filter(l => l.selecionada).length;
   const lista = filtro==="sel" ? linhas.filter(l=>l.selecionada) : filtro==="nao" ? linhas.filter(l=>!l.selecionada) : linhas;
-  const resumo = ["clientes_voltam","o_que_falta","tempo_atende","pacotes"].map(c =>
+  const resumo = ["clientes_voltam","origem_clientes","o_que_falta","tempo_atende","pacotes"].map(c =>
     `<div class="bloco"><h3>${ROTULOS[c]}</h3><ul>${contagem(c).map(([k,n])=>`<li><span>${esc(k)}</span><b>${n}</b></li>`).join("")}</ul></div>`).join("");
   app.innerHTML = `
     <p class="eyebrow">Seleção · Aula exclusiva</p><h1 class="serif">Respostas</h1>
@@ -126,7 +127,7 @@ function card(l){
   const wpp = (l.whatsapp||"").replace(/\D/g,"");
   const ig = (l.instagram||"").replace(/^@/,"");
   const data = l.criado_em ? new Date(l.criado_em).toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"}) : "";
-  const tags = ["tempo_atende","atend_semana","renda","clientes_voltam","pacotes"].filter(c=>l[c]).map(c=>`<span class="tag" title="${ROTULOS[c]}">${esc(l[c])}</span>`).join("");
+  const tags = ["tempo_atende","atend_semana","renda","clientes_voltam","pacotes","origem_clientes"].filter(c=>l[c]).map(c=>`<span class="tag" title="${ROTULOS[c]}">${esc(l[c])}</span>`).join("");
   return `<article class="card${l.selecionada?" sel":""}">
     <div class="cab"><span class="nome">${esc(l.nome)}</span>
       ${ig?`<a href="https://instagram.com/${encodeURIComponent(ig)}" target="_blank" rel="noopener">@${esc(ig)}</a>`:""}
@@ -135,8 +136,10 @@ function card(l){
       <span class="data">${data}</span></div>
     <div class="tags">${tags}</div>
     <dl>
-      <dt>Maior desafio</dt><dd>${esc(l.maior_desafio)}</dd>
-      <dt>O que mais falta</dt><dd>${esc(l.o_que_falta)}</dd>
+      <dt>Maior desafio <span style="text-transform:none;letter-spacing:0">(problema externo)</span></dt><dd>${esc(l.maior_desafio)}</dd>
+      <dt>Como se sente <span style="text-transform:none;letter-spacing:0">(problema interno)</span></dt><dd>${esc(l.como_se_sente)}</dd>
+      <dt>Eu não deveria ter que… <span style="text-transform:none;letter-spacing:0">(problema filosófico)</span></dt><dd class="destaque">${esc(l.nao_deveria)}</dd>
+      <dt>O que mais falta <span style="text-transform:none;letter-spacing:0">(crença)</span></dt><dd>${esc(l.o_que_falta)}</dd>
       <dt>Já tentou</dt><dd>${esc(l.ja_tentou)}</dd>
       <dt>Rotina ideal em 1 ano</dt><dd>${esc(l.rotina_ideal)}</dd>
       <dt>Por que a vaga deve ser dela</dt><dd class="destaque">${esc(l.por_que_vaga)}</dd>

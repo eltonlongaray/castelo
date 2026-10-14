@@ -117,9 +117,15 @@ const P = [
     ops:["Ainda não tenho clientes","Voltam com constância, por cuidado","Só quando a dor aperta","Somem depois de 1 ou 2 sessões","Um pouco de cada"]},
   {id:"pacotes", tipo:"escolha", q:"Você vende pacotes de sessões?",
     ops:["Ainda não atendo","Sim, a maioria compra pacote","Às vezes","Não, só sessão avulsa"]},
+  {id:"origem_clientes", tipo:"escolha", outro:true, q:"De onde vem a maioria dos seus clientes novos hoje?",
+    ops:["Ainda não tenho clientes","Indicação de quem já atendi","Instagram","Promoções e aplicativos"]},
   {id:"maior_desafio", tipo:"longo", q:"Qual é hoje o seu maior desafio com os seus clientes ou com a sua agenda?"},
+  {id:"como_se_sente", tipo:"longo", q:"Quando você pensa nesse desafio, como você se sente?",
+    ajuda:"Ex: cansada, insegura, frustrada, com medo de não dar conta…"},
+  {id:"nao_deveria", tipo:"longo", q:"Complete com sinceridade: “Eu não deveria ter que ______ pra ______.”",
+    ajuda:"Ex: Eu não deveria ter que atender o dia inteiro pra ter uma renda boa.", ph:"Eu não deveria ter que…"},
   {id:"o_que_falta", tipo:"escolha", outro:true, q:"Na sua opinião, o que mais falta pra você ter uma agenda cheia e previsível?",
-    ops:["Conseguir meus primeiros clientes","Me sentir segura pra atender","Mais técnicas e cursos","Saber me divulgar","Cobrar mais caro","Fazer o cliente voltar"]},
+    ops:["Conseguir meus primeiros clientes","Me sentir segura pra atender","Mais técnicas e cursos","Saber me divulgar","Cobrar mais caro","Clientes que voltem e me indiquem"]},
   {id:"ja_tentou", tipo:"longo", q:"O que você já tentou (cursos, promoções, redes sociais…) que não deu o resultado que você queria?"},
   {id:"rotina_ideal", tipo:"longo", q:"Como seria a sua rotina ideal daqui a 1 ano?", ajuda:"Pensa em renda, quantas horas por dia e que tipo de cliente."},
   {id:"por_que_vaga", tipo:"longo",
@@ -148,7 +154,7 @@ function telaIntro(){
     <p class="eyebrow">Seleção · Aula exclusiva</p><div class="rule"></div>
     <h1 class="serif">Que bom que você <em>quer</em> estar nessa aula.</h1>
     <p class="lead">Como as vagas são poucas, eu vou ler cada resposta com cuidado pra escolher quem vai participar.</p>
-    <p class="lead">São ${P.length} perguntas rápidas — leva uns 4 minutos. Responda com sinceridade: não existe resposta certa.</p>
+    <p class="lead">São ${P.length} perguntas rápidas — leva uns 5 minutos. Responda com sinceridade: não existe resposta certa.</p>
     <div class="nav"><span></span><button class="btn" id="go">${retomar ? "Continuar de onde parei" : "Começar"} →</button></div>
     <p class="assin">Larissa Rodrigues</p></section>`;
   document.getElementById("go").onclick = () => { st.i = retomar ? Math.min(st.i<0?0:st.i, P.length-1) : 0; salvar(); telaPergunta(); };
@@ -160,7 +166,7 @@ function telaPergunta(){
   if(p.tipo==="texto"||p.tipo==="tel"){
     campo = `<input id="f" type="${p.tipo==="tel"?"tel":"text"}" inputmode="${p.tipo==="tel"?"tel":"text"}" placeholder="${esc(p.ph||"")}" value="${esc(v)}" autocomplete="${p.id==="nome"?"name":p.tipo==="tel"?"tel":"off"}">`;
   } else if(p.tipo==="longo"){
-    campo = `<textarea id="f" placeholder="Escreva aqui…">${esc(v)}</textarea>`;
+    campo = `<textarea id="f" placeholder="${esc(p.ph||"Escreva aqui…")}">${esc(v)}</textarea>`;
   } else {
     const ehOutro = p.outro && v && !p.ops.includes(v);
     campo = `<div class="ops" role="radiogroup" aria-label="${esc(p.q)}">` +
