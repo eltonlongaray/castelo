@@ -67,6 +67,24 @@
   .voltar{ background:none; border:none; color:var(--soft); font-size:.95rem; cursor:pointer; padding:.5rem 0; }
   .dica{ font-size:.78rem; color:var(--muted); margin-top:.6rem; }
   .assin{ margin-top:auto; padding-top:2rem; font-family:"Cormorant Garamond",serif; font-style:italic; color:var(--rosa-txt); font-size:1.05rem; }
+
+  /* === BLOCO 4b: TELA FINAL === */
+  body.fim{ background:radial-gradient(120% 70% at 50% 0%, #FCDDDA 0%, #F4F1ED 55%); }
+  .final{ position:relative; flex:1; display:flex; align-items:center; padding:2rem 0 1rem; overflow:hidden; }
+  .final-lr{ position:absolute; width:min(26rem,90%); left:50%; top:46%; transform:translate(-50%,-50%); opacity:.06; pointer-events:none; }
+  .final-in{ position:relative; text-align:center; width:100%; }
+  .final .rule{ margin:.8rem auto 1.3rem; }
+  .final h1{ font-size:clamp(2.1rem,8.5vw,2.8rem); margin-bottom:1.2rem; }
+  .final .lead{ margin-left:auto; margin-right:auto; }
+  .final-box{ margin:1.4rem auto 1.4rem; max-width:26rem; background:var(--card); border:1px solid rgba(228,143,148,.45);
+    border-radius:16px; padding:1rem 1.2rem; font-size:.98rem; color:var(--soft); }
+  .final-btn{ display:inline-block; text-decoration:none; }
+  .final-assin{ margin-top:2.2rem; font-size:.9rem; color:var(--muted); }
+  .final-assin span{ font-family:"Cormorant Garamond",serif; font-style:italic; font-size:1.6rem; color:var(--rosa-txt); }
+  .r1,.r2,.r3,.r4,.r5{ animation:sobe .7s ease both; }
+  .r2{ animation-delay:.15s } .r3{ animation-delay:.35s } .r4{ animation-delay:.55s } .r5{ animation-delay:.75s }
+  @keyframes sobe{ from{ opacity:0; transform:translateY(12px); } to{ opacity:1; transform:none; } }
+  @media (prefers-reduced-motion:reduce){ .r1,.r2,.r3,.r4,.r5{ animation:none; } }
 </style>
 </head>
 <body>
@@ -87,7 +105,7 @@ const P = [
   {id:"nome", tipo:"texto", q:"Qual é o seu nome?", ph:"Seu nome"},
   {id:"instagram", tipo:"texto", q:"Qual é o seu @ do Instagram?", ph:"@seuperfil"},
   {id:"whatsapp", tipo:"tel", q:"Qual é o seu WhatsApp?", ph:"(51) 9 9999-9999", ajuda:"É por aqui que eu aviso se você for selecionada."},
-  {id:"cidade", tipo:"texto", q:"Em qual cidade você atende (ou vai atender)?", ph:"Cidade / estado", opcional:true},
+  {id:"cidade", tipo:"texto", q:"Em qual cidade você atende?", ph:"Cidade / estado", opcional:true},
   {id:"tempo_atende", tipo:"escolha", q:"Há quanto tempo você atende com massagem?",
     ops:["Ainda não atendo","Estou começando (menos de 1 ano)","De 1 a 3 anos","De 3 a 5 anos","Mais de 5 anos"]},
   {id:"atend_semana", tipo:"escolha", q:"Quantos atendimentos você faz por semana, em média?",
@@ -216,12 +234,27 @@ async function enviar(){
     console.error(error); return;
   }
   try{ localStorage.removeItem(CHAVE); }catch(e){}
-  app.innerHTML = topo(false) + `<section class="tela">
-    <p class="eyebrow">Respostas enviadas</p><div class="rule"></div>
-    <h1 class="serif">Recebi, ${esc((linha.nome||"").split(" ")[0])}! <em>Obrigada.</em></h1>
-    <p class="lead">Vou ler cada resposta com carinho. Se você for selecionada, eu te aviso pelo direct do Instagram e pelo WhatsApp.</p>
-    <p class="lead">Enquanto isso, fica de olho nos meus stories 💛</p>
-    <p class="assin">Larissa Rodrigues · @massoterapeutalarissar</p></section>`;
+  telaFinal(linha.nome);
+}
+
+// === BLOCO 9b: TELA FINAL ===
+function telaFinal(nome){
+  const primeiro = esc(String(nome||"").trim().split(" ")[0]);
+  document.body.classList.add("fim");
+  app.innerHTML = `<section class="final">
+    <img class="final-lr" src="${LR}" alt="">
+    <div class="final-in">
+      <p class="eyebrow r1">Inscrição recebida</p>
+      <div class="rule r1"></div>
+      <h1 class="serif r2">Obrigada${primeiro ? ", " + primeiro : ""}.<br><em>Sua resposta chegou até mim.</em></h1>
+      <p class="lead r3">Eu sei que parar pra olhar pro próprio trabalho — os desafios, os sonhos, o que ainda falta — não é pouca coisa. Só de ter chegado até aqui, você já deu o primeiro passo pra sair do lugar.</p>
+      <p class="lead r3">Vou ler cada resposta com calma e carinho. Se você for selecionada, eu te aviso pessoalmente pelo <b>direct</b> e pelo <b>WhatsApp</b>.</p>
+      <div class="final-box r4">Enquanto isso, fica de olho nos meus stories — tem conteúdo preparado pra você 💛</div>
+      <a class="btn final-btn r4" href="https://instagram.com/massoterapeutalarissar" target="_blank" rel="noopener">Ir pro meu Instagram →</a>
+      <p class="final-assin r5">Com carinho,<br><span>Larissa Rodrigues</span></p>
+    </div>
+  </section>`;
+  window.scrollTo({top:0});
 }
 
 // === BLOCO 10: INÍCIO ===
