@@ -1,0 +1,27 @@
+# === BLOCO 1: DESPERTADOR DO SUPABASE ===
+# O plano gratuito do Supabase pausa o projeto depois de ~7 dias sem uso.
+# Este workflow faz uma consulta leve no banco todo dia, mantendo o projeto acordado.
+name: Despertador do Supabase
+
+on:
+  schedule:
+    - cron: "17 11 * * *"   # todo dia às 08:17 (horário de Brasília)
+  workflow_dispatch: {}      # permite rodar na mão pela aba Actions
+
+# === BLOCO 2: CONSULTA ===
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Consulta leve no banco
+        env:
+          SB_URL: https://gopqajnivmbxjqsiznqi.supabase.co
+          SB_KEY: sb_publishable_YBF0cSQt0IlTqVhCyRlduQ_ij2CHBZ5   # chave pública (a mesma que já está nas páginas)
+        run: |
+          code=$(curl -s -o /dev/null -w "%{http_code}" \
+            "$SB_URL/rest/v1/respostas_castelo?select=id&limit=1" \
+            -H "apikey: $SB_KEY" -H "Authorization: Bearer $SB_KEY")
+          echo "Resposta do banco: $code"
+          if [ "$code" -ge 500 ] || [ "$code" = "000" ]; then
+            echo "::error::Banco não respondeu ($code) — confira se o projeto foi pausado."; exit 1
+          fi
