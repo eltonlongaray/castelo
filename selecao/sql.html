@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>SQL da Seleção</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<style>
+  body{ margin:0; font-family:system-ui,sans-serif; background:#F4F1ED; color:#050404; padding:1.2rem; line-height:1.5; }
+  h1{ font-size:1.3rem; margin:0 0 .4rem; }
+  ol{ padding-left:1.2rem; font-size:.95rem; } li{ margin:.3rem 0; }
+  pre{ background:#fffdfa; border:1px solid rgba(5,4,4,.12); border-radius:10px; padding:.9rem; font-size:.78rem; overflow-x:auto; white-space:pre; }
+  button{ width:100%; border:none; border-radius:999px; background:#050404; color:#F4F1ED; font-weight:700; font-size:1rem; padding:.9rem; margin:.6rem 0; }
+  .ok{ color:#3f7a4d; font-weight:700; text-align:center; min-height:1.4rem; }
+</style>
+</head>
+<body>
+<h1>SQL da tabela da seleção</h1>
+<ol>
+  <li>Abre o Supabase → projeto <b>realeza-holistica</b> (precisa estar ativo, não "Coming up").</li>
+  <li><b>SQL Editor → New query</b>.</li>
+  <li>Toca em <b>Copiar SQL</b> aqui embaixo, cola lá e clica em <b>Run</b>.</li>
+  <li>Tem que aparecer <b>"Success. No rows returned"</b>. Rode só uma vez.</li>
+</ol>
+<button id="b">Copiar SQL</button>
+<p class="ok" id="ok"></p>
+<pre id="sql">create table if not exists public.selecao_aula (
+  id bigint generated always as identity primary key,
+  criado_em timestamptz not null default now(),
+  nome text, instagram text, whatsapp text, cidade text,
+  tempo_atende text, atend_semana text, renda text, clientes_voltam text, pacotes text,
+  origem_clientes text, maior_desafio text, como_se_sente text, nao_deveria text,
+  o_que_falta text, ja_tentou text, rotina_ideal text,
+  por_que_vaga text, como_ajuda text,
+  selecionada boolean not null default false
+);
+alter table public.selecao_aula enable row level security;
+
+create policy "qualquer pessoa envia" on public.selecao_aula
+  for insert to anon, authenticated with check (selecionada = false);
+create policy "admin le" on public.selecao_aula
+  for select to authenticated using (auth.jwt()->>'email' = 'elton.longaray483@gmail.com');
+create policy "admin seleciona" on public.selecao_aula
+  for update to authenticated
+  using (auth.jwt()->>'email' = 'elton.longaray483@gmail.com')
+  with check (auth.jwt()->>'email' = 'elton.longaray483@gmail.com');</pre>
+<script>
+  document.getElementById("b").onclick = async () => {
+    const t = document.getElementById("sql").textContent;
+    try{ await navigator.clipboard.writeText(t); }
+    catch(e){ const a=document.createElement("textarea"); a.value=t; document.body.appendChild(a); a.select(); document.execCommand("copy"); a.remove(); }
+    document.getElementById("ok").textContent = "✓ Copiado! Agora cola no SQL Editor.";
+  };
+</script>
+</body>
+</html>
