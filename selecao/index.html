@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Seleção · Aula Exclusiva</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F4F1ED">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Karla:wght@400;500;600;700&display=swap">
+<style>
+  /* === BLOCO 1: IDENTIDADE (paleta e tipografia da marca) === */
+  :root{
+    --bg:#F4F1ED; --ink:#050404; --soft:#55504e; --muted:#8a8381;
+    --rosa:#E48F94; --rosa-txt:#C4646B; --blush:#FCDDDA; --line:rgba(5,4,4,.12); --card:#fffdfa;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{ font-family:"Karla",system-ui,sans-serif; background:var(--bg); color:var(--ink); min-height:100vh; min-height:100dvh;
+    line-height:1.5; -webkit-font-smoothing:antialiased; }
+  .serif{ font-family:"Cormorant Garamond",Georgia,serif; font-weight:600; }
+  button{ font-family:inherit; }
+  :focus-visible{ outline:2px solid var(--rosa-txt); outline-offset:3px; }
+
+  /* === BLOCO 2: ESTRUTURA === */
+  .wrap{ max-width:34rem; margin:0 auto; padding:1.2rem 1.3rem 2.5rem; min-height:100vh; min-height:100dvh; display:flex; flex-direction:column; }
+  .top{ display:flex; align-items:center; gap:.9rem; margin-bottom:1.6rem; min-height:2.2rem; }
+  .lr{ width:2.6rem; height:auto; opacity:.85; flex:none; }
+  .prog{ flex:1; }
+  .prog .bar{ height:3px; background:var(--line); border-radius:3px; overflow:hidden; }
+  .prog .bar i{ display:block; height:100%; width:0; background:var(--rosa); transition:width .35s ease; }
+  .prog .n{ font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-top:.35rem; font-weight:600; }
+  .tela{ flex:1; display:flex; flex-direction:column; animation:entra .35s ease both; }
+  @keyframes entra{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:none; } }
+  @media (prefers-reduced-motion:reduce){ .tela{ animation:none; } .prog .bar i{ transition:none; } }
+
+  .eyebrow{ font-size:.72rem; font-weight:700; letter-spacing:.24em; text-transform:uppercase; color:var(--rosa-txt); }
+  .rule{ width:3.2rem; height:2px; background:var(--rosa); margin:.8rem 0 1.2rem; }
+  h1{ font-size:clamp(2.2rem,9vw,2.9rem); line-height:1.02; margin-bottom:1rem; text-wrap:balance; }
+  h1 em{ color:var(--rosa-txt); }
+  .lead{ font-size:1.02rem; color:var(--soft); margin-bottom:.8rem; max-width:30rem; }
+  .pre{ font-size:.98rem; color:var(--soft); background:var(--card); border-left:3px solid var(--rosa); padding:.85rem 1rem; border-radius:0 10px 10px 0; margin-bottom:1rem; }
+  .q{ font-size:clamp(1.6rem,6.6vw,2.05rem); line-height:1.12; margin-bottom:.55rem; text-wrap:balance; }
+  .ajuda{ font-size:.92rem; color:var(--muted); margin-bottom:1rem; }
+  .opc{ font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); font-weight:600; margin-left:.3rem; }
+
+  /* === BLOCO 3: CAMPOS === */
+  input[type=text],input[type=tel],textarea{ width:100%; font-family:inherit; font-size:1.08rem; color:var(--ink); background:var(--card);
+    border:1px solid var(--line); border-radius:12px; padding:.9rem 1rem; margin-top:.4rem; }
+  textarea{ min-height:9rem; resize:vertical; line-height:1.45; }
+  input:focus,textarea:focus{ outline:none; border-color:var(--rosa-txt); box-shadow:0 0 0 3px rgba(228,143,148,.22); }
+  .ops{ display:flex; flex-direction:column; gap:.55rem; margin-top:.5rem; }
+  .op{ text-align:left; font-size:1.02rem; color:var(--ink); background:var(--card); border:1px solid var(--line); border-radius:12px;
+    padding:.85rem 1rem; cursor:pointer; display:flex; align-items:center; gap:.75rem; transition:border-color .15s, background .15s; }
+  .op:hover{ border-color:var(--rosa); }
+  .op .dot{ flex:none; width:1.05rem; height:1.05rem; border-radius:50%; border:1.5px solid var(--muted); display:grid; place-items:center; }
+  .op[aria-checked="true"]{ background:var(--ink); color:#F4F1ED; border-color:var(--ink); }
+  .op[aria-checked="true"] .dot{ border-color:var(--rosa); }
+  .op[aria-checked="true"] .dot::after{ content:""; width:.5rem; height:.5rem; border-radius:50%; background:var(--rosa); }
+  .outro{ margin-top:.55rem; }
+  .erro{ color:#b3434b; font-size:.9rem; margin-top:.6rem; min-height:1.2rem; }
+
+  /* === BLOCO 4: NAVEGAÇÃO === */
+  .nav{ display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-top:1.6rem; }
+  .btn{ border:none; cursor:pointer; background:var(--ink); color:#F4F1ED; font-weight:700; font-size:1rem; padding:.95rem 1.6rem; border-radius:999px; }
+  .btn:hover{ background:#2a2626; } .btn:disabled{ opacity:.5; cursor:wait; }
+  .voltar{ background:none; border:none; color:var(--soft); font-size:.95rem; cursor:pointer; padding:.5rem 0; }
+  .dica{ font-size:.78rem; color:var(--muted); margin-top:.6rem; }
+  .assin{ margin-top:auto; padding-top:2rem; font-family:"Cormorant Garamond",serif; font-style:italic; color:var(--rosa-txt); font-size:1.05rem; }
+</style>
+</head>
+<body>
+<main class="wrap" id="app" aria-live="polite"></main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// === BLOCO 5: CONFIG ===
+const SB_URL = "https://gopqajnivmbxjqsiznqi.supabase.co";
+const SB_KEY = "sb_publishable_YBF0cSQt0IlTqVhCyRlduQ_ij2CHBZ5";
+const TABELA = "selecao_aula";
+const CHAVE  = "selecao-larissa-v1";
+const LR     = "../sorteio/img/lr-ink.png";
+const sb = window.supabase.createClient(SB_URL, SB_KEY);
+
+// === BLOCO 6: PERGUNTAS ===
+const P = [
+  {id:"nome", tipo:"texto", q:"Qual é o seu nome?", ph:"Seu nome"},
+  {id:"instagram", tipo:"texto", q:"Qual é o seu @ do Instagram?", ph:"@seuperfil"},
+  {id:"whatsapp", tipo:"tel", q:"Qual é o seu WhatsApp?", ph:"(51) 9 9999-9999", ajuda:"É por aqui que eu aviso se você for selecionada."},
+  {id:"cidade", tipo:"texto", q:"Em qual cidade você atende (ou vai atender)?", ph:"Cidade / estado", opcional:true},
+  {id:"tempo_atende", tipo:"escolha", q:"Há quanto tempo você atende com massagem?",
+    ops:["Ainda não atendo","Estou começando (menos de 1 ano)","De 1 a 3 anos","De 3 a 5 anos","Mais de 5 anos"]},
+  {id:"atend_semana", tipo:"escolha", q:"Quantos atendimentos você faz por semana, em média?",
+    ops:["Ainda não atendo","Até 5","De 6 a 15","De 16 a 30","Mais de 30"]},
+  {id:"renda", tipo:"escolha", q:"Qual é a sua renda média com massagem por mês hoje?", opcional:true,
+    ajuda:"Fica só entre nós — é pra eu entender o seu momento.",
+    ops:["Ainda não tenho renda com massagem","Até R$2 mil","De R$2 a 5 mil","De R$5 a 10 mil","Acima de R$10 mil"]},
+  {id:"clientes_voltam", tipo:"escolha", q:"Como os seus clientes voltam hoje?",
+    ops:["Ainda não tenho clientes","Voltam com constância, por cuidado","Só quando a dor aperta","Somem depois de 1 ou 2 sessões","Um pouco de cada"]},
+  {id:"pacotes", tipo:"escolha", q:"Você vende pacotes de sessões?",
+    ops:["Ainda não atendo","Sim, a maioria compra pacote","Às vezes","Não, só sessão avulsa"]},
+  {id:"maior_desafio", tipo:"longo", q:"Qual é hoje o seu maior desafio com os seus clientes ou com a sua agenda?"},
+  {id:"o_que_falta", tipo:"escolha", outro:true, q:"Na sua opinião, o que mais falta pra você ter uma agenda cheia e previsível?",
+    ops:["Conseguir meus primeiros clientes","Me sentir segura pra atender","Mais técnicas e cursos","Saber me divulgar","Cobrar mais caro","Fazer o cliente voltar"]},
+  {id:"ja_tentou", tipo:"longo", q:"O que você já tentou (cursos, promoções, redes sociais…) que não deu o resultado que você queria?"},
+  {id:"rotina_ideal", tipo:"longo", q:"Como seria a sua rotina ideal daqui a 1 ano?", ajuda:"Pensa em renda, quantas horas por dia e que tipo de cliente."},
+  {id:"por_que_vaga", tipo:"longo",
+    pre:"Essa aula tem valor de R$147, mas vou liberar poucas vagas gratuitas — e cada pessoa selecionada ocupa a vaga de alguém, comparecendo ou não.",
+    q:"Por que você acha que essa vaga deve ser sua?"},
+  {id:"como_ajuda", tipo:"longo", q:"De que forma você acredita que o meu método pode te ajudar?"}
+];
+
+// === BLOCO 7: ESTADO (salva no aparelho pra não perder se fechar) ===
+let st = {i:-1, r:{}};
+try{ const s = JSON.parse(localStorage.getItem(CHAVE)||"null"); if(s && s.r) st = s; }catch(e){}
+const salvar = () => { try{ localStorage.setItem(CHAVE, JSON.stringify(st)); }catch(e){} };
+const app = document.getElementById("app");
+const esc = s => String(s??"").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function topo(mostrarProg){
+  const pct = Math.round((Math.max(st.i,0)/P.length)*100);
+  return `<div class="top"><img class="lr" src="${LR}" alt="LR — Larissa Rodrigues">
+    ${mostrarProg ? `<div class="prog"><div class="bar"><i style="width:${pct}%"></i></div><p class="n">Pergunta ${st.i+1} de ${P.length}</p></div>` : ""}</div>`;
+}
+
+// === BLOCO 8: TELAS ===
+function telaIntro(){
+  const retomar = Object.keys(st.r).length > 0;
+  app.innerHTML = topo(false) + `<section class="tela">
+    <p class="eyebrow">Seleção · Aula exclusiva</p><div class="rule"></div>
+    <h1 class="serif">Que bom que você <em>quer</em> estar nessa aula.</h1>
+    <p class="lead">Como as vagas são poucas, eu vou ler cada resposta com cuidado pra escolher quem vai participar.</p>
+    <p class="lead">São ${P.length} perguntas rápidas — leva uns 4 minutos. Responda com sinceridade: não existe resposta certa.</p>
+    <div class="nav"><span></span><button class="btn" id="go">${retomar ? "Continuar de onde parei" : "Começar"} →</button></div>
+    <p class="assin">Larissa Rodrigues</p></section>`;
+  document.getElementById("go").onclick = () => { st.i = retomar ? Math.min(st.i<0?0:st.i, P.length-1) : 0; salvar(); telaPergunta(); };
+}
+
+function telaPergunta(){
+  const p = P[st.i], v = st.r[p.id] ?? "";
+  let campo = "";
+  if(p.tipo==="texto"||p.tipo==="tel"){
+    campo = `<input id="f" type="${p.tipo==="tel"?"tel":"text"}" inputmode="${p.tipo==="tel"?"tel":"text"}" placeholder="${esc(p.ph||"")}" value="${esc(v)}" autocomplete="${p.id==="nome"?"name":p.tipo==="tel"?"tel":"off"}">`;
+  } else if(p.tipo==="longo"){
+    campo = `<textarea id="f" placeholder="Escreva aqui…">${esc(v)}</textarea>`;
+  } else {
+    const ehOutro = p.outro && v && !p.ops.includes(v);
+    campo = `<div class="ops" role="radiogroup" aria-label="${esc(p.q)}">` +
+      p.ops.map(o => `<button type="button" class="op" role="radio" aria-checked="${v===o}" data-v="${esc(o)}"><span class="dot"></span>${esc(o)}</button>`).join("") +
+      (p.outro ? `<button type="button" class="op" role="radio" aria-checked="${ehOutro}" data-v="__outro"><span class="dot"></span>Outro</button>` : "") +
+      `</div>` + (p.outro ? `<input id="outro" class="outro" type="text" placeholder="Conta qual…" value="${ehOutro?esc(v):""}" ${ehOutro?"":"hidden"}>` : "");
+  }
+  app.innerHTML = topo(true) + `<section class="tela">
+    ${p.pre ? `<p class="pre">${esc(p.pre)}</p>` : ""}
+    <h2 class="q serif">${esc(p.q)}${p.opcional?'<span class="opc">opcional</span>':""}</h2>
+    ${p.ajuda ? `<p class="ajuda">${esc(p.ajuda)}</p>` : ""}
+    ${campo}
+    <p class="erro" id="erro" role="alert"></p>
+    <div class="nav"><button class="voltar" id="volta" type="button">← Voltar</button>
+      <button class="btn" id="seg" type="button">${st.i===P.length-1 ? "Enviar respostas" : "Continuar →"}</button></div>
+    ${p.tipo==="longo" ? `<p class="dica">Dica: escreve com as suas palavras, do jeito que você falaria.</p>` : ""}
+  </section>`;
+
+  const f = document.getElementById("f");
+  if(f){ setTimeout(()=>f.focus(), 60);
+    f.addEventListener("input", () => { st.r[p.id] = p.tipo==="tel" ? mascara(f.value) : f.value; if(p.tipo==="tel") f.value = st.r[p.id]; salvar(); });
+    if(p.tipo!=="longo") f.addEventListener("keydown", e => { if(e.key==="Enter"){ e.preventDefault(); avancar(); } });
+    else f.addEventListener("keydown", e => { if(e.key==="Enter" && (e.ctrlKey||e.metaKey)){ e.preventDefault(); avancar(); } });
+  }
+  app.querySelectorAll(".op").forEach(b => b.onclick = () => {
+    app.querySelectorAll(".op").forEach(x => x.setAttribute("aria-checked","false"));
+    b.setAttribute("aria-checked","true");
+    const out = document.getElementById("outro");
+    if(b.dataset.v==="__outro"){ out.hidden=false; out.focus(); st.r[p.id] = out.value.trim(); salvar(); return; }
+    if(out) out.hidden = true;
+    st.r[p.id] = b.dataset.v; salvar(); setTimeout(avancar, 220);
+  });
+  const out = document.getElementById("outro");
+  if(out){ out.addEventListener("input", () => { st.r[p.id] = out.value; salvar(); });
+    out.addEventListener("keydown", e => { if(e.key==="Enter"){ e.preventDefault(); avancar(); } }); }
+  document.getElementById("seg").onclick = avancar;
+  document.getElementById("volta").onclick = () => { if(st.i===0){ st.i=-1; salvar(); telaIntro(); } else { st.i--; salvar(); telaPergunta(); } };
+}
+
+function mascara(v){
+  const d = v.replace(/\D/g,"").slice(0,11);
+  if(d.length<=2) return d; if(d.length<=7) return `(${d.slice(0,2)}) ${d.slice(2)}`;
+  return `(${d.slice(0,2)}) ${d.slice(2,d.length-4)}-${d.slice(-4)}`;
+}
+
+function valido(p){
+  const v = String(st.r[p.id]??"").trim();
+  if(p.opcional) return "";
+  if(!v) return p.tipo==="escolha" ? "Escolha uma opção pra continuar." : "Responde essa pra gente continuar 💛";
+  if(p.id==="whatsapp" && v.replace(/\D/g,"").length < 10) return "Confere o número com DDD.";
+  if(p.tipo==="longo" && v.length < 3) return "Escreve um pouquinho mais 💛";
+  return "";
+}
+
+function avancar(){
+  const p = P[st.i], e = valido(p);
+  if(e){ document.getElementById("erro").textContent = e; return; }
+  if(st.i < P.length-1){ st.i++; salvar(); telaPergunta(); window.scrollTo({top:0}); }
+  else enviar();
+}
+
+// === BLOCO 9: ENVIO ===
+async function enviar(){
+  const b = document.getElementById("seg"); b.disabled = true; b.textContent = "Enviando…";
+  const linha = {}; P.forEach(p => linha[p.id] = String(st.r[p.id]??"").trim() || null);
+  if(linha.instagram && !linha.instagram.startsWith("@")) linha.instagram = "@"+linha.instagram;
+  const { error } = await sb.from(TABELA).insert(linha);
+  if(error){
+    b.disabled = false; b.textContent = "Tentar enviar de novo";
+    document.getElementById("erro").textContent = "Não consegui enviar agora. Suas respostas estão salvas aqui — tenta de novo em instantes.";
+    console.error(error); return;
+  }
+  try{ localStorage.removeItem(CHAVE); }catch(e){}
+  app.innerHTML = topo(false) + `<section class="tela">
+    <p class="eyebrow">Respostas enviadas</p><div class="rule"></div>
+    <h1 class="serif">Recebi, ${esc((linha.nome||"").split(" ")[0])}! <em>Obrigada.</em></h1>
+    <p class="lead">Vou ler cada resposta com carinho. Se você for selecionada, eu te aviso pelo direct do Instagram e pelo WhatsApp.</p>
+    <p class="lead">Enquanto isso, fica de olho nos meus stories 💛</p>
+    <p class="assin">Larissa Rodrigues · @massoterapeutalarissar</p></section>`;
+}
+
+// === BLOCO 10: INÍCIO ===
+if(st.i >= 0 && st.i < P.length) telaPergunta(); else telaIntro();
+</script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Painel da Seleção</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Karla:wght@400;500;600;700&display=swap">
+<style>
+  /* === BLOCO 1: ESTILO === */
+  :root{ --bg:#F4F1ED; --ink:#050404; --soft:#55504e; --muted:#8a8381; --rosa:#E48F94; --rosa-txt:#C4646B; --blush:#FCDDDA; --line:rgba(5,4,4,.12); --card:#fffdfa; --ok:#3f7a4d; }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{ font-family:"Karla",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.5; -webkit-font-smoothing:antialiased; }
+  .serif{ font-family:"Cormorant Garamond",Georgia,serif; font-weight:600; }
+  .wrap{ max-width:56rem; margin:0 auto; padding:1.4rem 1.2rem 3rem; }
+  .eyebrow{ font-size:.72rem; font-weight:700; letter-spacing:.24em; text-transform:uppercase; color:var(--rosa-txt); }
+  h1{ font-size:2.2rem; line-height:1.05; margin:.3rem 0 1rem; }
+  .btn{ border:none; cursor:pointer; background:var(--ink); color:#F4F1ED; font-weight:700; font-size:.92rem; padding:.7rem 1.2rem; border-radius:999px; font-family:inherit; }
+  .btn.ghost{ background:transparent; color:var(--ink); border:1px solid var(--line); }
+  input{ font-family:inherit; font-size:1rem; padding:.8rem 1rem; border:1px solid var(--line); border-radius:10px; background:var(--card); width:100%; margin-bottom:.7rem; }
+  .login{ max-width:22rem; margin:4rem auto; }
+  .erro{ color:#b3434b; font-size:.9rem; min-height:1.2rem; }
+  .barra{ display:flex; flex-wrap:wrap; gap:.6rem; align-items:center; margin-bottom:1.2rem; }
+  .barra .stat{ color:var(--soft); font-size:.92rem; margin-right:auto; }
+  .chip{ border:1px solid var(--line); background:var(--card); border-radius:999px; padding:.45rem .9rem; font-size:.85rem; cursor:pointer; font-family:inherit; }
+  .chip[aria-pressed="true"]{ background:var(--ink); color:#F4F1ED; border-color:var(--ink); }
+  .resumo{ display:grid; grid-template-columns:repeat(auto-fit,minmax(14rem,1fr)); gap:.8rem; margin-bottom:1.4rem; }
+  .bloco{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:.9rem 1rem; }
+  .bloco h3{ font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-bottom:.5rem; }
+  .bloco li{ list-style:none; display:flex; justify-content:space-between; gap:.6rem; font-size:.88rem; padding:.15rem 0; }
+  .bloco li b{ font-variant-numeric:tabular-nums; }
+  .card{ background:var(--card); border:1px solid var(--line); border-radius:16px; padding:1.1rem 1.2rem; margin-bottom:.9rem; }
+  .card.sel{ border-color:var(--ok); box-shadow:0 0 0 2px rgba(63,122,77,.15); }
+  .cab{ display:flex; flex-wrap:wrap; gap:.4rem .9rem; align-items:baseline; margin-bottom:.6rem; }
+  .cab .nome{ font-family:"Cormorant Garamond",serif; font-size:1.5rem; font-weight:600; }
+  .cab a{ color:var(--rosa-txt); text-decoration:none; font-weight:600; font-size:.9rem; }
+  .cab .data{ margin-left:auto; color:var(--muted); font-size:.8rem; }
+  .tags{ display:flex; flex-wrap:wrap; gap:.35rem; margin-bottom:.7rem; }
+  .tag{ font-size:.75rem; background:var(--blush); color:#7a3b40; border-radius:999px; padding:.2rem .6rem; }
+  dl dt{ font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-top:.55rem; }
+  dl dd{ font-size:.95rem; white-space:pre-wrap; }
+  dd.destaque{ background:#fbf3ef; border-left:3px solid var(--rosa); padding:.4rem .7rem; border-radius:0 8px 8px 0; }
+  .acoes{ display:flex; gap:.5rem; margin-top:.9rem; flex-wrap:wrap; }
+  .vazio{ text-align:center; color:var(--muted); padding:3rem 1rem; }
+</style>
+</head>
+<body>
+<main class="wrap" id="app"><p class="vazio">Carregando…</p></main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// === BLOCO 2: CONFIG ===
+const SB_URL = "https://gopqajnivmbxjqsiznqi.supabase.co";
+const SB_KEY = "sb_publishable_YBF0cSQt0IlTqVhCyRlduQ_ij2CHBZ5";
+const sb = window.supabase.createClient(SB_URL, SB_KEY);
+const app = document.getElementById("app");
+const esc = s => String(s??"").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let linhas = [], filtro = "todas";
+
+const ROTULOS = {
+  tempo_atende:"Tempo atendendo", atend_semana:"Atendimentos/semana", renda:"Renda/mês",
+  clientes_voltam:"Como os clientes voltam", pacotes:"Pacotes", o_que_falta:"O que mais falta"
+};
+
+// === BLOCO 3: LOGIN ===
+function telaLogin(msg){
+  app.innerHTML = `<div class="login"><p class="eyebrow">Seleção · Aula exclusiva</p><h1 class="serif">Painel</h1>
+    <input id="em" type="email" placeholder="E-mail" autocomplete="username">
+    <input id="pw" type="password" placeholder="Senha" autocomplete="current-password">
+    <p class="erro" id="er">${esc(msg||"")}</p><button class="btn" id="ent">Entrar</button>
+    <p style="font-size:.82rem;color:var(--muted);margin-top:1rem">Use o mesmo login do castelo.</p></div>`;
+  const ir = async () => {
+    const { error } = await sb.auth.signInWithPassword({ email: em.value.trim(), password: pw.value });
+    if(error) return telaLogin("E-mail ou senha incorretos."); carregar();
+  };
+  ent.onclick = ir; pw.onkeydown = e => { if(e.key==="Enter") ir(); };
+}
+
+// === BLOCO 4: DADOS ===
+async function carregar(){
+  const { data:{ session } } = await sb.auth.getSession();
+  if(!session) return telaLogin();
+  const { data, error } = await sb.from("selecao_aula").select("*").order("criado_em",{ascending:false});
+  if(error) return app.innerHTML = `<p class="vazio">Erro ao carregar: ${esc(error.message)}</p>`;
+  linhas = data || [];
+  if(!linhas.length && session) { render(); return; }
+  render();
+}
+
+async function marcar(id, valor){
+  const { error } = await sb.from("selecao_aula").update({ selecionada: valor }).eq("id", id);
+  if(error) return alert("Não consegui salvar: "+error.message);
+  const l = linhas.find(x => x.id===id); if(l) l.selecionada = valor; render();
+}
+
+// === BLOCO 5: TELA ===
+function contagem(campo){
+  const m = {}; linhas.forEach(l => { const v = l[campo]||"—"; m[v]=(m[v]||0)+1; });
+  return Object.entries(m).sort((a,b)=>b[1]-a[1]);
+}
+
+function render(){
+  const sel = linhas.filter(l => l.selecionada).length;
+  const lista = filtro==="sel" ? linhas.filter(l=>l.selecionada) : filtro==="nao" ? linhas.filter(l=>!l.selecionada) : linhas;
+  const resumo = ["clientes_voltam","o_que_falta","tempo_atende","pacotes"].map(c =>
+    `<div class="bloco"><h3>${ROTULOS[c]}</h3><ul>${contagem(c).map(([k,n])=>`<li><span>${esc(k)}</span><b>${n}</b></li>`).join("")}</ul></div>`).join("");
+  app.innerHTML = `
+    <p class="eyebrow">Seleção · Aula exclusiva</p><h1 class="serif">Respostas</h1>
+    <div class="barra"><span class="stat"><b>${linhas.length}</b> inscritas · <b>${sel}</b> selecionadas</span>
+      <button class="chip" data-f="todas" aria-pressed="${filtro==="todas"}">Todas</button>
+      <button class="chip" data-f="sel" aria-pressed="${filtro==="sel"}">Selecionadas</button>
+      <button class="chip" data-f="nao" aria-pressed="${filtro==="nao"}">Ainda não</button>
+      <button class="btn ghost" id="csv">Baixar planilha</button>
+      <button class="btn ghost" id="sair">Sair</button></div>
+    ${linhas.length ? `<div class="resumo">${resumo}</div>` : ""}
+    ${lista.length ? lista.map(card).join("") : `<p class="vazio">${linhas.length ? "Nada nesse filtro." : "Ainda não chegou nenhuma resposta."}</p>`}`;
+  app.querySelectorAll(".chip").forEach(b => b.onclick = () => { filtro = b.dataset.f; render(); });
+  app.querySelectorAll("[data-sel]").forEach(b => b.onclick = () => marcar(+b.dataset.id, b.dataset.sel==="1"));
+  csv.onclick = baixar;
+  sair.onclick = async () => { await sb.auth.signOut(); telaLogin(); };
+}
+
+function card(l){
+  const wpp = (l.whatsapp||"").replace(/\D/g,"");
+  const ig = (l.instagram||"").replace(/^@/,"");
+  const data = l.criado_em ? new Date(l.criado_em).toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"}) : "";
+  const tags = ["tempo_atende","atend_semana","renda","clientes_voltam","pacotes"].filter(c=>l[c]).map(c=>`<span class="tag" title="${ROTULOS[c]}">${esc(l[c])}</span>`).join("");
+  return `<article class="card${l.selecionada?" sel":""}">
+    <div class="cab"><span class="nome">${esc(l.nome)}</span>
+      ${ig?`<a href="https://instagram.com/${encodeURIComponent(ig)}" target="_blank" rel="noopener">@${esc(ig)}</a>`:""}
+      ${wpp?`<a href="https://wa.me/55${wpp}" target="_blank" rel="noopener">WhatsApp</a>`:""}
+      ${l.cidade?`<span style="color:var(--muted);font-size:.85rem">${esc(l.cidade)}</span>`:""}
+      <span class="data">${data}</span></div>
+    <div class="tags">${tags}</div>
+    <dl>
+      <dt>Maior desafio</dt><dd>${esc(l.maior_desafio)}</dd>
+      <dt>O que mais falta</dt><dd>${esc(l.o_que_falta)}</dd>
+      <dt>Já tentou</dt><dd>${esc(l.ja_tentou)}</dd>
+      <dt>Rotina ideal em 1 ano</dt><dd>${esc(l.rotina_ideal)}</dd>
+      <dt>Por que a vaga deve ser dela</dt><dd class="destaque">${esc(l.por_que_vaga)}</dd>
+      <dt>Como o método pode ajudar</dt><dd class="destaque">${esc(l.como_ajuda)}</dd>
+    </dl>
+    <div class="acoes">${l.selecionada
+      ? `<button class="btn ghost" data-sel="0" data-id="${l.id}">Desmarcar</button><span style="color:var(--ok);font-weight:700;align-self:center">✓ Selecionada</span>`
+      : `<button class="btn" data-sel="1" data-id="${l.id}">Selecionar</button>`}</div>
+  </article>`;
+}
+
+function baixar(){
+  if(!linhas.length) return;
+  const cols = Object.keys(linhas[0]);
+  const linhaCsv = r => cols.map(c => `"${String(r[c]??"").replace(/"/g,'""')}"`).join(";");
+  const txt = "﻿" + cols.join(";") + "\n" + linhas.map(linhaCsv).join("\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([txt],{type:"text/csv;charset=utf-8"}));
+  a.download = "selecao-aula.csv"; a.click();
+}
+
+carregar();
+</script>
+</body>
+</html>
