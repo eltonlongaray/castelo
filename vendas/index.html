@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Painel de Vendas · Mentoria</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Karla:wght@400;500;600;700&display=swap">
+<style>
+  /* === BLOCO 1: ESTILO (mesmo do painel da seleção) === */
+  :root{ --bg:#F4F1ED; --ink:#050404; --soft:#55504e; --muted:#8a8381; --rosa:#E48F94; --rosa-txt:#C4646B; --blush:#FCDDDA; --line:rgba(5,4,4,.12); --card:#fffdfa; --ok:#3f7a4d; --amarelo:#b7791f; }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html,body{ background:var(--bg); }
+  body{ font-family:"Karla",system-ui,sans-serif; color:var(--ink); line-height:1.5; -webkit-font-smoothing:antialiased; }
+  .serif{ font-family:"Cormorant Garamond",Georgia,serif; font-weight:600; }
+  .wrap{ max-width:52rem; margin:0 auto; padding:1.4rem 1.2rem 3rem; }
+  .eyebrow{ font-size:.72rem; font-weight:700; letter-spacing:.24em; text-transform:uppercase; color:var(--rosa-txt); }
+  h1{ font-size:2.1rem; line-height:1.05; margin:.3rem 0 1rem; }
+  .btn{ border:none; cursor:pointer; background:var(--ink); color:#F4F1ED; font-weight:700; font-size:.88rem; padding:.6rem 1.05rem; border-radius:999px; font-family:inherit; text-decoration:none; display:inline-block; }
+  .btn.ghost{ background:transparent; color:var(--ink); border:1px solid var(--line); }
+  .btn.ok{ background:var(--ok); }
+  input{ font-family:inherit; font-size:1rem; padding:.8rem 1rem; border:1px solid var(--line); border-radius:10px; background:var(--card); width:100%; margin-bottom:.7rem; }
+  .login{ max-width:22rem; margin:4rem auto; }
+  .erro{ color:#b3434b; font-size:.9rem; min-height:1.2rem; }
+  .abas{ display:flex; gap:.4rem; overflow-x:auto; margin-bottom:1.1rem; padding-bottom:.2rem; }
+  .aba{ flex:none; border:1px solid var(--line); background:var(--card); border-radius:999px; padding:.5rem 1rem; font-size:.88rem; font-weight:600; cursor:pointer; font-family:inherit; color:var(--soft); }
+  .aba.on{ background:var(--ink); color:#F4F1ED; border-color:var(--ink); }
+  .stats{ display:grid; grid-template-columns:repeat(auto-fit,minmax(8rem,1fr)); gap:.6rem; margin-bottom:1rem; }
+  .stat{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:.7rem .9rem; }
+  .stat b{ display:block; font-family:"Cormorant Garamond",serif; font-size:1.9rem; line-height:1; }
+  .stat small{ font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+  .chips{ display:flex; flex-wrap:wrap; gap:.4rem; margin-bottom:1rem; }
+  .chip{ border:1px solid var(--line); background:var(--card); border-radius:999px; padding:.4rem .85rem; font-size:.83rem; cursor:pointer; font-family:inherit; }
+  .chip[aria-pressed="true"]{ background:var(--rosa-txt); color:#fff; border-color:var(--rosa-txt); }
+  .card{ background:var(--card); border:1px solid var(--line); border-left:4px solid var(--line); border-radius:16px; padding:1rem 1.1rem; margin-bottom:.8rem; }
+  .card.pago{ border-left-color:var(--ok); }
+  .card.reservou{ border-left-color:var(--amarelo); }
+  .card.aberto{ border-left-color:var(--rosa); }
+  .cab{ display:flex; flex-wrap:wrap; gap:.3rem .8rem; align-items:baseline; }
+  .cab .nome{ font-family:"Cormorant Garamond",serif; font-size:1.45rem; font-weight:600; }
+  .cab a{ color:var(--rosa-txt); font-weight:600; font-size:.88rem; text-decoration:none; }
+  .selo{ font-size:.72rem; font-weight:700; border-radius:999px; padding:.15rem .6rem; }
+  .selo.pago{ background:#e3f0e6; color:var(--ok); }
+  .selo.reservou{ background:#fbf0d9; color:var(--amarelo); }
+  .selo.nao_agora{ background:#eee; color:var(--muted); }
+  .selo.aberto{ background:var(--blush); color:#7a3b40; }
+  .ctx{ margin:.6rem 0; font-size:.88rem; color:var(--soft); }
+  .ctx p{ margin:.15rem 0; }
+  .ctx b{ color:var(--ink); font-weight:600; }
+  .linha{ display:flex; flex-wrap:wrap; gap:.4rem; align-items:center; margin-top:.55rem; }
+  .linha .rot{ font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-right:.2rem; }
+  .mini{ border:1px solid var(--line); background:var(--bg); border-radius:999px; padding:.35rem .75rem; font-size:.8rem; cursor:pointer; font-family:inherit; color:var(--ink); }
+  .mini.on{ background:var(--ink); color:#F4F1ED; border-color:var(--ink); }
+  .msg{ border:1px solid var(--line); background:var(--bg); border-radius:10px; padding:.45rem .7rem; font-size:.8rem; cursor:pointer; font-family:inherit; text-align:left; color:var(--ink); }
+  .msg.sug{ border-color:var(--rosa); background:#fbf0ee; font-weight:600; }
+  .msg small{ display:block; font-weight:400; color:var(--muted); font-size:.72rem; }
+  .msg.feito{ opacity:.6; }
+  .bib{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:.9rem 1rem; margin-bottom:.7rem; }
+  .bib h3{ font-size:.95rem; margin-bottom:.35rem; }
+  .bib pre{ white-space:pre-wrap; font-family:inherit; font-size:.9rem; color:var(--soft); background:var(--bg); border-radius:10px; padding:.7rem .8rem; margin:.4rem 0; }
+  .bib .obs{ font-size:.8rem; color:var(--rosa-txt); }
+  .qr{ text-align:center; background:var(--card); border:1px solid var(--line); border-radius:18px; padding:1.5rem; }
+  #qrbox{ display:inline-block; background:#fff; padding:14px; border-radius:12px; margin:1rem 0; }
+  .vazio{ text-align:center; color:var(--muted); padding:2.5rem 1rem; }
+  .dica{ font-size:.85rem; color:var(--soft); background:var(--blush); border-radius:12px; padding:.7rem .9rem; margin-bottom:1rem; }
+</style>
+</head>
+<body>
+<main class="wrap" id="app"><p class="vazio">Carregando…</p></main>
+
+<script src="../mentoria/config.js?v=1"></script>
+<script src="textos.js?v=1"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+// === BLOCO 2: CONFIG E AJUDANTES ===
+const C = window.MENTORIA;
+const SB_URL = "https://gopqajnivmbxjqsiznqi.supabase.co";
+const SB_KEY = "sb_publishable_YBF0cSQt0IlTqVhCyRlduQ_ij2CHBZ5";
+const sb = window.supabase.createClient(SB_URL, SB_KEY);
+const app = document.getElementById("app");
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c]));
+const brl = v => v == null ? "[valor]" : "R$ " + Number(v).toLocaleString("pt-BR", { minimumFractionDigits: v % 1 ? 2 : 0, maximumFractionDigits: 2 });
+const LINK = new URL("../mentoria/", location.href).href;
+const dig = s => String(s || "").replace(/\D/g, "").replace(/^55(?=\d{10,11}$)/, "");
+const mesmoNum = (a, b) => { const x = dig(a), y = dig(b); return x.length >= 10 && y.length >= 10 && x.slice(0, 2) === y.slice(0, 2) && x.slice(-8) === y.slice(-8); };
+const wa = (num, txt) => `https://wa.me/55${dig(num)}?text=${encodeURIComponent(txt)}`;
+const DIAS = ["domingo", "segunda", "terça", "quarta", "quinta", "sexta", "sábado"];
+function prazoTxt(){
+  if (!C.prazo) return "[prazo]";
+  const d = new Date(C.prazo);
+  return `${DIAS[d.getDay()]} (${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")}) às ${String(d.getHours()).padStart(2, "0")}h${String(d.getMinutes()).padStart(2, "0")}`;
+}
+let selec = [], vagas = [], aba = "pessoas", filtro = "conversar", soSelecionadas = true;
+
+// Preenche {variáveis}; [[trecho]] some se alguma variável dele estiver vazia.
+function preencher(txt, v){
+  const val = k => (v[k] == null ? "" : String(v[k]).trim());
+  txt = txt.replace(/\[\[([\s\S]*?)\]\]/g, (_, t) => {
+    const vars = [...t.matchAll(/\{(\w+)\}/g)].map(m => m[1]);
+    return vars.every(k => val(k)) ? t : "";
+  });
+  return txt.replace(/\{(\w+)\}/g, (_, k) => val(k) || `[${k}]`);
+}
+function varsGerais(){
+  const pagas = vagas.filter(x => x.pago).length + selec.filter(l => l.status_venda === "pago" && !vagaDe(l)?.pago).length;
+  return { link: LINK, prazo: prazoTxt(), preco: brl(C.precoHoje), parcela: brl(C.valorParcela), parcelas: C.parcelas,
+    vagas: C.vagas ? Math.max(0, C.vagas - pagas) : "" };
+}
+function varsPessoa(p){
+  const nd = String(p.nao_deveria || "").replace(/^\s*eu\s+n[aã]o\s+deveria\s+ter\s+que\s*/i, "").replace(/[.\s]+$/, "");
+  return { ...varsGerais(), nome: String(p.nome || "").trim().split(/\s+/)[0], desafio: String(p.maior_desafio || "").replace(/[.\s]+$/, "").toLowerCase(),
+    naoDeveria: nd, rotina: p.rotina_ideal || "" };
+}
+
+// === BLOCO 3: LOGIN E DADOS ===
+function telaLogin(msg){
+  app.innerHTML = `<div class="login"><p class="eyebrow">Mentoria · vendas</p><h1 class="serif">Painel de vendas</h1>
+    <input id="em" type="email" placeholder="E-mail" autocomplete="username">
+    <input id="pw" type="password" placeholder="Senha" autocomplete="current-password">
+    <p class="erro">${esc(msg || "")}</p><button class="btn" id="ent">Entrar</button>
+    <p style="font-size:.82rem;color:var(--muted);margin-top:1rem">Use o mesmo login do castelo.</p></div>`;
+  const ir = async () => {
+    const { error } = await sb.auth.signInWithPassword({ email: em.value.trim(), password: pw.value });
+    if (error) return telaLogin("E-mail ou senha incorretos."); carregar();
+  };
+  ent.onclick = ir; pw.onkeydown = e => { if (e.key === "Enter") ir(); };
+}
+async function carregar(){
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) return telaLogin();
+  const [a, b] = await Promise.all([
+    sb.from("selecao_aula").select("*").order("criado_em", { ascending: false }),
+    sb.from("mentoria_vagas").select("*").order("criado_em", { ascending: false }),
+  ]);
+  if (a.error) return app.innerHTML = `<p class="vazio">Erro ao carregar: ${esc(a.error.message)}</p>`;
+  if (b.error) return app.innerHTML = `<p class="vazio">Falta rodar o SQL do caminho de venda (tabela mentoria_vagas).<br><small>${esc(b.error.message)}</small></p>`;
+  selec = a.data || []; vagas = b.data || [];
+  render();
+}
+const vagaDe = l => vagas.find(v => mesmoNum(v.whatsapp, l.whatsapp));
+
+// === BLOCO 4: PESSOAS (selecionadas + quem reservou sem estar na seleção) ===
+function pessoas(){
+  const base = (soSelecionadas ? selec.filter(l => l.selecionada) : selec).map(l => ({ ...l, _tipo: "selecao", _vaga: vagaDe(l) }));
+  const soReserva = vagas.filter(v => !selec.some(l => mesmoNum(l.whatsapp, v.whatsapp)))
+    .map(v => ({ id: v.id, nome: v.nome, whatsapp: v.whatsapp, followup: v.followup || {}, status_venda: v.pago ? "pago" : null, _tipo: "vaga", _vaga: v }));
+  return base.concat(soReserva).map(p => ({ ...p, _st: status(p) }));
+}
+function status(p){
+  if (p._vaga?.pago || p.status_venda === "pago") return "pago";
+  if (p.status_venda === "nao_agora") return "nao_agora";
+  if (p._vaga) return "reservou";
+  return "aberto";
+}
+const ROT_ST = { pago: "✅ Pagou", reservou: "⏳ Reservou, falta pagar", nao_agora: "Não vai agora", aberto: "Em aberto" };
+
+// Mensagem sugerida pro momento da pessoa
+function sugerida(p){
+  const f = p.followup || {};
+  if (p._st === "pago") return f.boas_vindas ? null : "boas_vindas";
+  if (p._st === "reservou") return f.abandono ? null : "abandono";
+  if (p._st === "nao_agora") return null;
+  if (p.compareceu === false && !f.d0_ausente) return "d0_ausente";
+  if (p.compareceu !== false && !f.d0_presente) return "d0_presente";
+  if (!f.conversa) return "conversa";
+  if (!f.prazo) return "prazo";
+  if (!f.ultimo_dia) return "ultimo_dia";
+  if (!f.despedida) return "despedida";
+  return null;
+}
+
+// === BLOCO 5: TELA ===
+function render(){
+  const ps = pessoas();
+  const n = st => ps.filter(p => p._st === st).length;
+  const foram = selec.filter(l => l.selecionada && l.compareceu === true).length;
+  app.innerHTML = `
+    <p class="eyebrow">Mentoria ${esc(C.nome)}</p><h1 class="serif">Painel de vendas</h1>
+    <div class="abas">
+      ${[["pessoas", "👥 Pessoas"], ["roteiro", "💬 Conversa e objeções"], ["grupo", "📣 Grupo"], ["qr", "🔗 Link e QR"]].map(([k, t]) => `<button class="aba${aba === k ? " on" : ""}" data-aba="${k}">${t}</button>`).join("")}
+      <button class="aba" id="sair">Sair</button>
+    </div>
+    ${aba === "pessoas" ? `
+      <div class="stats">
+        <div class="stat"><b>${selec.filter(l => l.selecionada).length}</b><small>Selecionadas</small></div>
+        <div class="stat"><b>${foram}</b><small>Foram</small></div>
+        <div class="stat"><b>${n("reservou")}</b><small>Reservaram</small></div>
+        <div class="stat"><b>${n("pago")}</b><small>Pagaram</small></div>
+      </div>
+      <div class="chips">
+        ${[["conversar", `A conversar (${n("aberto") + n("reservou")})`], ["reservou", `Falta pagar (${n("reservou")})`], ["pago", `Pagaram (${n("pago")})`], ["nao_agora", `Não agora (${n("nao_agora")})`], ["todas", `Todas (${ps.length})`]]
+          .map(([k, t]) => `<button class="chip" data-f="${k}" aria-pressed="${filtro === k}">${t}</button>`).join("")}
+        <button class="chip" id="so-sel" aria-pressed="${!soSelecionadas}">${soSelecionadas ? "Ver todas as inscritas" : "Só selecionadas"}</button>
+      </div>
+      <div class="dica">Toque na mensagem <b>em destaque</b>: ela abre o WhatsApp já escrita pra pessoa e fica marcada como enviada.</div>
+      ${lista(ps)}` : ""}
+    ${aba === "roteiro" ? biblioteca() : ""}
+    ${aba === "grupo" ? grupo() : ""}
+    ${aba === "qr" ? qr() : ""}`;
+  app.querySelectorAll("[data-aba]").forEach(b => b.onclick = () => { aba = b.dataset.aba; render(); });
+  sair.onclick = async () => { await sb.auth.signOut(); telaLogin(); };
+  if (aba === "pessoas") ligarPessoas(ps);
+  if (aba === "roteiro" || aba === "grupo") ligarCopiar();
+  if (aba === "qr") { new QRCode(document.getElementById("qrbox"), { text: LINK, width: 220, height: 220 }); ligarCopiar(); }
+}
+
+function lista(ps){
+  const l = filtro === "todas" ? ps : filtro === "conversar" ? ps.filter(p => p._st === "aberto" || p._st === "reservou") : ps.filter(p => p._st === filtro);
+  if (!l.length) return `<p class="vazio">Ninguém aqui por enquanto.</p>`;
+  return l.map(p => {
+    const f = p.followup || {};
+    const sug = sugerida(p);
+    const ehSel = p._tipo === "selecao";
+    return `<article class="card ${p._st}" data-k="${p._tipo}:${p.id}">
+      <div class="cab"><span class="nome">${esc(p.nome)}</span>
+        ${p.whatsapp ? `<a href="https://wa.me/55${dig(p.whatsapp)}" target="_blank" rel="noopener">${esc(p.whatsapp)}</a>` : ""}
+        <span class="selo ${p._st}">${ROT_ST[p._st]}</span>
+        ${p._vaga ? `<span style="font-size:.78rem;color:var(--muted)">reservou ${p._vaga.forma === "pix" ? "no Pix" : "no cartão"} em ${new Date(p._vaga.criado_em).toLocaleDateString("pt-BR")}</span>` : ""}
+      </div>
+      ${ehSel ? `<div class="ctx">
+        ${p.maior_desafio ? `<p><b>Desafio:</b> ${esc(p.maior_desafio)}</p>` : ""}
+        ${p.nao_deveria ? `<p><b>Não deveria ter que:</b> ${esc(p.nao_deveria)}</p>` : ""}
+        ${p.rotina_ideal ? `<p><b>Rotina ideal:</b> ${esc(p.rotina_ideal)}</p>` : ""}
+      </div>
+      <div class="linha"><span class="rot">Workshop</span>
+        <button class="mini${p.compareceu === true ? " on" : ""}" data-comp="1">Foi</button>
+        <button class="mini${p.compareceu === false ? " on" : ""}" data-comp="0">Não foi</button></div>` : `<p class="ctx">Reservou pela página da mentoria (não estava na seleção).</p>`}
+      <div class="linha"><span class="rot">Situação</span>
+        ${p._st !== "pago" ? `<button class="mini" data-st="pago">✅ Pagou</button>` : `<button class="mini" data-st="reabrir">Desfazer pago</button>`}
+        ${p._st !== "nao_agora" && p._st !== "pago" ? `<button class="mini" data-st="nao_agora">Não vai agora</button>` : ""}
+        ${p._st === "nao_agora" ? `<button class="mini" data-st="reabrir">Reabrir</button>` : ""}</div>
+      <div class="linha" style="align-items:stretch">${MSG_PESSOA.filter(m => m.k !== "d0_presente" || p.compareceu !== false).filter(m => m.k !== "d0_ausente" || p.compareceu !== true).map(m => `
+        <button class="msg${m.k === sug ? " sug" : ""}${f[m.k] ? " feito" : ""}" data-msg="${m.k}">${f[m.k] ? "✓ " : ""}${esc(m.rot)}<small>${f[m.k] ? "enviada em " + new Date(f[m.k]).toLocaleDateString("pt-BR") : esc(m.quando)}</small></button>`).join("")}</div>
+    </article>`;
+  }).join("");
+}
+
+function ligarPessoas(ps){
+  app.querySelectorAll(".chip[data-f]").forEach(b => b.onclick = () => { filtro = b.dataset.f; render(); });
+  document.getElementById("so-sel").onclick = () => { soSelecionadas = !soSelecionadas; render(); };
+  app.querySelectorAll(".card").forEach(card => {
+    const [tipo, id] = card.dataset.k.split(":");
+    const p = ps.find(x => x._tipo === tipo && String(x.id) === id);
+    card.querySelectorAll("[data-comp]").forEach(b => b.onclick = () => salvarSel(p, { compareceu: b.dataset.comp === "1" }));
+    card.querySelectorAll("[data-st]").forEach(b => b.onclick = () => mudarStatus(p, b.dataset.st));
+    card.querySelectorAll("[data-msg]").forEach(b => b.onclick = () => {
+      const m = MSG_PESSOA.find(x => x.k === b.dataset.msg);
+      if (!p.whatsapp) return alert("Essa pessoa não tem WhatsApp cadastrado.");
+      window.open(wa(p.whatsapp, preencher(m.txt, varsPessoa(p))), "_blank");
+      const fu = { ...(p.followup || {}), [m.k]: new Date().toISOString() };
+      if (tipo === "selecao") salvarSel(p, { followup: fu }); else salvarVaga(p._vaga, { followup: fu });
+    });
+  });
+}
+async function salvarSel(p, patch){
+  const { error } = await sb.from("selecao_aula").update(patch).eq("id", p.id);
+  if (error) return alert("Não consegui salvar: " + error.message);
+  Object.assign(selec.find(l => l.id === p.id), patch); render();
+}
+async function salvarVaga(v, patch){
+  const { error } = await sb.from("mentoria_vagas").update(patch).eq("id", v.id);
+  if (error) return alert("Não consegui salvar: " + error.message);
+  Object.assign(vagas.find(x => x.id === v.id), patch); render();
+}
+async function mudarStatus(p, st){
+  if (st === "pago") {
+    if (p._vaga) await salvarVaga(p._vaga, { pago: true, pago_em: new Date().toISOString() });
+    if (p._tipo === "selecao") await salvarSel(p, { status_venda: "pago" });
+  } else if (st === "nao_agora") {
+    if (p._tipo === "selecao") await salvarSel(p, { status_venda: "nao_agora" });
+  } else {
+    if (p._vaga?.pago) await salvarVaga(p._vaga, { pago: false, pago_em: null });
+    if (p._tipo === "selecao") await salvarSel(p, { status_venda: null });
+  }
+}
+
+// === BLOCO 6: BIBLIOTECA (conversa, objeções, grupo, link) ===
+const geral = t => preencher(t, { ...varsGerais(), nome: "[NOME]" });
+function blocoCopia(rot, txt, obs){
+  return `<div class="bib"><h3>${esc(rot)}</h3><pre>${esc(txt)}</pre>${obs ? `<p class="obs">${esc(obs)}</p>` : ""}<button class="btn ghost" data-copiar="${encodeURIComponent(txt)}">Copiar</button></div>`;
+}
+function biblioteca(){
+  return `<div class="dica">Use na conversa no privado, na ordem. Troque o que estiver entre [colchetes] pelas palavras da pessoa.</div>
+    <p class="eyebrow" style="margin:1rem 0 .6rem">Conversa (passo a passo)</p>
+    ${ROTEIRO.map(r => blocoCopia(r.rot, geral(r.txt), r.obs)).join("")}
+    <p class="eyebrow" style="margin:1.4rem 0 .6rem">Objeções</p>
+    ${OBJECOES.map(o => blocoCopia(o.rot, geral(o.txt))).join("")}`;
+}
+function grupo(){
+  return `<div class="dica">Mensagens do grupo de WhatsApp, do convite até o encerramento. Troque [DATA], [HORÁRIO] e [LOCAL/LINK].</div>
+    ${GRUPO.map(g => blocoCopia(g.quando, geral(g.txt))).join("")}`;
+}
+function qr(){
+  return `<div class="qr"><p class="eyebrow">Página da mentoria</p>
+    <p style="color:var(--soft);margin-top:.4rem">Mostra esse QR na hora da oferta no workshop. Quem apontar a câmera cai direto na página de inscrição.</p>
+    <div id="qrbox"></div>
+    <p style="word-break:break-all;font-weight:600">${esc(LINK)}</p>
+    <p style="margin-top:1rem"><button class="btn" data-copiar="${encodeURIComponent(LINK)}">Copiar link</button>
+      <a class="btn ghost" href="${esc(LINK)}" target="_blank" rel="noopener">Abrir página</a></p></div>`;
+}
+function ligarCopiar(){
+  app.querySelectorAll("[data-copiar]").forEach(b => b.onclick = async () => {
+    try { await navigator.clipboard.writeText(decodeURIComponent(b.dataset.copiar)); b.textContent = "✓ Copiado"; }
+    catch { b.textContent = "Não deu pra copiar"; }
+    setTimeout(() => b.textContent = b.closest(".qr") ? "Copiar link" : "Copiar", 1600);
+  });
+}
+
+carregar();
+</script>
+</body>
+</html>

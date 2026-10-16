@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Massoterapeuta de Sucesso · Mentoria</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Karla:wght@400;500;600;700&display=swap">
+<style>
+  /* === BLOCO 1: ESTILO (marca da Larissa: rosa, preto, off-white) === */
+  :root{ --bg:#F4F1ED; --ink:#050404; --soft:#55504e; --muted:#8a8381; --rosa:#E48F94; --rosa-txt:#C4646B; --blush:#FCDDDA; --line:rgba(5,4,4,.12); --card:#fffdfa; --ok:#3f7a4d; }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html,body{ background:var(--bg); }
+  body{ font-family:"Karla",system-ui,sans-serif; color:var(--ink); line-height:1.55; -webkit-font-smoothing:antialiased; }
+  .serif{ font-family:"Cormorant Garamond",Georgia,serif; font-weight:500; }
+  .wrap{ max-width:40rem; margin:0 auto; padding:0 1.2rem; }
+  .eyebrow{ font-size:.72rem; font-weight:700; letter-spacing:.24em; text-transform:uppercase; color:var(--rosa-txt); }
+  .rule{ width:3.2rem; height:3px; background:var(--rosa); margin:.9rem 0 1.1rem; border-radius:2px; }
+  section{ padding:2.6rem 0; border-top:1px solid var(--line); }
+  h2{ font-size:2rem; line-height:1.1; margin-bottom:.8rem; }
+  h2 em{ color:var(--rosa-txt); font-style:italic; }
+  p.lead{ font-size:1.05rem; color:var(--soft); }
+  .rascunho{ background:#fff4d6; border-bottom:1px solid #e9cf86; color:#6b5512; font-size:.82rem; text-align:center; padding:.5rem 1rem; }
+
+  /* hero */
+  .hero{ padding:2.4rem 0 2rem; text-align:center; }
+  .hero .lr{ width:3.2rem; opacity:.9; margin-bottom:1rem; }
+  .hero h1{ font-size:2.9rem; line-height:1; letter-spacing:-.01em; }
+  .hero .sub{ font-size:1.1rem; color:var(--soft); margin-top:.7rem; }
+  .hero .exclusivo{ display:inline-block; margin-top:1.2rem; background:var(--ink); color:#F4F1ED; font-size:.78rem; font-weight:600; letter-spacing:.06em; border-radius:999px; padding:.45rem 1rem; }
+  .relogio{ display:flex; justify-content:center; gap:.5rem; margin-top:1.3rem; }
+  .relogio div{ background:var(--card); border:1px solid var(--line); border-radius:12px; min-width:3.6rem; padding:.45rem .3rem; }
+  .relogio b{ display:block; font-family:"Cormorant Garamond",serif; font-size:1.7rem; line-height:1; }
+  .relogio small{ font-size:.66rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
+  .vagas{ margin-top:.8rem; font-size:.9rem; color:var(--rosa-txt); font-weight:600; }
+
+  /* listas e cards */
+  .check li{ list-style:none; padding:.45rem 0 .45rem 1.8rem; position:relative; color:var(--soft); }
+  .check li::before{ content:""; position:absolute; left:0; top:.75rem; width:.9rem; height:.9rem; border-radius:50%; background:var(--blush); border:2px solid var(--rosa); }
+  .enc{ background:var(--card); border:1px solid var(--line); border-left:4px solid var(--rosa); border-radius:14px; padding:1rem 1.1rem; margin-bottom:.7rem; }
+  .enc .n{ font-size:.7rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--rosa-txt); }
+  .enc h3{ font-family:"Cormorant Garamond",serif; font-weight:600; font-size:1.45rem; line-height:1.15; margin:.15rem 0 .25rem; }
+  .enc p{ color:var(--soft); font-size:.97rem; }
+  .enc .v{ font-size:.82rem; color:var(--muted); margin-top:.35rem; }
+  .bonus{ background:var(--ink); color:#F4F1ED; border-radius:18px; padding:1.4rem 1.3rem; }
+  .bonus .eyebrow{ color:var(--rosa); }
+  .bonus li{ list-style:none; padding:.5rem 0; border-top:1px solid rgba(244,241,237,.14); }
+  .bonus li:first-child{ border-top:none; }
+
+  /* preço */
+  .preco{ text-align:center; }
+  .preco .riscado{ color:var(--muted); text-decoration:line-through; font-size:1.05rem; }
+  .preco .poderia{ color:var(--soft); margin-top:.3rem; }
+  .preco .hoje{ font-family:"Cormorant Garamond",serif; font-size:3rem; line-height:1; margin:.6rem 0 .2rem; }
+  .preco .avista{ color:var(--soft); }
+  .btn{ display:inline-flex; align-items:center; justify-content:center; gap:.5rem; border:none; cursor:pointer; background:var(--ink); color:#F4F1ED; font-weight:700; font-size:1rem; padding:1rem 1.6rem; border-radius:999px; font-family:inherit; text-decoration:none; width:100%; max-width:24rem; }
+  .btn.rosa{ background:var(--rosa-txt); }
+  .btn.ghost{ background:transparent; color:var(--ink); border:1px solid var(--line); }
+  .btn:disabled{ opacity:.5; cursor:default; }
+  .garantia{ background:var(--blush); border-radius:16px; padding:1.2rem 1.3rem; color:#5d2c30; }
+
+  /* faq */
+  details{ background:var(--card); border:1px solid var(--line); border-radius:12px; padding:.85rem 1rem; margin-bottom:.55rem; }
+  summary{ cursor:pointer; font-weight:600; }
+  details p{ color:var(--soft); margin-top:.5rem; }
+
+  /* reserva (folha) */
+  .fundo{ position:fixed; inset:0; background:rgba(5,4,4,.5); display:none; z-index:10; }
+  .fundo.on{ display:block; }
+  .folha{ position:fixed; left:0; right:0; bottom:0; z-index:11; max-width:32rem; margin:0 auto; background:var(--bg); border-radius:22px 22px 0 0; padding:1.5rem 1.3rem calc(1.4rem + env(safe-area-inset-bottom)); max-height:92vh; overflow-y:auto; transform:translateY(105%); transition:transform .25s ease; }
+  .folha.on{ transform:none; }
+  .folha h3{ font-family:"Cormorant Garamond",serif; font-weight:600; font-size:1.7rem; line-height:1.1; margin-bottom:.4rem; }
+  .folha label{ display:block; font-size:.8rem; font-weight:600; color:var(--soft); margin:.8rem 0 .3rem; }
+  .folha input{ width:100%; font-family:inherit; font-size:1rem; padding:.85rem 1rem; border:1px solid var(--line); border-radius:12px; background:var(--card); outline:none; }
+  .folha input:focus{ border-color:var(--rosa); }
+  .opcoes{ display:grid; gap:.5rem; margin-top:.3rem; }
+  .op{ display:flex; gap:.7rem; align-items:center; text-align:left; width:100%; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:.85rem 1rem; font-family:inherit; font-size:.95rem; cursor:pointer; color:var(--ink); }
+  .op .mk{ width:1.1rem; height:1.1rem; border-radius:50%; border:2px solid var(--muted); flex:none; }
+  .op.on{ border-color:var(--rosa-txt); background:#fbf0ee; }
+  .op.on .mk{ border-color:var(--rosa-txt); background:var(--rosa-txt); box-shadow:inset 0 0 0 3px #fbf0ee; }
+  .erro{ color:#b3434b; font-size:.88rem; min-height:1.2rem; margin-top:.5rem; }
+  .pix{ background:var(--card); border:1px dashed var(--rosa); border-radius:12px; padding:.9rem 1rem; margin:.8rem 0; word-break:break-all; font-weight:600; }
+  .passo{ display:flex; gap:.7rem; margin:.7rem 0; color:var(--soft); }
+  .passo b.n{ flex:none; width:1.6rem; height:1.6rem; border-radius:50%; background:var(--ink); color:#F4F1ED; display:grid; place-items:center; font-size:.82rem; }
+  .fechada{ text-align:center; padding:4rem 1.2rem; }
+  footer{ text-align:center; color:var(--muted); font-size:.8rem; padding:2rem 1rem 6rem; }
+  .cta-fixo{ position:fixed; left:0; right:0; bottom:0; padding:.8rem 1.2rem calc(.8rem + env(safe-area-inset-bottom)); background:rgba(244,241,237,.94); backdrop-filter:blur(6px); border-top:1px solid var(--line); display:flex; justify-content:center; z-index:5; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<div class="fundo" id="fundo"></div>
+<div class="folha" id="folha"></div>
+
+<script src="config.js?v=1"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// === BLOCO 2: AJUDANTES ===
+const C = window.MENTORIA;
+const SB_URL = "https://gopqajnivmbxjqsiznqi.supabase.co";
+const SB_KEY = "sb_publishable_YBF0cSQt0IlTqVhCyRlduQ_ij2CHBZ5";
+const sb = window.supabase.createClient(SB_URL, SB_KEY);
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c]));
+const brl = v => v == null ? "a definir" : "R$ " + Number(v).toLocaleString("pt-BR", { minimumFractionDigits: v % 1 ? 2 : 0, maximumFractionDigits: 2 });
+const CHAVE = "mentoria-reserva-v1";
+const prazo = C.prazo ? new Date(C.prazo) : null;
+const encerrada = () => prazo && Date.now() > prazo.getTime();
+const rascunho = [C.precoHoje, C.prazo, C.pixChave || C.linkCartao].some(v => v == null);
+function mascara(v){
+  const d = v.replace(/\D/g, "").slice(0, 11);
+  if (d.length <= 2) return d.length ? "(" + d : "";
+  if (d.length <= 7) return `(${d.slice(0,2)}) ${d.slice(2)}`;
+  return `(${d.slice(0,2)}) ${d.slice(2, d.length - 4)}-${d.slice(-4)}`;
+}
+const waLarissa = msg => `https://wa.me/${C.whatsapp}?text=${encodeURIComponent(msg)}`;
+
+// === BLOCO 3: PÁGINA ===
+function pagina(){
+  if (encerrada()) {
+    $("app").innerHTML = `<div class="fechada wrap"><p class="eyebrow">${esc(C.nome)}</p><div class="rule" style="margin:.9rem auto 1.1rem"></div>
+      <h2 class="serif">A condição especial <em>encerrou</em>.</h2>
+      <p class="lead">Obrigada por ter participado do workshop. Se você ainda quer entrar na mentoria, me chama no WhatsApp que eu te conto se ainda tem vaga.</p>
+      <p style="margin-top:1.6rem"><a class="btn" href="${waLarissa("Oi Lari! Vi que a condição especial da mentoria encerrou, ainda tem vaga?")}" target="_blank" rel="noopener">Falar com a Larissa</a></p></div>`;
+    return;
+  }
+  const soma = C.encontros.concat([C.acompanhamento]).map(e => e.v).filter(v => v != null);
+  $("app").innerHTML = `
+    ${rascunho ? `<div class="rascunho">Rascunho: falta preencher preço, prazo e pagamento em <b>mentoria/config.js</b></div>` : ""}
+    <header class="hero wrap">
+      <img class="lr" src="../sorteio/img/lr-ink.png" alt="LR">
+      <p class="eyebrow">Mentoria presencial</p>
+      <h1 class="serif">${esc(C.nome)}</h1>
+      <p class="sub">${esc(C.subtitulo)}</p>
+      <span class="exclusivo">Condição exclusiva pra quem participou do workshop</span>
+      ${prazo ? `<div class="relogio" id="relogio"></div>` : ""}
+      ${C.vagas ? `<p class="vagas" id="vagas">Turma com ${C.vagas} vagas</p>` : ""}
+    </header>
+
+    <section><div class="wrap">
+      <p class="eyebrow">Pra quem é</p><div class="rule"></div>
+      <h2 class="serif">Pra quem cansou de ser o <em>remédio de emergência</em> do cliente.</h2>
+      <ul class="check">
+        <li>Você manda bem no que faz, mas o cliente só volta quando dói de novo.</li>
+        <li>Sua agenda depende da dor dos outros e a renda nunca é previsível.</li>
+        <li>Você já pensou que precisava de mais técnica ou de mais seguidores.</li>
+        <li>Você quer viver bem da massagem, com clientes que voltam por constância e te indicam.</li>
+      </ul>
+    </div></section>
+
+    <section><div class="wrap">
+      <p class="eyebrow">O que você vai viver</p><div class="rule"></div>
+      <h2 class="serif">Os 5 pilares da <em>Sinergia Intuitiva</em>, na prática.</h2>
+      <p class="lead" style="margin-bottom:1.1rem">${esc(C.datas || "Encontros presenciais práticos")} · ${esc(C.local)}</p>
+      ${C.encontros.map((e, i) => `<div class="enc"><span class="n">Encontro ${i + 1}</span><h3>${esc(e.t)}</h3><p>${esc(e.p)}</p>${e.v != null ? `<p class="v">Valor: ${brl(e.v)}</p>` : ""}</div>`).join("")}
+      <div class="enc"><span class="n">Durante toda a mentoria</span><h3>${esc(C.acompanhamento.t)}</h3><p>${esc(C.acompanhamento.p)}</p>${C.acompanhamento.v != null ? `<p class="v">Valor: ${brl(C.acompanhamento.v)}</p>` : ""}</div>
+    </div></section>
+
+    <section><div class="wrap">
+      <div class="bonus">
+        <p class="eyebrow">Bônus${C.bonusPrimeiras ? ` pras ${C.bonusPrimeiras} primeiras inscrições` : ""}</p>
+        <ul style="margin-top:.6rem">${C.bonus.map(b => `<li>🎁 ${esc(b)}</li>`).join("")}</ul>
+      </div>
+    </div></section>
+
+    <section class="preco"><div class="wrap">
+      <p class="eyebrow">Investimento</p><div class="rule" style="margin:.9rem auto 1.1rem"></div>
+      ${C.precoCheio != null ? `<p class="riscado">Tudo isso daria ${brl(C.precoCheio)}</p>` : soma.length ? `<p class="riscado">Tudo isso daria ${brl(soma.reduce((a, b) => a + b, 0))}</p>` : ""}
+      ${C.precoPoderia != null ? `<p class="poderia">Eu poderia cobrar ${brl(C.precoPoderia)}, mas pra quem esteve no workshop:</p>` : ""}
+      <p class="hoje">${C.valorParcela != null ? `${C.parcelas}x de ${brl(C.valorParcela)}` : brl(C.precoHoje)}</p>
+      <p class="avista">${C.valorParcela != null ? `ou ${brl(C.precoHoje)} à vista no Pix` : "à vista no Pix ou parcelado no cartão"}</p>
+      <p style="margin-top:1.4rem"><button class="btn rosa" data-reservar>Quero minha vaga</button></p>
+    </div></section>
+
+    <section><div class="wrap">
+      <div class="garantia"><p class="eyebrow" style="color:#8a3c42">Garantia</p><p style="margin-top:.4rem">${esc(C.garantia)}</p></div>
+    </div></section>
+
+    <section><div class="wrap">
+      <p class="eyebrow">Dúvidas</p><div class="rule"></div>
+      ${FAQ.map(([q, a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join("")}
+      <p style="margin-top:1.2rem;text-align:center"><a class="btn ghost" href="${waLarissa("Oi Lari! Tenho uma dúvida sobre a mentoria.")}" target="_blank" rel="noopener">Ainda tenho dúvida, quero falar com a Larissa</a></p>
+    </div></section>
+    <footer>Larissa Rodrigues · @massoterapeutalarissar</footer>
+    <div class="cta-fixo"><button class="btn rosa" data-reservar>Quero minha vaga</button></div>`;
+  document.querySelectorAll("[data-reservar]").forEach(b => b.onclick = abrirReserva);
+  if (prazo) { relogio(); setInterval(relogio, 1000); }
+  vagasRestantes();
+}
+
+const FAQ = [
+  ["Sou iniciante, serve pra mim?", "Serve. É o melhor momento: você já começa construindo clientes que voltam por constância, em vez de passar anos no ciclo da emergência."],
+  ["Já fiz vários cursos de técnica. Qual a diferença?", "Curso de técnica ensina o que fazer com as mãos. Aqui é o que fazer com a pessoa: a escuta, o ritual, o vínculo e a conversa que fazem ela voltar e indicar."],
+  ["Não tenho tempo.", "Você não vai trabalhar mais horas. Vai trabalhar diferente nas horas que você já trabalha. Os encontros são práticos e você aplica nos seus atendimentos da semana."],
+  ["Posso parcelar?", "Pode. No cartão em até " + C.parcelas + "x, ou à vista no Pix."],
+  ["Isso não é dom? Dá pra aprender?", "Não é dom, é escuta. Você sentiu nas próprias mãos no workshop. Escuta se treina, e é isso que a gente faz nos encontros."],
+  ["Como eu garanto a minha vaga?", "Toca em \"Quero minha vaga\", escolhe Pix ou cartão e me manda o comprovante no WhatsApp. Eu confirmo pessoalmente."],
+];
+
+function relogio(){
+  const el = $("relogio"); if (!el) return;
+  let s = Math.max(0, Math.floor((prazo - Date.now()) / 1000));
+  if (s === 0) return pagina();
+  const d = Math.floor(s / 86400); s %= 86400;
+  const h = Math.floor(s / 3600); s %= 3600;
+  const m = Math.floor(s / 60);
+  el.innerHTML = [[d, "dias"], [h, "horas"], [m, "min"], [s % 60, "seg"]].map(([n, t]) => `<div><b>${String(n).padStart(2, "0")}</b><small>${t}</small></div>`).join("");
+}
+async function vagasRestantes(){
+  if (!C.vagas) return;
+  try {
+    const { data, error } = await sb.rpc("mentoria_pagas");
+    if (error || typeof data !== "number") return;
+    const r = Math.max(0, C.vagas - data);
+    const el = $("vagas"); if (el) el.textContent = r > 0 ? `Restam ${r} de ${C.vagas} vagas` : "Turma completa: entra na lista de espera pelo WhatsApp";
+  } catch {}
+}
+
+// === BLOCO 4: RESERVA + PAGAMENTO ===
+let forma = null;
+function lerReserva(){ try { return JSON.parse(localStorage.getItem(CHAVE) || "null"); } catch { return null; } }
+function abrirReserva(){
+  const r = lerReserva();
+  $("fundo").classList.add("on"); $("folha").classList.add("on");
+  if (r) return telaPagamento(r);
+  forma = null;
+  $("folha").innerHTML = `
+    <h3>Reservar minha vaga</h3>
+    <p style="color:var(--soft)">Leva 1 minuto. Depois eu te mostro como pagar.</p>
+    <label>Seu nome</label><input id="r-nome" autocomplete="name" maxlength="80">
+    <label>Seu WhatsApp</label><input id="r-whats" inputmode="tel" placeholder="(51) 99999-9999">
+    <label>Como você prefere pagar?</label>
+    <div class="opcoes">
+      <button class="op" data-f="pix"><span class="mk"></span><span><b>Pix à vista</b><br><small style="color:var(--muted)">${brl(C.precoHoje)}</small></span></button>
+      <button class="op" data-f="cartao"><span class="mk"></span><span><b>Cartão em até ${C.parcelas}x</b><br><small style="color:var(--muted)">${C.valorParcela != null ? `${C.parcelas}x de ${brl(C.valorParcela)}` : "parcelado"}</small></span></button>
+    </div>
+    <p class="erro" id="r-erro"></p>
+    <button class="btn rosa" id="r-ok" style="max-width:none;margin-top:.4rem">Continuar</button>
+    <button class="btn ghost" id="r-fechar" style="max-width:none;margin-top:.5rem">Agora não</button>`;
+  $("r-whats").oninput = e => e.target.value = mascara(e.target.value);
+  document.querySelectorAll(".op").forEach(b => b.onclick = () => {
+    forma = b.dataset.f;
+    document.querySelectorAll(".op").forEach(x => x.classList.toggle("on", x === b));
+  });
+  $("r-fechar").onclick = fechar;
+  $("r-ok").onclick = reservar;
+}
+async function reservar(){
+  const nome = $("r-nome").value.trim(), whats = $("r-whats").value.trim();
+  if (nome.length < 2) return $("r-erro").textContent = "Escreve o seu nome.";
+  if (whats.replace(/\D/g, "").length < 10) return $("r-erro").textContent = "Coloca o WhatsApp com DDD.";
+  if (!forma) return $("r-erro").textContent = "Escolhe a forma de pagamento.";
+  const btn = $("r-ok"); btn.disabled = true; btn.textContent = "Reservando…";
+  const { error } = await sb.from("mentoria_vagas").insert({ nome, whatsapp: whats, forma });
+  if (error) { btn.disabled = false; btn.textContent = "Continuar"; return $("r-erro").textContent = "Não consegui reservar agora. Tenta de novo ou me chama no WhatsApp."; }
+  const r = { nome, whats, forma };
+  try { localStorage.setItem(CHAVE, JSON.stringify(r)); } catch {}
+  telaPagamento(r);
+}
+function telaPagamento(r){
+  const primeiro = r.nome.split(" ")[0];
+  const msg = `Oi Lari! Aqui é ${r.nome}. Fiz o pagamento da mentoria ${C.nome} (${r.forma === "pix" ? "Pix" : "cartão"}), segue o comprovante 💛`;
+  $("folha").innerHTML = `
+    <h3>Vaga reservada, ${esc(primeiro)} 💛</h3>
+    <p style="color:var(--soft)">Agora é só concluir o pagamento. A vaga fica garantida quando o comprovante chegar.</p>
+    ${r.forma === "pix" ? `
+      <div class="passo"><b class="n">1</b><span>Faz um Pix de <b>${brl(C.precoHoje)}</b> pra chave abaixo (${esc(C.pixNome)}):</span></div>
+      <div class="pix" id="pix">${esc(C.pixChave || "chave Pix a definir")}</div>
+      <button class="btn ghost" id="copiar" style="max-width:none">Copiar chave Pix</button>`
+    : `
+      <div class="passo"><b class="n">1</b><span>Paga no cartão em até ${C.parcelas}x pelo link seguro do Mercado Pago:</span></div>
+      ${C.linkCartao ? `<a class="btn" href="${esc(C.linkCartao)}" target="_blank" rel="noopener" style="max-width:none">Pagar no cartão</a>` : `<p class="pix">Link de pagamento a definir</p>`}`}
+    <div class="passo"><b class="n">2</b><span>Me manda o comprovante no WhatsApp. Eu confirmo sua vaga pessoalmente.</span></div>
+    <a class="btn rosa" href="${waLarissa(msg)}" target="_blank" rel="noopener" style="max-width:none">Enviar comprovante no WhatsApp</a>
+    <button class="btn ghost" id="trocar" style="max-width:none;margin-top:.5rem">Trocar forma de pagamento</button>
+    <button class="btn ghost" id="r-fechar" style="max-width:none;margin-top:.5rem">Fechar</button>`;
+  $("copiar")?.addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(C.pixChave || ""); $("copiar").textContent = "✓ Chave copiada"; }
+    catch { $("copiar").textContent = "Segura na chave pra copiar"; }
+  });
+  $("trocar").onclick = () => { try { localStorage.removeItem(CHAVE); } catch {} abrirReserva(); };
+  $("r-fechar").onclick = fechar;
+}
+function fechar(){ $("fundo").classList.remove("on"); $("folha").classList.remove("on"); }
+$("fundo").onclick = fechar;
+
+pagina();
+</script>
+</body>
+</html>
