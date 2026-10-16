@@ -60,6 +60,12 @@
   .brick{ width:2rem; height:1.2rem; border-radius:4px; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.22); display:grid; place-items:center; font-size:.72rem; color:rgba(255,255,255,.5); transition:all .4s; }
   .brick.on{ background:linear-gradient(180deg,var(--gold-lite),var(--gold)); border-color:var(--gold-lite); color:#5a3d05; transform:translateY(-2px); }
 
+  /* ferramentas da dona do castelo (só admins: tabela public.admins) */
+  .ferramentas{ background:rgba(255,250,240,.96); border-radius:16px; margin:0 0 1.1rem; box-shadow:0 8px 30px rgba(0,0,0,.16); overflow:hidden; }
+  .fer-tit{ width:100%; display:flex; justify-content:space-between; align-items:center; background:none; border:none; cursor:pointer; font-family:inherit; font-weight:700; font-size:1rem; color:var(--ink); padding:.9rem 1.1rem; }
+  .fer-corpo{ padding:0 .8rem .8rem; display:grid; gap:.5rem; }
+  .fer-item{ display:block; text-align:left; width:100%; text-decoration:none; color:var(--ink); background:#fff; border:1px solid var(--line); border-left:4px solid var(--gold); border-radius:12px; padding:.7rem .9rem; font-family:inherit; font-size:.95rem; cursor:pointer; }
+  .fer-item small{ display:block; color:var(--ink-soft); font-size:.8rem; font-weight:400; margin-top:.15rem; }
   .howto{ background:rgba(255,250,240,.94); border-radius:16px; padding:1rem 1.1rem; margin-bottom:1.2rem; box-shadow:0 8px 30px rgba(0,0,0,.16); }
   .howto p{ margin:.2rem 0; font-size:.92rem; color:var(--ink-soft); } .howto b{ color:var(--ink); }
   .howto.pesq{ border:1px solid var(--gold); background:#fff8ea; }
@@ -137,6 +143,15 @@
 
   <div id="alunaView" class="hidden">
     <div class="topbar"><span class="who" id="alunaWho"></span><button class="out alt hidden" id="alunaAsAdmin">👑 Ver como admin</button><button class="out" id="alunaOut">Sair</button></div>
+    <div class="ferramentas hidden" data-ferramentas>
+      <button class="fer-tit" type="button" data-fer-tog>🧰 Suas ferramentas <span data-fer-seta>▾</span></button>
+      <div class="fer-corpo hidden" data-fer-corpo>
+        <a class="fer-item" href="selecao/painel/"><b>📝 Respostas da seleção</b><small>Quem se inscreveu na aula e o que respondeu. Aqui você seleciona.</small></a>
+        <a class="fer-item" href="vendas/"><b>📊 Vendas da mentoria</b><small>Quem pagou, quem falta, mensagens prontas pro WhatsApp, roteiro e QR.</small></a>
+        <a class="fer-item" href="mentoria/"><b>💳 Página da mentoria</b><small>A página de inscrição e pagamento que as pessoas veem.</small></a>
+        <button class="fer-item" type="button" data-copiar="selecao/"><b>📋 Copiar link do formulário</b><small>Pra mandar no direct pra quem comentou "Eu quero".</small></button>
+      </div>
+    </div>
     <div class="andar-nav" id="andarNav"></div>
     <div class="hero">
       <p class="eyebrow" id="andarEyebrow"></p>
@@ -179,6 +194,15 @@
     <div class="topbar"><span class="who" id="adminWho"></span><button class="out alt" id="adminAsAluna">👤 Ver como aluno(a)</button><button class="out" id="adminOut">Sair</button></div>
 
     <div id="adminHome">
+      <div class="ferramentas hidden" data-ferramentas>
+      <button class="fer-tit" type="button" data-fer-tog>🧰 Suas ferramentas <span data-fer-seta>▾</span></button>
+      <div class="fer-corpo hidden" data-fer-corpo>
+        <a class="fer-item" href="selecao/painel/"><b>📝 Respostas da seleção</b><small>Quem se inscreveu na aula e o que respondeu. Aqui você seleciona.</small></a>
+        <a class="fer-item" href="vendas/"><b>📊 Vendas da mentoria</b><small>Quem pagou, quem falta, mensagens prontas pro WhatsApp, roteiro e QR.</small></a>
+        <a class="fer-item" href="mentoria/"><b>💳 Página da mentoria</b><small>A página de inscrição e pagamento que as pessoas veem.</small></a>
+        <button class="fer-item" type="button" data-copiar="selecao/"><b>📋 Copiar link do formulário</b><small>Pra mandar no direct pra quem comentou "Eu quero".</small></button>
+      </div>
+    </div>
       <h1>🏰 Seus alunos e alunas</h1>
       <p class="sub">Clique num card pra abrir o castelo da pessoa.</p>
       <div style="margin-bottom:1rem"><button class="btn" id="reload">🔄 Atualizar</button> <span id="stat" style="color:#f3e4d6;font-size:.9rem"></span></div>
@@ -286,12 +310,31 @@
   async function route(){
     var s=(await client.auth.getSession()).data.session;
     if(!s){ show('authView'); return; }
+    mostrarFerramentas();
     USER=s.user; isAdmin=((USER.email||'').toLowerCase()===ADMIN_EMAIL);
     if(isAdmin && viewAs==='admin'){ initAdmin(); } else { initAluna(); }
   }
   $('adminAsAluna').addEventListener('click',function(){ viewAs='aluna'; route(); });
   $('alunaAsAdmin').addEventListener('click',function(){ viewAs='admin'; route(); });
 
+  // ---------- FERRAMENTAS (só pra quem está na tabela public.admins) ----------
+  var _ehAdminDb=null;
+  async function mostrarFerramentas(){
+    if(_ehAdminDb===null){ try{ var r=await client.rpc('eh_admin'); _ehAdminDb=!r.error && r.data===true; }catch(e){ _ehAdminDb=false; } }
+    document.querySelectorAll('[data-ferramentas]').forEach(function(box){
+      box.classList.toggle('hidden', !_ehAdminDb);
+      if(box._ligado) return; box._ligado=true;
+      box.querySelector('[data-fer-tog]').addEventListener('click',function(){
+        var c=box.querySelector('[data-fer-corpo]'); c.classList.toggle('hidden');
+        box.querySelector('[data-fer-seta]').textContent=c.classList.contains('hidden')?'▾':'▴';
+      });
+      box.querySelectorAll('[data-copiar]').forEach(function(b){ b.addEventListener('click',async function(){
+        var url=new URL(b.getAttribute('data-copiar'), location.href).href;
+        try{ await navigator.clipboard.writeText(url); b.querySelector('b').textContent='✓ Link copiado'; }
+        catch(e){ prompt('Copie o link:', url); }
+      }); });
+    });
+  }
   // ---------- ALUNA (MULTI-ANDAR) ----------
   var rows={}, cur=0, prevDone=null;
   function nome(){ return (USER.user_metadata&&USER.user_metadata.nome)||(USER.email||'').split('@')[0]; }
