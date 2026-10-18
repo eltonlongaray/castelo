@@ -106,7 +106,7 @@ function preencher(txt, v){
 }
 function varsGerais(){
   const pagas = vagas.filter(x => x.pago).length + selec.filter(l => l.status_venda === "pago" && !vagaDe(l)?.pago).length;
-  return { link: LINK, encontros: `${C.encontros.length} encontros`, prazo: prazoTxt(), preco: brl(C.precoHoje), parcela: brl(C.valorParcela), parcelas: C.parcelas,
+  return { link: LINK, encontros: `${C.encontros.length} aulas${C.duracaoAula ? " de " + C.duracaoAula : ""}`, prazo: prazoTxt(), preco: brl(C.precoHoje), parcela: brl(C.valorParcela), parcelas: C.parcelas,
     // turmas de C.vagas pessoas: o que falta pra fechar a turma atual
     vagas: C.vagas ? C.vagas - (pagas % C.vagas) : "" };
 }
