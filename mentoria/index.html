@@ -52,6 +52,13 @@
   /* preço */
   .preco{ text-align:center; }
   .preco .riscado{ color:var(--muted); text-decoration:line-through; font-size:1.05rem; }
+  .ancora{ text-align:left; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:.4rem 1rem; margin-bottom:1rem; }
+  .ancora li{ list-style:none; display:flex; justify-content:space-between; gap:1rem; padding:.5rem 0; border-top:1px solid var(--line); font-size:.92rem; color:var(--soft); }
+  .ancora li:first-child{ border-top:none; }
+  .ancora b{ color:var(--ink); white-space:nowrap; font-variant-numeric:tabular-nums; }
+  .preco .total{ font-size:1.15rem; color:var(--soft); }
+  .preco .total s{ color:var(--muted); }
+  .preco .pordia{ font-size:.9rem; color:var(--rosa-txt); margin-top:.8rem; }
   .preco .poderia{ color:var(--soft); margin-top:.3rem; }
   .preco .hoje{ font-family:"Cormorant Garamond",serif; font-size:3rem; line-height:1; margin:.6rem 0 .2rem; }
   .preco .avista{ color:var(--soft); }
@@ -95,7 +102,7 @@
 <div class="fundo" id="fundo"></div>
 <div class="folha" id="folha"></div>
 
-<script src="config.js?v=2"></script>
+<script src="config.js?v=4"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 // === BLOCO 2: AJUDANTES ===
@@ -127,7 +134,13 @@ function pagina(){
       <p style="margin-top:1.6rem"><a class="btn" href="${waLarissa("Oi Lari! Vi que a condição especial da mentoria encerrou, ainda tem vaga?")}" target="_blank" rel="noopener">Falar com a Larissa</a></p></div>`;
     return;
   }
-  const soma = C.encontros.concat([C.acompanhamento]).map(e => e.v).filter(v => v != null);
+  const bonusT = b => typeof b === "string" ? b : b.t;
+  const bonusV = b => typeof b === "string" ? null : b.v;
+  // itens com valor (ancoragem do pitch: cada parte da entrega com o seu valor)
+  const itens = C.encontros.map((e, i) => ({ t: `Aula ${i + 1} · ${e.t}`, v: e.v }))
+    .concat([{ t: C.acompanhamento.t, v: C.acompanhamento.v }], C.bonus.map(b => ({ t: "Bônus: " + (b.c || bonusT(b)), v: bonusV(b) })))
+    .filter(x => x.v != null);
+  const soma = itens.reduce((a, x) => a + x.v, 0);
   $("app").innerHTML = `
     ${rascunho ? `<div class="rascunho">Rascunho: falta preencher preço, prazo e pagamento em <b>mentoria/config.js</b></div>` : ""}
     <header class="hero wrap">
@@ -162,16 +175,18 @@ function pagina(){
     <section><div class="wrap">
       <div class="bonus">
         <p class="eyebrow">Bônus${C.bonusPrimeiras ? ` pras ${C.bonusPrimeiras} primeiras inscrições` : ""}</p>
-        <ul style="margin-top:.6rem">${C.bonus.map(b => `<li>🎁 ${esc(b)}</li>`).join("")}</ul>
+        <ul style="margin-top:.6rem">${C.bonus.map(b => `<li>🎁 ${esc(bonusT(b))}${bonusV(b) != null ? ` <span style="opacity:.6">(valor ${brl(bonusV(b))})</span>` : ""}</li>`).join("")}</ul>
       </div>
     </div></section>
 
     <section class="preco"><div class="wrap">
       <p class="eyebrow">Investimento</p><div class="rule" style="margin:.9rem auto 1.1rem"></div>
-      ${C.precoCheio != null ? `<p class="riscado">Tudo isso daria ${brl(C.precoCheio)}</p>` : soma.length ? `<p class="riscado">Tudo isso daria ${brl(soma.reduce((a, b) => a + b, 0))}</p>` : ""}
+      ${itens.length ? `<ul class="ancora">${itens.map(x => `<li><span>${esc(x.t)}</span><b>${brl(x.v)}</b></li>`).join("")}</ul>` : ""}
+      ${C.precoCheio != null || soma ? `<p class="total">Tudo isso daria <s>${brl(C.precoCheio != null ? C.precoCheio : soma)}</s></p>` : ""}
       ${C.precoPoderia != null ? `<p class="poderia">Eu poderia cobrar ${brl(C.precoPoderia)}, mas pra quem esteve no workshop:</p>` : ""}
       <p class="hoje">${C.valorParcela != null ? `${C.parcelas}x de ${brl(C.valorParcela)}` : brl(C.precoHoje)}</p>
-      <p class="avista">${C.valorParcela != null ? `ou ${brl(C.precoHoje)} à vista no Pix` : "à vista no Pix ou parcelado no cartão"}</p>
+      <p class="avista">${C.valorParcela != null ? `ou ${brl(C.precoHoje)} à vista no Pix` : `à vista no Pix ou em até ${C.parcelas}x no cartão`}</p>
+      ${C.precoHoje ? `<p class="pordia">Menos de ${brl(Math.ceil(C.precoHoje / 365))} por dia ao longo de um ano, e se paga com poucos clientes que passam a voltar todo mês.</p>` : ""}
       <p style="margin-top:1.4rem"><button class="btn rosa" data-reservar>Quero minha vaga</button></p>
     </div></section>
 

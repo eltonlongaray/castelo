@@ -15,8 +15,8 @@ window.MENTORIA = {
   bonusPrimeiras: null,        // bônus vale pras X primeiras (ex: 3)
 
   // Preço
-  precoCheio: null,            // "tudo isso daria" (ancoragem), ex: 6000
-  precoPoderia: null,          // "eu poderia cobrar", ex: 4500
+  precoCheio: null,            // "tudo isso daria" — null = soma sozinho os valores de cada item abaixo
+  precoPoderia: 3000,          // "eu poderia cobrar" (proposta 18/10, a confirmar)
   precoHoje: 1800,             // valor da mentoria (definido pela Larissa, 18/10)
   parcelas: 12,
   valorParcela: null,          // ex: 297
@@ -28,17 +28,19 @@ window.MENTORIA = {
 
   // O que entra (cada pilar do método = um encontro prático)
   encontros: [
-    { t: "A Dança", p: "Escute o que o corpo do seu cliente esconde antes mesmo dele falar.", v: null },
-    { t: "O Ritual", p: "Transforme uma sessão comum numa experiência que ele não encontra em outro lugar.", v: null },
-    { t: "O Vínculo", p: "Faça o cliente parar de comparar o seu preço com o de qualquer outra.", v: null },
-    { t: "O Efeito Cascata", p: "Faça cada cliente feliz trazer o próximo, sem você pedir.", v: null },
-    { t: "O Negócio", p: "Monte pacotes, cobre pelo valor e tenha renda previsível sem mais horas.", v: null },
+    { t: "A Dança", p: "Escute o que o corpo do seu cliente esconde antes mesmo dele falar.", v: 500 },
+    { t: "O Ritual", p: "Transforme uma sessão comum numa experiência que ele não encontra em outro lugar.", v: 500 },
+    { t: "O Vínculo", p: "Faça o cliente parar de comparar o seu preço com o de qualquer outra.", v: 500 },
+    { t: "O Efeito Cascata", p: "Faça cada cliente feliz trazer o próximo, sem você pedir.", v: 500 },
+    { t: "O Negócio", p: "Monte pacotes, cobre pelo valor e tenha renda previsível sem mais horas.", v: 500 },
   ],
-  acompanhamento: { t: "3 atendimentos com acompanhamento", p: "Três atendimentos com o meu acompanhamento, pra você aplicar o método na prática com segurança.", v: null },
+  acompanhamento: { t: "3 atendimentos com acompanhamento", p: "Três atendimentos com o meu acompanhamento, pra você aplicar o método na prática com segurança.", v: 1050 },
+  // Ancoragem (proposta 18/10, a confirmar com a Larissa): aula = R$ 500 (3h ≈ a hora da massagem dela),
+  // atendimento acompanhado = R$ 350 cada, sessão = o preço real dela (R$ 170).
   bonus: [
-    "Uma sessão comigo pra você sentir o método na pele",
-    "Roteiro da frase-ponte e do pacote: o que falar no fim da sessão pra vender constância",
-    "Ficha de atendimento digital com mapa do corpo, pra usar com os seus clientes desde o primeiro dia",
+    { t: "Uma sessão comigo pra você sentir o método na pele", c: "Sessão comigo", v: 170 },
+    { t: "Roteiro da frase-ponte e do pacote: o que falar no fim da sessão pra vender constância", c: "Roteiro da frase-ponte e do pacote", v: 197 },
+    { t: "Ficha de atendimento digital com mapa do corpo, pra usar com os seus clientes desde o primeiro dia", c: "Ficha digital com mapa do corpo", v: 297 },
   ],
   garantia: "Se você aplicar o que eu te ensinar nos primeiros 30 dias e não sentir diferença em como os seus clientes voltam, eu te acompanho sem custo até sentir.",
 };
