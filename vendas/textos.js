@@ -73,7 +73,7 @@ Assim que pagar, me manda o comprovante aqui que eu já confirmo sua vaga e te c
 
 // === BLOCO 4: OBJEÇÕES (resposta pronta) ===
 window.OBJECOES = [
-  { rot: "\"Tá caro\" / \"não tenho dinheiro agora\"", txt: `Te entendo, {nome}. Faz uma conta comigo: quantos clientes por mês aparecem uma vez e somem? Se só 2 ou 3 deles passarem a voltar por constância, a mentoria se paga. Por isso deixei também em até {parcelas}x no cartão.` },
+  { rot: "\"Tá caro\" / \"não tenho dinheiro agora\"", txt: `Te entendo, {nome}. Faz uma conta comigo: quantos clientes por mês aparecem uma vez e somem? Se só 2 ou 3 deles passarem a voltar por constância, a mentoria se paga, sem contar as indicações deles. Por isso deixei também em até {parcelas}x no cartão.` },
   { rot: "\"Não tenho tempo\"", txt: `Eu sei que sua rotina é corrida, {nome}, por isso mesmo a mentoria é prática. Você não vai trabalhar mais horas: vai trabalhar diferente nas horas que já trabalha, aplicando nos atendimentos da semana.` },
   { rot: "\"Já fiz vários cursos\"", txt: `Faz sentido, {nome}. Mas me diz: os cursos que você fez te ensinaram o que fazer com as mãos ou o que fazer com a pessoa? A mentoria é sobre a pessoa: a escuta, o vínculo e a conversa que fazem ela voltar e te indicar.` },
   { rot: "\"Sou iniciante\"", txt: `Esse é o melhor momento, {nome}. Você já começa construindo clientes que voltam por constância, em vez de passar anos dependendo da dor dos outros como eu passei.` },
