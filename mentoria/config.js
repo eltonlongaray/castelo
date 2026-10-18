@@ -5,18 +5,19 @@ window.MENTORIA = {
   nome: "Massoterapeuta de Sucesso",
   subtitulo: "Mentoria presencial com o método Sinergia Intuitiva",
   local: "Porto Alegre · no espaço da Larissa",
-  datas: null,                 // ex: "4 encontros às terças, de 11/11 a 02/12, 19h às 22h"
+  datas: "5 aulas de 3h + 3 atendimentos com acompanhamento", // (datas dos encontros: a definir)
+  duracaoAula: "3h",
   whatsapp: "5551984551613",   // WhatsApp da Larissa (recebe comprovante e dúvidas)
 
   // Condição especial (só pra quem participou do workshop)
   prazo: null,                 // ex: "2026-11-08T23:59:00-03:00"  → fecha a condição sozinho
-  vagas: null,                 // total de vagas da turma (ex: 8)
+  vagas: 5,                    // vagas por TURMA. Passou de 5 inscrições pagas → abre a turma 2
   bonusPrimeiras: null,        // bônus vale pras X primeiras (ex: 3)
 
   // Preço
   precoCheio: null,            // "tudo isso daria" (ancoragem), ex: 6000
   precoPoderia: null,          // "eu poderia cobrar", ex: 4500
-  precoHoje: null,             // à vista hoje, ex: 2970
+  precoHoje: 1800,             // valor da mentoria (definido pela Larissa, 18/10)
   parcelas: 12,
   valorParcela: null,          // ex: 297
 
@@ -33,7 +34,7 @@ window.MENTORIA = {
     { t: "O Efeito Cascata", p: "Faça cada cliente feliz trazer o próximo, sem você pedir.", v: null },
     { t: "O Negócio", p: "Monte pacotes, cobre pelo valor e tenha renda previsível sem mais horas.", v: null },
   ],
-  acompanhamento: { t: "Acompanhamento comigo", p: "Grupo no WhatsApp durante toda a mentoria pra tirar dúvidas e destravar na prática.", v: null },
+  acompanhamento: { t: "3 atendimentos com acompanhamento", p: "Três atendimentos com o meu acompanhamento, pra você aplicar o método na prática com segurança.", v: null },
   bonus: [
     "Uma sessão comigo pra você sentir o método na pele",
     "Roteiro da frase-ponte e do pacote: o que falar no fim da sessão pra vender constância",

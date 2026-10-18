@@ -95,7 +95,7 @@
 <div class="fundo" id="fundo"></div>
 <div class="folha" id="folha"></div>
 
-<script src="config.js?v=1"></script>
+<script src="config.js?v=2"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 // === BLOCO 2: AJUDANTES ===
@@ -137,7 +137,7 @@ function pagina(){
       <p class="sub">${esc(C.subtitulo)}</p>
       <span class="exclusivo">Condição exclusiva pra quem participou do workshop</span>
       ${prazo ? `<div class="relogio" id="relogio"></div>` : ""}
-      ${C.vagas ? `<p class="vagas" id="vagas">Turma com ${C.vagas} vagas</p>` : ""}
+      ${C.vagas ? `<p class="vagas" id="vagas">Turma de ${C.vagas} vagas</p>` : ""}
     </header>
 
     <section><div class="wrap">
@@ -155,8 +155,8 @@ function pagina(){
       <p class="eyebrow">O que você vai viver</p><div class="rule"></div>
       <h2 class="serif">Os 5 pilares da <em>Sinergia Intuitiva</em>, na prática.</h2>
       <p class="lead" style="margin-bottom:1.1rem">${esc(C.datas || "Encontros presenciais práticos")} · ${esc(C.local)}</p>
-      ${C.encontros.map((e, i) => `<div class="enc"><span class="n">Encontro ${i + 1}</span><h3>${esc(e.t)}</h3><p>${esc(e.p)}</p>${e.v != null ? `<p class="v">Valor: ${brl(e.v)}</p>` : ""}</div>`).join("")}
-      <div class="enc"><span class="n">Durante toda a mentoria</span><h3>${esc(C.acompanhamento.t)}</h3><p>${esc(C.acompanhamento.p)}</p>${C.acompanhamento.v != null ? `<p class="v">Valor: ${brl(C.acompanhamento.v)}</p>` : ""}</div>
+      ${C.encontros.map((e, i) => `<div class="enc"><span class="n">Aula ${i + 1}${C.duracaoAula ? " · " + esc(C.duracaoAula) : ""}</span><h3>${esc(e.t)}</h3><p>${esc(e.p)}</p>${e.v != null ? `<p class="v">Valor: ${brl(e.v)}</p>` : ""}</div>`).join("")}
+      <div class="enc"><span class="n">Na prática</span><h3>${esc(C.acompanhamento.t)}</h3><p>${esc(C.acompanhamento.p)}</p>${C.acompanhamento.v != null ? `<p class="v">Valor: ${brl(C.acompanhamento.v)}</p>` : ""}</div>
     </div></section>
 
     <section><div class="wrap">
@@ -196,6 +196,7 @@ const FAQ = [
   ["Já fiz vários cursos de técnica. Qual a diferença?", "Curso de técnica ensina o que fazer com as mãos. Aqui é o que fazer com a pessoa: a escuta, o ritual, o vínculo e a conversa que fazem ela voltar e indicar."],
   ["Não tenho tempo.", "Você não vai trabalhar mais horas. Vai trabalhar diferente nas horas que você já trabalha. Os encontros são práticos e você aplica nos seus atendimentos da semana."],
   ["Posso parcelar?", "Pode. No cartão em até " + C.parcelas + "x, ou à vista no Pix."],
+  ["E se as vagas acabarem?", "Cada turma tem " + C.vagas + " vagas, pra eu conseguir acompanhar cada pessoa de perto. Se lotar, eu abro uma nova turma, e você garante o seu lugar nela."],
   ["Isso não é dom? Dá pra aprender?", "Não é dom, é escuta. Você sentiu nas próprias mãos no workshop. Escuta se treina, e é isso que a gente faz nos encontros."],
   ["Como eu garanto a minha vaga?", "Toca em \"Quero minha vaga\", escolhe Pix ou cartão e me manda o comprovante no WhatsApp. Eu confirmo pessoalmente."],
 ];
@@ -214,8 +215,11 @@ async function vagasRestantes(){
   try {
     const { data, error } = await sb.rpc("mentoria_pagas");
     if (error || typeof data !== "number") return;
-    const r = Math.max(0, C.vagas - data);
-    const el = $("vagas"); if (el) el.textContent = r > 0 ? `Restam ${r} de ${C.vagas} vagas` : "Turma completa: entra na lista de espera pelo WhatsApp";
+    // turmas de C.vagas pessoas: lotou a 1ª, a reserva continua aberta pra turma seguinte
+    const turma = Math.floor(data / C.vagas) + 1;
+    const r = C.vagas - (data % C.vagas);
+    const el = $("vagas");
+    if (el) el.textContent = turma === 1 ? `Restam ${r} de ${C.vagas} vagas` : `Turma ${turma - 1} completa! Abrimos a turma ${turma}: restam ${r} de ${C.vagas} vagas`;
   } catch {}
 }
 

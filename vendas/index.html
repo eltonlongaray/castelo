@@ -70,7 +70,7 @@
 <body>
 <main class="wrap" id="app"><p class="vazio">Carregando…</p></main>
 
-<script src="../mentoria/config.js?v=1"></script>
+<script src="../mentoria/config.js?v=2"></script>
 <script src="textos.js?v=5"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -107,7 +107,8 @@ function preencher(txt, v){
 function varsGerais(){
   const pagas = vagas.filter(x => x.pago).length + selec.filter(l => l.status_venda === "pago" && !vagaDe(l)?.pago).length;
   return { link: LINK, encontros: `${C.encontros.length} encontros`, prazo: prazoTxt(), preco: brl(C.precoHoje), parcela: brl(C.valorParcela), parcelas: C.parcelas,
-    vagas: C.vagas ? Math.max(0, C.vagas - pagas) : "" };
+    // turmas de C.vagas pessoas: o que falta pra fechar a turma atual
+    vagas: C.vagas ? C.vagas - (pagas % C.vagas) : "" };
 }
 function varsPessoa(p){
   const nd = String(p.nao_deveria || "").replace(/^\s*eu\s+n[aã]o\s+deveria\s+ter\s+que\s*/i, "").replace(/[.\s]+$/, "");
@@ -188,7 +189,7 @@ function render(){
         <div class="stat"><b>${selec.filter(l => l.selecionada).length}</b><small>Selecionadas</small></div>
         <div class="stat"><b>${foram}</b><small>Foram</small></div>
         <div class="stat"><b>${n("reservou")}</b><small>Reservaram</small></div>
-        <div class="stat"><b>${n("pago")}</b><small>Pagaram</small></div>
+        <div class="stat"><b>${n("pago")}</b><small>Pagaram${C.vagas && n("pago") > C.vagas ? ` · ${Math.ceil(n("pago") / C.vagas)} turmas` : ""}</small></div>
       </div>
       <div class="chips">
         ${[["conversar", `A conversar (${n("aberto") + n("reservou")})`], ["reservou", `Falta pagar (${n("reservou")})`], ["pago", `Pagaram (${n("pago")})`], ["nao_agora", `Não agora (${n("nao_agora")})`], ["todas", `Todas (${ps.length})`]]
