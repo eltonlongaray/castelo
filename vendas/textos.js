@@ -76,7 +76,7 @@ window.OBJECOES = [
   { rot: "\"Tá caro\" / \"não tenho dinheiro agora\"", txt: `Te entendo, {nome}. Faz uma conta comigo: quantos clientes por mês aparecem uma vez e somem? Se só 2 ou 3 deles passarem a voltar por constância, a mentoria se paga, sem contar as indicações deles. Por isso deixei também em até {parcelas}x no cartão.` },
   { rot: "\"Não tenho tempo\"", txt: `Eu sei que sua rotina é corrida, {nome}, e é justamente por isso que a mentoria é prática: você aplica nos atendimentos que já tem na semana, sem trabalhar mais horas.
 
-E pensa comigo: quanto mais cheia a sua agenda, mais valor a sua massagem tem, e mais você pode cobrar por ela. São {encontros} que você investe agora pra ter uma agenda cheia de clientes que voltam e te indicam.` },
+E pensa comigo: quanto mais cheia a sua agenda, mais valor a sua massagem tem, e mais você pode cobrar por ela. São {encontros} que você investe agora pra ter uma agenda cheia de clientes que voltam, te indicam e não te trocam por nada.` },
   { rot: "\"Já fiz vários cursos\"", txt: `Faz sentido, {nome}. Mas me diz: os cursos que você fez te ensinaram o que fazer com as mãos ou o que fazer com a pessoa? A mentoria é sobre a pessoa: a escuta, o vínculo e a conversa que fazem ela voltar e te indicar.` },
   { rot: "\"Sou iniciante\"", txt: `Esse é o melhor momento, {nome}. Você já começa construindo clientes que voltam por constância, em vez de passar anos dependendo da dor dos outros como eu passei.` },
   { rot: "\"Vou pensar\"", txt: `Claro, {nome}, decisão importante merece reflexão 💛 Me ajuda a te ajudar: quais são as 2 coisas principais que você vai pensar? Assim eu já te tiro as dúvidas antes da condição encerrar.` },
