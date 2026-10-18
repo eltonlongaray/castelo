@@ -44,6 +44,9 @@
   .enc h3{ font-family:"Cormorant Garamond",serif; font-weight:600; font-size:1.45rem; line-height:1.15; margin:.15rem 0 .25rem; }
   .enc p{ color:var(--soft); font-size:.97rem; }
   .enc .v{ font-size:.82rem; color:var(--muted); margin-top:.35rem; }
+  .enc .itens{ margin-top:.55rem; }
+  .enc .itens li{ list-style:none; position:relative; padding:.18rem 0 .18rem 1.1rem; font-size:.9rem; color:var(--soft); }
+  .enc .itens li::before{ content:"·"; position:absolute; left:.3rem; color:var(--rosa-txt); font-weight:700; }
   .bonus{ background:var(--ink); color:#F4F1ED; border-radius:18px; padding:1.4rem 1.3rem; }
   .bonus .eyebrow{ color:var(--rosa); }
   .bonus li{ list-style:none; padding:.5rem 0; border-top:1px solid rgba(244,241,237,.14); }
@@ -102,7 +105,7 @@
 <div class="fundo" id="fundo"></div>
 <div class="folha" id="folha"></div>
 
-<script src="config.js?v=4"></script>
+<script src="config.js?v=5"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 // === BLOCO 2: AJUDANTES ===
@@ -166,9 +169,9 @@ function pagina(){
 
     <section><div class="wrap">
       <p class="eyebrow">O que você vai viver</p><div class="rule"></div>
-      <h2 class="serif">Os 5 pilares da <em>Sinergia Intuitiva</em>, na prática.</h2>
+      <h2 class="serif">A jornada completa do seu cliente, <em>do preparo ao pacote</em>.</h2>
       <p class="lead" style="margin-bottom:1.1rem">${esc(C.datas || "Encontros presenciais práticos")} · ${esc(C.local)}</p>
-      ${C.encontros.map((e, i) => `<div class="enc"><span class="n">Aula ${i + 1}${C.duracaoAula ? " · " + esc(C.duracaoAula) : ""}</span><h3>${esc(e.t)}</h3><p>${esc(e.p)}</p>${e.v != null ? `<p class="v">Valor: ${brl(e.v)}</p>` : ""}</div>`).join("")}
+      ${C.encontros.map((e, i) => `<div class="enc"><span class="n">Aula ${i + 1}${C.duracaoAula ? " · " + esc(C.duracaoAula) : ""}</span><h3>${esc(e.t)}</h3><p>${esc(e.p)}</p>${(e.itens || []).length ? `<ul class="itens">${e.itens.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}</div>`).join("")}
       <div class="enc"><span class="n">Na prática</span><h3>${esc(C.acompanhamento.t)}</h3><p>${esc(C.acompanhamento.p)}</p>${C.acompanhamento.v != null ? `<p class="v">Valor: ${brl(C.acompanhamento.v)}</p>` : ""}</div>
     </div></section>
 

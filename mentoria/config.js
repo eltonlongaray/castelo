@@ -26,13 +26,19 @@ window.MENTORIA = {
   pixNome: "Larissa Rodrigues",
   linkCartao: null,            // link de pagamento do Mercado Pago (cartão em até 12x)
 
-  // O que entra (cada pilar do método = um encontro prático)
+  // O que entra: 5 aulas na ordem da EXPERIÊNCIA DO CLIENTE (definido pelo Elton, 18/10)
+  // t = nome da aula · p = promessa · itens = entregáveis · v = valor (ancoragem)
   encontros: [
-    { t: "A Dança", p: "Escute o que o corpo do seu cliente esconde antes mesmo dele falar.", v: 500 },
-    { t: "O Ritual", p: "Transforme uma sessão comum numa experiência que ele não encontra em outro lugar.", v: 500 },
-    { t: "O Vínculo", p: "Faça o cliente parar de comparar o seu preço com o de qualquer outra.", v: 500 },
-    { t: "O Efeito Cascata", p: "Faça cada cliente feliz trazer o próximo, sem você pedir.", v: 500 },
-    { t: "O Negócio", p: "Monte pacotes, cobre pelo valor e tenha renda previsível sem mais horas.", v: 500 },
+    { t: "O Ambiente", p: "Prepare um espaço que acolhe antes mesmo do primeiro toque.", v: 500,
+      itens: ["Preparação da maca", "Luz, música e aromas", "Difusores e fontes com som de água", "Cremes, óleos e toalhas", "Checklist de preparação antes de cada atendimento"] },
+    { t: "O Acolhimento na maca", p: "Faça o cliente se sentir cuidado do primeiro ao último minuto.", v: 500,
+      itens: ["Temperatura agradável no ambiente", "Manter o cliente aquecido: pés, mãos e tronco", "Conforto e posicionamento", "O que observar enquanto ele está na maca"] },
+    { t: "A Ficha do cliente", p: "Conheça o corpo do seu cliente e mostre pra ele a própria evolução.", v: 500,
+      itens: ["Ficha de cadastro (anamnese e mapa do corpo)", "Acompanhamento sessão a sessão", "Como devolver a evolução pro cliente e gerar consciência corporal"] },
+    { t: "A Massagem", p: "Escolha a técnica certa e escute o corpo enquanto aplica.", v: 500,
+      itens: ["Tipos de massagem e quando indicar cada uma", "Métodos de execução", "A escuta das mãos: o diálogo com o corpo do cliente"] },
+    { t: "O Efeito Cascata", p: "Feche pacotes e transforme cada cliente em quem te indica.", v: 500,
+      itens: ["Comunicação estratégica pra fechar pacote", "Acompanhamento depois da sessão", "Lista de indicações", "Cartão presente: a cada 3 indicações, o cliente ganha 1 cartão presente pra usar como quiser"] },
   ],
   acompanhamento: { t: "3 atendimentos com acompanhamento", p: "Três atendimentos com o meu acompanhamento, pra você aplicar o método na prática com segurança.", v: 1050 },
   // Ancoragem (proposta 18/10, a confirmar com a Larissa): aula = R$ 500 (3h ≈ a hora da massagem dela),
