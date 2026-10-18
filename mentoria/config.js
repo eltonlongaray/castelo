@@ -41,12 +41,15 @@ window.MENTORIA = {
       itens: ["Comunicação estratégica pra fechar pacote", "Acompanhamento depois da sessão", "Lista de indicações", "Cartão presente: a cada 3 indicações, o cliente ganha 1 cartão presente pra usar como quiser"] },
   ],
   acompanhamento: { t: "3 atendimentos com acompanhamento", p: "Três atendimentos com o meu acompanhamento, pra você aplicar o método na prática com segurança.", v: 1050 },
+  // Incluso pra TODA aluna (não é bônus de quem entra primeiro): a ficha é a ferramenta da aula 3
+  inclusos: [
+    { t: "Ficha de atendimento digital com mapa do corpo", c: "Ficha digital com mapa do corpo (app)", p: "A ferramenta da aula 3 pronta pra usar no celular: cadastro, mapa do corpo e evolução de cada cliente, desde o primeiro dia.", v: 297 },
+  ],
   // Ancoragem (proposta 18/10, a confirmar com a Larissa): aula = R$ 500 (3h ≈ a hora da massagem dela),
   // atendimento acompanhado = R$ 350 cada, sessão = o preço real dela (R$ 170).
   bonus: [
     { t: "Uma sessão comigo pra você sentir o método na pele", c: "Sessão comigo", v: 170 },
     { t: "Roteiro da frase-ponte e do pacote: o que falar no fim da sessão pra vender constância", c: "Roteiro da frase-ponte e do pacote", v: 197 },
-    { t: "Ficha de atendimento digital com mapa do corpo, pra usar com os seus clientes desde o primeiro dia", c: "Ficha digital com mapa do corpo", v: 297 },
   ],
   garantia: "Se você aplicar o que eu te ensinar nos primeiros 30 dias e não sentir diferença em como os seus clientes voltam, eu te acompanho sem custo até sentir.",
 };
