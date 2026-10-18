@@ -80,7 +80,8 @@ E pensa comigo: quanto mais cheia a sua agenda, mais valor a sua massagem tem, e
   { rot: "\"Já fiz vários cursos\"", txt: `Faz sentido, {nome}. Mas me diz: os cursos que você fez te ensinaram o que fazer com as mãos ou o que fazer com a pessoa? A mentoria é sobre a pessoa: a escuta, o vínculo e a conversa que fazem ela voltar e te indicar.` },
   { rot: "\"Sou iniciante\"", txt: `Esse é o melhor momento, {nome}. Você já começa construindo clientes que voltam por constância, em vez de passar anos dependendo da dor dos outros como eu passei.` },
   { rot: "\"Vou pensar\"", txt: `Claro, {nome}, decisão importante merece reflexão 💛 Quais são as 2 coisas principais que você precisa pensar? Assim eu já te tiro as dúvidas antes da condição encerrar.` },
-  { rot: "\"De 0 a 5\" (quando ela tá em cima do muro)", txt: `{nome}, de 0 a 5, qual a chance de você entrar na mentoria? ... E o que falta pra esse número chegar no 5?` },
+  { rot: "\"De 0 a 5\" · 1ª pergunta (quando a pessoa tá em cima do muro)", txt: `{nome}, de 0 a 5, qual a chance de você entrar na mentoria?`, obs: "Espera a resposta antes de mandar a 2ª pergunta." },
+  { rot: "\"De 0 a 5\" · 2ª pergunta (depois que ela responder)", txt: `E o que falta pra esse número chegar no 5?`, obs: "O que ela responder é a objeção real: responde com a mensagem certa daqui de cima." },
   { rot: "\"Isso é dom, não sei se consigo\"", txt: `Não é dom, {nome}, é escuta. Você sentiu nas próprias mãos no workshop. Escuta se treina, e é exatamente isso que a gente faz nos encontros.` },
 ];
 

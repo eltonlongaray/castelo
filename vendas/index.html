@@ -71,7 +71,7 @@
 <main class="wrap" id="app"><p class="vazio">Carregando…</p></main>
 
 <script src="../mentoria/config.js?v=1"></script>
-<script src="textos.js?v=4"></script>
+<script src="textos.js?v=5"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
@@ -287,7 +287,7 @@ function biblioteca(){
     <p class="eyebrow" style="margin:1rem 0 .6rem">Conversa (passo a passo)</p>
     ${ROTEIRO.map(r => blocoCopia(r.rot, geral(r.txt), r.obs)).join("")}
     <p class="eyebrow" style="margin:1.4rem 0 .6rem">Objeções</p>
-    ${OBJECOES.map(o => blocoCopia(o.rot, geral(o.txt))).join("")}`;
+    ${OBJECOES.map(o => blocoCopia(o.rot, geral(o.txt), o.obs)).join("")}`;
 }
 function grupo(){
   return `<div class="dica">Mensagens do grupo de WhatsApp, do convite até o encerramento. Troque [DATA], [HORÁRIO] e [LOCAL/LINK].</div>
