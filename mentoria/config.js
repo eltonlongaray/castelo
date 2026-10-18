@@ -49,7 +49,8 @@ window.MENTORIA = {
   // atendimento acompanhado = R$ 350 cada, sessão = o preço real dela (R$ 170).
   bonus: [
     { t: "Uma sessão comigo pra você sentir o método na pele", c: "Sessão comigo", v: 170 },
-    { t: "Roteiro da frase-ponte e do pacote: o que falar no fim da sessão pra vender constância", c: "Roteiro da frase-ponte e do pacote", v: 197 },
+    { t: "Kit de comunicação pronto: mensagens de copiar e colar pra fechar pacote, acompanhar o cliente depois da sessão e pedir indicação", c: "Kit de comunicação (pacote, acompanhamento e indicação)", v: 197 },
+    { t: "Modelo do cartão presente e da lista de indicações, prontos pra usar", c: "Modelo do cartão presente e lista de indicações", v: 97 },
   ],
   garantia: "Se você aplicar o que eu te ensinar nos primeiros 30 dias e não sentir diferença em como os seus clientes voltam, eu te acompanho sem custo até sentir.",
 };
