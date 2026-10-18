@@ -71,7 +71,7 @@
 <main class="wrap" id="app"><p class="vazio">Carregando…</p></main>
 
 <script src="../mentoria/config.js?v=1"></script>
-<script src="textos.js?v=1"></script>
+<script src="textos.js?v=2"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
@@ -106,7 +106,7 @@ function preencher(txt, v){
 }
 function varsGerais(){
   const pagas = vagas.filter(x => x.pago).length + selec.filter(l => l.status_venda === "pago" && !vagaDe(l)?.pago).length;
-  return { link: LINK, prazo: prazoTxt(), preco: brl(C.precoHoje), parcela: brl(C.valorParcela), parcelas: C.parcelas,
+  return { link: LINK, encontros: `${C.encontros.length} encontros`, prazo: prazoTxt(), preco: brl(C.precoHoje), parcela: brl(C.valorParcela), parcelas: C.parcelas,
     vagas: C.vagas ? Math.max(0, C.vagas - pagas) : "" };
 }
 function varsPessoa(p){
