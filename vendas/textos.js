@@ -111,7 +111,7 @@ Leva papel e caneta (e roupa confortável, porque vai ter prática). A parte que
 Te espero 💛` },
   { quando: "No dia · 1 hora antes", txt: `Daqui 1 hora a gente começa! ⏰ [LINK/ENDEREÇO]` },
   { quando: "No dia · 10 minutos antes", txt: `Já tô aqui te esperando 💛 [LINK/ENDEREÇO]` },
-  { quando: "Logo depois do workshop", txt: `Que noite! 💛 Obrigada a cada pessoa que esteve comigo.
+  { quando: "Logo depois do workshop", txt: `Que tarde! 💛 Obrigada a cada pessoa que esteve comigo.
 
 [PRINT/FOTO DOS COMENTÁRIOS: "quanto valeu", "maior insight"]
 
