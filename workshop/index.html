@@ -10,8 +10,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Karla:wght@400;500;600;700&display=swap">
 <style>
   /* === BLOCO 1: ESTILO DA TELA DE LOGIN ===
-     Esta página é só a "casca": o roteiro do workshop fica guardado no Supabase
-     (tabela conteudo_privado) e só aparece depois do login de quem está em public.admins. */
+     Esta página é só a "casca": o roteiro fica criptografado em conteudo.enc (ilegível sem a chave)
+     e a chave fica no Supabase (tabela conteudo_privado), que só entrega pra quem está em public.admins. */
   body{ margin:0; font-family:"Karla",system-ui,sans-serif; background:#F4F1ED; color:#050404; -webkit-font-smoothing:antialiased; }
   .sh-login{ max-width:22rem; margin:0 auto; padding:5rem 1.2rem 3rem; display:grid; gap:.8rem; }
   .sh-eyebrow{ font-size:.72rem; font-weight:700; letter-spacing:.24em; text-transform:uppercase; color:#C4646B; }
@@ -77,14 +77,30 @@
     tela('telaCarregando');
     var s = (await sb.auth.getSession()).data.session;
     if (!s) { tela('telaLogin'); return; }
-    // o conteúdo é guardado em pedaços (workshop-1, workshop-2, ...) e juntado aqui na ordem
-    var r = await sb.from('conteudo_privado').select('slug, html').like('slug', SLUG + '-%').order('slug');
-    if (r.error || !r.data || !r.data.length) {
-      $('semAcessoTxt').textContent = r.error ? 'Esse conteúdo é só da Larissa e do Élton.' : 'Esse conteúdo é só da Larissa e do Élton, ou ainda não foi carregado no banco.';
+    // o conteúdo fica criptografado em conteudo.enc; a chave só sai do banco pra quem é admin
+    var r = await sb.from('conteudo_privado').select('html').eq('slug', SLUG + '-chave').maybeSingle();
+    if (r.error || !r.data) {
+      $('semAcessoTxt').textContent = r.error ? 'Esse conteúdo é só da Larissa e do Élton.' : 'Esse conteúdo é só da Larissa e do Élton, ou a chave ainda não foi colocada no banco.';
       tela('telaSemAcesso'); return;
     }
-    tela(null);
-    mostrar(r.data.map(function(p){ return p.html; }).join(''));
+    try {
+      var html = await abrir(r.data.html.trim());
+      tela(null);
+      mostrar(html);
+    } catch (e) {
+      $('semAcessoTxt').textContent = 'Não consegui abrir o conteúdo. Confere se a chave no banco está certa.';
+      tela('telaSemAcesso');
+    }
+  }
+
+  // AES-GCM: conteudo.enc = base64(iv de 12 bytes + texto cifrado)
+  function b64(s){ var b = atob(s), u = new Uint8Array(b.length); for (var i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u; }
+  async function abrir(chave){
+    var resp = await fetch('conteudo.enc', { cache: 'no-store' });
+    var dados = b64((await resp.text()).trim());
+    var k = await crypto.subtle.importKey('raw', b64(chave), 'AES-GCM', false, ['decrypt']);
+    var claro = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: dados.slice(0, 12) }, k, dados.slice(12));
+    return new TextDecoder().decode(claro);
   }
 
   // === BLOCO 5: MOSTRA O CONTEÚDO (scripts do conteúdo não rodam; a interação fica aqui) ===
