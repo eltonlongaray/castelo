@@ -291,7 +291,7 @@ function biblioteca(){
     ${OBJECOES.map(o => blocoCopia(o.rot, geral(o.txt), o.obs)).join("")}`;
 }
 function grupo(){
-  return `<div class="dica">Mensagens do grupo de WhatsApp, do convite até o encerramento. Troque [DATA], [HORÁRIO] e [LOCAL/LINK].</div>
+  return `<div class="dica">Mensagens do grupo de WhatsApp, do convite até o encerramento. Troque [DATA], [HORÁRIO] e [LINK].</div>
     ${GRUPO.map(g => blocoCopia(g.quando, geral(g.txt))).join("")}`;
 }
 function qr(){

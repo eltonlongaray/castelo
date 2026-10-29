@@ -82,7 +82,7 @@ E pensa comigo: quanto mais cheia a sua agenda, mais valor a sua massagem tem, e
   { rot: "\"Vou pensar\"", txt: `Claro, {nome}, decisão importante merece reflexão 💛 Quais são as 2 coisas principais que você precisa pensar? Assim eu já te tiro as dúvidas antes da condição encerrar.` },
   { rot: "\"De 0 a 5\" · 1ª pergunta (quando a pessoa tá em cima do muro)", txt: `{nome}, de 0 a 5, qual a chance de você entrar na mentoria?`, obs: "Espera a resposta antes de mandar a 2ª pergunta." },
   { rot: "\"De 0 a 5\" · 2ª pergunta (depois que ela responder)", txt: `E o que falta pra esse número chegar no 5?`, obs: "O que ela responder é a objeção real: responde com a mensagem certa daqui de cima." },
-  { rot: "\"Isso é dom, não sei se consigo\"", txt: `Não é dom, {nome}, é escuta. Você sentiu nas próprias mãos no workshop. Escuta se treina, e é exatamente isso que a gente faz nos encontros.` },
+  { rot: "\"Isso é dom, não sei se consigo\"", txt: `Não é dom, {nome}, é escuta. Você viu acontecer ao vivo no workshop. Escuta se treina, e é exatamente isso que a gente faz nos encontros.` },
 ];
 
 // === BLOCO 5: CALENDÁRIO DO GRUPO DE WHATSAPP (antes e depois do workshop) ===
@@ -104,13 +104,13 @@ Quantos dos seus clientes de hoje vão voltar mês que vem SEM estar com dor?
 Guarda a sua resposta. A gente vai falar exatamente disso 💛` },
   { quando: "Véspera", txt: `É amanhã! 🔥
 
-📅 [DATA] · ⏰ [HORÁRIO] · 📍 [LOCAL/LINK]
+📅 [DATA] · ⏰ [HORÁRIO] · 💻 [LINK]
 
-Leva papel e caneta (e roupa confortável, porque vai ter prática). A parte que vocês mais querem fica pro segundo tempo, e no final eu abro a oportunidade especial só pra quem estiver lá.
+Separa papel, caneta e um cantinho tranquilo com boa internet. Eu vou atender ao vivo pra vocês verem tudo de pertinho. A parte que vocês mais querem fica pro segundo tempo, e no final eu abro a oportunidade especial só pra quem estiver lá.
 
 Te espero 💛` },
-  { quando: "No dia · 1 hora antes", txt: `Daqui 1 hora a gente começa! ⏰ [LINK/ENDEREÇO]` },
-  { quando: "No dia · 10 minutos antes", txt: `Já tô aqui te esperando 💛 [LINK/ENDEREÇO]` },
+  { quando: "No dia · 1 hora antes", txt: `Daqui 1 hora a gente começa! ⏰ [LINK]` },
+  { quando: "No dia · 10 minutos antes", txt: `Já tô aqui te esperando 💛 [LINK]` },
   { quando: "Logo depois do workshop", txt: `Que tarde! 💛 Obrigada a cada pessoa que esteve comigo.
 
 [PRINT/FOTO DOS COMENTÁRIOS: "quanto valeu", "maior insight"]
