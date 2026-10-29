@@ -55,7 +55,7 @@
   // === BLOCO 2: CONFIG ===
   var SB_URL = "https://gopqajnivmbxjqsiznqi.supabase.co";
   var SB_KEY = "sb_publishable_YBF0cSQt0IlTqVhCyRlduQ_ij2CHBZ5";
-  var SLUG = "workshop";   // linha da tabela conteudo_privado que esta página mostra
+  var SLUG = "workshop";   // prefixo das linhas da tabela conteudo_privado que esta página mostra
   var sb = window.supabase.createClient(SB_URL, SB_KEY);
   var $ = function(id){ return document.getElementById(id); };
   function tela(id){ ['telaLogin','telaSemAcesso','telaCarregando'].forEach(function(t){ $(t).classList.toggle('hidden', t !== id); }); }
@@ -77,13 +77,14 @@
     tela('telaCarregando');
     var s = (await sb.auth.getSession()).data.session;
     if (!s) { tela('telaLogin'); return; }
-    var r = await sb.from('conteudo_privado').select('html').eq('slug', SLUG).maybeSingle();
-    if (r.error || !r.data) {
-      $('semAcessoTxt').textContent = r.error ? 'Esse conteúdo é só da Larissa e do Élton.' : 'O conteúdo ainda não foi carregado no banco.';
+    // o conteúdo é guardado em pedaços (workshop-1, workshop-2, ...) e juntado aqui na ordem
+    var r = await sb.from('conteudo_privado').select('slug, html').like('slug', SLUG + '-%').order('slug');
+    if (r.error || !r.data || !r.data.length) {
+      $('semAcessoTxt').textContent = r.error ? 'Esse conteúdo é só da Larissa e do Élton.' : 'Esse conteúdo é só da Larissa e do Élton, ou ainda não foi carregado no banco.';
       tela('telaSemAcesso'); return;
     }
-    tela(null); $('telaCarregando').classList.add('hidden');
-    mostrar(r.data.html);
+    tela(null);
+    mostrar(r.data.map(function(p){ return p.html; }).join(''));
   }
 
   // === BLOCO 5: MOSTRA O CONTEÚDO (scripts do conteúdo não rodam; a interação fica aqui) ===
