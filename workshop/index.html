@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Workshop · Larissa</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Karla:wght@400;500;600;700&display=swap">
+<style>
+  /* === BLOCO 1: ESTILO DA TELA DE LOGIN ===
+     Esta página é só a "casca": o roteiro do workshop fica guardado no Supabase
+     (tabela conteudo_privado) e só aparece depois do login de quem está em public.admins. */
+  body{ margin:0; font-family:"Karla",system-ui,sans-serif; background:#F4F1ED; color:#050404; -webkit-font-smoothing:antialiased; }
+  .sh-login{ max-width:22rem; margin:0 auto; padding:5rem 1.2rem 3rem; display:grid; gap:.8rem; }
+  .sh-eyebrow{ font-size:.72rem; font-weight:700; letter-spacing:.24em; text-transform:uppercase; color:#C4646B; }
+  .sh-login h1{ font-family:"Cormorant Garamond",Georgia,serif; font-weight:600; font-size:2.4rem; line-height:1.05; margin:0; }
+  .sh-login p{ margin:0; color:#55504e; }
+  .sh-login input{ font-family:inherit; font-size:1rem; padding:.8rem 1rem; border:1px solid rgba(5,4,4,.15); border-radius:10px; background:#fffdfa; width:100%; box-sizing:border-box; }
+  .sh-btn{ border:none; cursor:pointer; background:#050404; color:#F4F1ED; font-weight:700; font-size:.95rem; padding:.8rem 1.2rem; border-radius:999px; font-family:inherit; }
+  .sh-btn.ghost{ background:transparent; color:#050404; border:1px solid rgba(5,4,4,.15); }
+  .sh-erro{ color:#b3434b; font-size:.9rem; min-height:1.2rem; }
+  .sh-sair{ position:fixed; right:max(12px, env(safe-area-inset-right, 0px)); bottom:max(12px, env(safe-area-inset-bottom, 0px)); z-index:20; font-family:"Karla",sans-serif; font-size:.8rem; padding:.5rem .9rem; border-radius:999px; border:1px solid rgba(5,4,4,.15); background:#fffdfa; color:#050404; cursor:pointer; }
+  .hidden{ display:none !important; }
+</style>
+</head>
+<body>
+
+<form class="sh-login hidden" id="telaLogin" autocomplete="on">
+  <span class="sh-eyebrow">Área privada</span>
+  <h1>Workshop</h1>
+  <p>Entra com o mesmo e-mail e senha do castelo.</p>
+  <input id="email" type="email" placeholder="E-mail" autocomplete="username" required>
+  <input id="senha" type="password" placeholder="Senha" autocomplete="current-password" required>
+  <button class="sh-btn" type="submit" id="entrar">Entrar</button>
+  <div class="sh-erro" id="erro"></div>
+</form>
+
+<div class="sh-login hidden" id="telaSemAcesso">
+  <span class="sh-eyebrow">Área privada</span>
+  <h1>Sem acesso</h1>
+  <p id="semAcessoTxt">Esse conteúdo é só da Larissa e do Élton.</p>
+  <button class="sh-btn ghost" type="button" id="sairSemAcesso">Sair</button>
+</div>
+
+<div class="sh-login" id="telaCarregando"><p>Carregando…</p></div>
+
+<div id="conteudo"></div>
+<button class="sh-sair hidden" type="button" id="sair">Sair</button>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function(){
+  // === BLOCO 2: CONFIG ===
+  var SB_URL = "https://gopqajnivmbxjqsiznqi.supabase.co";
+  var SB_KEY = "sb_publishable_YBF0cSQt0IlTqVhCyRlduQ_ij2CHBZ5";
+  var SLUG = "workshop";   // linha da tabela conteudo_privado que esta página mostra
+  var sb = window.supabase.createClient(SB_URL, SB_KEY);
+  var $ = function(id){ return document.getElementById(id); };
+  function tela(id){ ['telaLogin','telaSemAcesso','telaCarregando'].forEach(function(t){ $(t).classList.toggle('hidden', t !== id); }); }
+
+  // === BLOCO 3: LOGIN ===
+  $('telaLogin').addEventListener('submit', async function(e){
+    e.preventDefault(); $('erro').textContent = ''; $('entrar').disabled = true;
+    var r = await sb.auth.signInWithPassword({ email: $('email').value.trim(), password: $('senha').value });
+    $('entrar').disabled = false;
+    if (r.error) { $('erro').textContent = 'E-mail ou senha não conferem.'; return; }
+    carregar();
+  });
+  async function sair(){ await sb.auth.signOut(); location.reload(); }
+  $('sair').addEventListener('click', sair);
+  $('sairSemAcesso').addEventListener('click', sair);
+
+  // === BLOCO 4: BUSCA O CONTEÚDO (o banco só entrega pra admins) ===
+  async function carregar(){
+    tela('telaCarregando');
+    var s = (await sb.auth.getSession()).data.session;
+    if (!s) { tela('telaLogin'); return; }
+    var r = await sb.from('conteudo_privado').select('html').eq('slug', SLUG).maybeSingle();
+    if (r.error || !r.data) {
+      $('semAcessoTxt').textContent = r.error ? 'Esse conteúdo é só da Larissa e do Élton.' : 'O conteúdo ainda não foi carregado no banco.';
+      tela('telaSemAcesso'); return;
+    }
+    tela(null); $('telaCarregando').classList.add('hidden');
+    mostrar(r.data.html);
+  }
+
+  // === BLOCO 5: MOSTRA O CONTEÚDO (scripts do conteúdo não rodam; a interação fica aqui) ===
+  function mostrar(html){
+    var box = $('conteudo');
+    box.innerHTML = html.replace(/<script[\s\S]*?<\/script>/gi, '');
+    var t = box.querySelector('title'); if (t) { document.title = t.textContent; t.remove(); }
+    $('sair').classList.remove('hidden');
+    var blocos = box.querySelectorAll('details');
+    var abrir = $('abrir-tudo'), fechar = $('fechar-tudo');
+    if (abrir) abrir.addEventListener('click', function(){ blocos.forEach(function(d){ d.open = true; }); });
+    if (fechar) fechar.addEventListener('click', function(){ blocos.forEach(function(d){ d.open = false; }); });
+    box.querySelectorAll('a[href^="#"]').forEach(function(a){
+      a.addEventListener('click', function(){
+        var alvo = document.querySelector(a.getAttribute('href'));
+        if (alvo && alvo.tagName === 'DETAILS') alvo.open = true;
+      });
+    });
+  }
+
+  carregar();
+})();
+</script>
+</body>
+</html>
