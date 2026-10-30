@@ -24,7 +24,7 @@ window.MENTORIA = {
   // Pagamento
   pixChave: null,              // chave Pix da Larissa
   pixNome: "Larissa Rodrigues",
-  linkCartao: null,            // link de pagamento do Mercado Pago (cartão em até 12x)
+  linkCartao: "https://checkout.infinitepay.io/larioltramari/XktEBmX75f", // link de pagamento da InfinitePay (cartão em até 12x)
 
   // O que entra: 5 aulas na ordem da EXPERIÊNCIA DO CLIENTE (definido pelo Elton, 18/10)
   // t = nome da aula · p = promessa · itens = entregáveis · v = valor (ancoragem)

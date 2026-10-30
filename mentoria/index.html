@@ -294,7 +294,7 @@ function telaPagamento(r){
       <div class="pix" id="pix">${esc(C.pixChave || "chave Pix a definir")}</div>
       <button class="btn ghost" id="copiar" style="max-width:none">Copiar chave Pix</button>`
     : `
-      <div class="passo"><b class="n">1</b><span>Paga no cartão em até ${C.parcelas}x pelo link seguro do Mercado Pago:</span></div>
+      <div class="passo"><b class="n">1</b><span>Paga no cartão em até ${C.parcelas}x pelo link seguro da InfinitePay:</span></div>
       ${C.linkCartao ? `<a class="btn" href="${esc(C.linkCartao)}" target="_blank" rel="noopener" style="max-width:none">Pagar no cartão</a>` : `<p class="pix">Link de pagamento a definir</p>`}`}
     <div class="passo"><b class="n">2</b><span>Me manda o comprovante no WhatsApp. Eu confirmo sua vaga pessoalmente.</span></div>
     <a class="btn rosa" href="${waLarissa(msg)}" target="_blank" rel="noopener" style="max-width:none">Enviar comprovante no WhatsApp</a>
