@@ -141,7 +141,7 @@ function pagina(){
   const bonusV = b => typeof b === "string" ? null : b.v;
   // itens com valor (ancoragem do pitch: cada parte da entrega com o seu valor)
   const itens = C.encontros.map((e, i) => ({ t: `Aula ${i + 1} · ${e.t}`, v: e.v }))
-    .concat([{ t: C.acompanhamento.t, v: C.acompanhamento.v }], (C.inclusos || []).map(x => ({ t: x.c || x.t, v: x.v })), C.bonus.map(b => ({ t: "Bônus: " + (b.c || bonusT(b)), v: bonusV(b) })))
+    .concat([{ t: C.acompanhamento.t, v: C.acompanhamento.v }], (C.inclusos || []).map(x => ({ t: x.c || x.t, v: x.v })), C.bonus.filter(b => !b.primeiras).map(b => ({ t: "Bônus: " + (b.c || bonusT(b)), v: bonusV(b) })))
     .filter(x => x.v != null);
   const soma = itens.reduce((a, x) => a + x.v, 0);
   $("app").innerHTML = `
@@ -178,8 +178,11 @@ function pagina(){
 
     <section><div class="wrap">
       <div class="bonus">
-        <p class="eyebrow">Bônus${C.bonusPrimeiras ? ` pras ${C.bonusPrimeiras} primeiras inscrições` : ""}</p>
-        <ul style="margin-top:.6rem">${C.bonus.map(b => `<li>🎁 ${esc(bonusT(b))}${bonusV(b) != null ? ` <span style="opacity:.6">(valor ${brl(bonusV(b))})</span>` : ""}</li>`).join("")}</ul>
+        ${[[false, "Bônus pra toda a turma"], [true, `Só pras ${C.bonusPrimeiras || ""} primeiras de cada turma`]].map(([so, rotulo]) => {
+          const lista = C.bonus.filter(b => !!b.primeiras === so);
+          return lista.length ? `<p class="eyebrow"${so ? ' style="margin-top:1.2rem"' : ""}>${rotulo}</p>
+        <ul style="margin-top:.6rem">${lista.map(b => `<li>🎁 ${esc(bonusT(b))}${b.vt ? ` <span style="opacity:.6">(valor ${esc(b.vt)})</span>` : bonusV(b) != null ? ` <span style="opacity:.6">(valor ${brl(bonusV(b))})</span>` : ""}</li>`).join("")}</ul>` : "";
+        }).join("")}
       </div>
     </div></section>
 
