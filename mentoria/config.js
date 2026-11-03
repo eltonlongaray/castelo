@@ -12,7 +12,7 @@ window.MENTORIA = {
   // Condição especial (só pra quem participou do workshop)
   prazo: null,                 // ex: "2026-11-08T23:59:00-03:00"  → fecha a condição sozinho
   vagas: 5,                    // vagas por TURMA. Passou de 5 inscrições pagas → abre a turma 2
-  bonusPrimeiras: null,        // bônus vale pras X primeiras (ex: 3)
+  bonusPrimeiras: 3,           // bônus marcados com primeiras:true valem só pras X primeiras de CADA turma
 
   // Preço
   precoCheio: null,            // "tudo isso daria" — null = soma sozinho os valores de cada item abaixo
@@ -24,7 +24,7 @@ window.MENTORIA = {
   // Pagamento
   pixChave: null,              // chave Pix da Larissa
   pixNome: "Larissa Rodrigues",
-  linkCartao: null,            // link de pagamento do Mercado Pago (cartão em até 12x)
+  linkCartao: "https://checkout.infinitepay.io/larioltramari/XktEBmX75f", // link de pagamento da InfinitePay (cartão em até 12x)
 
   // O que entra: 5 aulas na ordem da EXPERIÊNCIA DO CLIENTE (definido pelo Elton, 18/10)
   // t = nome da aula · p = promessa · itens = entregáveis · v = valor (ancoragem)
@@ -41,13 +41,16 @@ window.MENTORIA = {
       itens: ["Comunicação estratégica pra fechar pacote", "Acompanhamento depois da sessão", "Lista de indicações", "Cartão presente: a cada 3 indicações, o cliente ganha 1 cartão presente pra usar como quiser"] },
   ],
   acompanhamento: { t: "3 atendimentos com acompanhamento", p: "Três atendimentos com o meu acompanhamento, pra você aplicar o método na prática com segurança.", v: 1050 },
-  // Incluso pra TODA aluna (não é bônus de quem entra primeiro): a ficha é a ferramenta da aula 3
+  // Incluso pra TODA aluna (não é bônus de quem entra primeiro): o Falcon Profissional é a ferramenta da aula 3
+  // Preços do Falcon (Élton, 03/11): Profissional R$ 27,90/mês · Duo R$ 30,00/mês · aluna R$ 12,90/mês depois de 3 meses grátis
   inclusos: [
-    { t: "Ficha de atendimento digital com mapa do corpo", c: "Ficha digital com mapa do corpo (app)", p: "A ferramenta da aula 3 pronta pra usar no celular: cadastro, mapa do corpo e evolução de cada cliente, desde o primeiro dia.", v: 297 },
+    { t: "Falcon Profissional: Agenda Online, ficha do cliente e todo o app", c: "Falcon Profissional (3 meses grátis)", p: "A ferramenta da aula 3 no seu celular: agenda online pro cliente marcar sozinho, ficha com mapa do corpo e a evolução de cada cliente, desde o primeiro dia. Você usa 3 meses sem pagar e, depois, por ser aluna, paga R$ 12,90 por mês em vez de R$ 27,90.", v: 83.7 },
   ],
   // Ancoragem (proposta 18/10, a confirmar com a Larissa): aula = R$ 500 (3h ≈ a hora da massagem dela),
   // atendimento acompanhado = R$ 350 cada, sessão = o preço real dela (R$ 170).
+  // primeiras:true = só pras primeiras de cada turma (bonusPrimeiras); fica fora do "tudo isso daria"
   bonus: [
+    { t: "Falcon Profissional grátis pra sempre: Agenda Online, ficha do cliente e todo o app, sem nunca pagar mensalidade", c: "Falcon Profissional vitalício", vt: "R$ 27,90 por mês, pra sempre", primeiras: true },
     { t: "Uma sessão comigo pra você sentir o método na pele", c: "Sessão comigo", v: 170 },
     { t: "Kit de comunicação pronto: mensagens de copiar e colar pra fechar pacote, acompanhar o cliente depois da sessão e pedir indicação", c: "Kit de comunicação (pacote, acompanhamento e indicação)", v: 197 },
     { t: "Modelo do cartão presente e da lista de indicações, prontos pra usar", c: "Modelo do cartão presente e lista de indicações", v: 97 },
