@@ -113,6 +113,9 @@ const C = window.MENTORIA;
 const SB_URL = "https://gopqajnivmbxjqsiznqi.supabase.co";
 const SB_KEY = "sb_publishable_YBF0cSQt0IlTqVhCyRlduQ_ij2CHBZ5";
 const sb = window.supabase.createClient(SB_URL, SB_KEY);
+// 25/11: reservas e vagas pagas moram no Falcon (Ferramentas → Fontes de renda extra → 🎓 Mentoria)
+const FALCON = window.supabase.createClient("https://snbxaudykjpqqgocgaoz.supabase.co", "sb_publishable_rObp-4IhXg33NkL3P-czVg_aNl9VaxG");
+const FALCON_SLUG = "Y35";
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c]));
 const brl = v => v == null ? "a definir" : "R$ " + Number(v).toLocaleString("pt-BR", { minimumFractionDigits: v % 1 ? 2 : 0, maximumFractionDigits: 2 });
@@ -235,7 +238,7 @@ function relogio(){
 async function vagasRestantes(){
   if (!C.vagas) return;
   try {
-    const { data, error } = await sb.rpc("mentoria_pagas");
+    const { data, error } = await FALCON.rpc("mentoria_pagas", { p_slug: FALCON_SLUG });
     if (error || typeof data !== "number") return;
     // turmas de C.vagas pessoas: lotou a 1ª, a reserva continua aberta pra turma seguinte
     const turma = Math.floor(data / C.vagas) + 1;
@@ -280,7 +283,7 @@ async function reservar(){
   if (whats.replace(/\D/g, "").length < 10) return $("r-erro").textContent = "Coloca o WhatsApp com DDD.";
   if (!forma) return $("r-erro").textContent = "Escolhe a forma de pagamento.";
   const btn = $("r-ok"); btn.disabled = true; btn.textContent = "Reservando…";
-  const { error } = await sb.from("mentoria_vagas").insert({ nome, whatsapp: whats, forma });
+  const { error } = await FALCON.rpc("mentoria_reservar", { p_slug: FALCON_SLUG, p_nome: nome, p_contato: whats, p_forma: forma });
   if (error) { btn.disabled = false; btn.textContent = "Continuar"; return $("r-erro").textContent = "Não consegui reservar agora. Tenta de novo ou me chama no WhatsApp."; }
   const r = { nome, whats, forma };
   try { localStorage.setItem(CHAVE, JSON.stringify(r)); } catch {}
