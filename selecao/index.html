@@ -11,7 +11,7 @@
 <style>
   /* === BLOCO 1: IDENTIDADE (paleta e tipografia da marca) === */
   :root{
-    --bg:#F4F1ED; --ink:#050404; --soft:#55504e; --muted:#8a8381;
+    --bg:#F4F1ED; --ink:#050404; --soft:#3F3A38; --muted:#5f5856;
     --rosa:#E48F94; --rosa-txt:#C4646B; --blush:#FCDDDA; --line:rgba(5,4,4,.12); --card:#fffdfa;
   }
   *{ box-sizing:border-box; margin:0; padding:0; }
@@ -124,8 +124,6 @@ const P = [
   {id:"maior_desafio", tipo:"longo", q:"Qual é hoje o seu maior desafio com os seus clientes ou com a sua agenda?"},
   {id:"como_se_sente", tipo:"longo", q:"Quando você pensa nesse desafio, como você se sente?",
     ajuda:"Ex: cansada, insegura, frustrada, com medo de não dar conta…"},
-  {id:"nao_deveria", tipo:"longo", q:"Complete com sinceridade: “Eu não deveria ter que ______ pra ______.”",
-    ajuda:"Ex: Eu não deveria ter que atender o dia inteiro pra ter uma renda boa.", ph:"Eu não deveria ter que…"},
   {id:"o_que_falta", tipo:"escolha", outro:true, q:"Na sua opinião, o que mais falta pra você ter uma agenda cheia e previsível?",
     ops:["Conseguir meus primeiros clientes","Me sentir segura pra atender","Mais técnicas e cursos","Saber me divulgar","Cobrar mais caro","Clientes que voltem e me indiquem"]},
   {id:"ja_tentou", tipo:"longo", q:"O que você já tentou (cursos, promoções, redes sociais…) que não deu o resultado que você queria?"},
@@ -172,7 +170,7 @@ function telaPergunta(){
   const p = P[st.i], v = st.r[p.id] ?? "";
   let campo = "";
   if(p.tipo==="texto"||p.tipo==="tel"){
-    campo = `<input id="f" type="${p.tipo==="tel"?"tel":"text"}" inputmode="${p.tipo==="tel"?"tel":"text"}" placeholder="${esc(p.ph||"")}" value="${esc(v)}" autocomplete="${p.id==="nome"?"name":p.tipo==="tel"?"tel":"off"}">`;
+    campo = `<input id="f" type="${p.tipo==="tel"?"tel":"text"}" inputmode="${p.tipo==="tel"?"tel":"text"}" placeholder="${esc(p.ph||"")}" value="${esc(v)}" autocomplete="${p.id==="nome"?"name":p.tipo==="tel"?"tel-national":"off"}">`;
   } else if(p.tipo==="longo"){
     campo = `<textarea id="f" placeholder="${esc(p.ph||"Escreva aqui…")}">${esc(v)}</textarea>`;
   } else {
@@ -215,7 +213,9 @@ function telaPergunta(){
 }
 
 function mascara(v){
-  const d = v.replace(/\D/g,"").slice(0,11);
+  let d = v.replace(/\D/g,"");
+  if(d.length>11 && d.startsWith("55")) d = d.slice(2);   // preenchimento automático (+55)
+  d = d.slice(0,11);
   if(d.length<=2) return d; if(d.length<=7) return `(${d.slice(0,2)}) ${d.slice(2)}`;
   return `(${d.slice(0,2)}) ${d.slice(2,d.length-4)}-${d.slice(-4)}`;
 }
@@ -263,7 +263,6 @@ function telaFinal(nome){
       <h1 class="serif r2">Obrigada${primeiro ? ", " + primeiro : ""}.<br><em>Sua resposta chegou até mim.</em></h1>
       <p class="lead r3">Eu sei que parar pra olhar pro próprio trabalho — os desafios, os sonhos, o que ainda falta — não é pouca coisa. Só de ter chegado até aqui, você já deu o primeiro passo pra sair do lugar.</p>
       <p class="lead r3">Vou ler cada resposta com calma e carinho. Se você for selecionada, eu te aviso pessoalmente pelo <b>direct</b> e pelo <b>WhatsApp</b>.</p>
-      <div class="final-box r4">Enquanto isso, fica de olho nos meus stories — tem conteúdo preparado pra você 💛</div>
       <a class="btn final-btn r4" href="https://instagram.com/massoterapeutalarissar" target="_blank" rel="noopener">Ir pro meu Instagram →</a>
       <p class="final-assin r5">Com carinho,<br><span>Larissa Rodrigues</span></p>
     </div>
