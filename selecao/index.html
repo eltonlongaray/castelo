@@ -96,7 +96,9 @@
 const SB_URL = "https://gopqajnivmbxjqsiznqi.supabase.co";
 const SB_KEY = "sb_publishable_YBF0cSQt0IlTqVhCyRlduQ_ij2CHBZ5";
 const TABELA = "selecao_aula";
-const CHAVE  = "selecao-larissa-v1";
+// ?teste=1 → modo teste: não grava no banco e usa rascunho separado no aparelho
+const TESTE  = new URLSearchParams(location.search).has("teste");
+const CHAVE  = TESTE ? "selecao-larissa-teste" : "selecao-larissa-v1";
 const LR     = "../sorteio/img/lr-ink.png";
 const sb = window.supabase.createClient(SB_URL, SB_KEY);
 
@@ -139,6 +141,12 @@ let st = {i:-1, r:{}};
 try{ const s = JSON.parse(localStorage.getItem(CHAVE)||"null"); if(s && s.r) st = s; }catch(e){}
 const salvar = () => { try{ localStorage.setItem(CHAVE, JSON.stringify(st)); }catch(e){} };
 const app = document.getElementById("app");
+if(TESTE){
+  const t = document.createElement("div");
+  t.textContent = "MODO TESTE · nada é salvo";
+  t.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:99;background:#050404;color:#FCDDDA;font:600 .72rem/1 Karla,sans-serif;letter-spacing:.14em;text-align:center;padding:.45rem;";
+  document.body.appendChild(t);
+}
 const esc = s => String(s??"").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
 function topo(mostrarProg){
@@ -233,7 +241,7 @@ async function enviar(){
   const b = document.getElementById("seg"); b.disabled = true; b.textContent = "Enviando…";
   const linha = {}; P.forEach(p => linha[p.id] = String(st.r[p.id]??"").trim() || null);
   if(linha.instagram && !linha.instagram.startsWith("@")) linha.instagram = "@"+linha.instagram;
-  const { error } = await sb.from(TABELA).insert(linha);
+  const { error } = TESTE ? { error: null } : await sb.from(TABELA).insert(linha);
   if(error){
     b.disabled = false; b.textContent = "Tentar enviar de novo";
     document.getElementById("erro").textContent = "Não consegui enviar agora. Suas respostas estão salvas aqui — tenta de novo em instantes.";
